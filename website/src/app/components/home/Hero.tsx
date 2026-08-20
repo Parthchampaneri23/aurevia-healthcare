@@ -81,7 +81,7 @@ export default function Hero() {
         <section className="relative w-full overflow-hidden bg-slate-100">
 
             {/* Slides */}
-            <div className="relative h-[280px] sm:h-[340px] md:h-[390px] lg:h-[420px]">
+            <div className="relative h-[200px] sm:h-[240px] lg:h-[280px]">
                 {slides.map((slide, index) => (
                     <div
                         key={slide.image}
@@ -109,33 +109,33 @@ export default function Hero() {
                                 <div className="max-w-xl text-white">
 
                                     {/* Eyebrow */}
-                                    <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/80 sm:text-xs">
+                                    <p className="mb-1.5 text-[9px] font-semibold uppercase tracking-[0.22em] text-white/80 sm:text-xs">
                                         {slide.eyebrow}
                                     </p>
 
                                     {/* Heading */}
-                                    <h1 className="text-2xl font-bold leading-tight sm:text-3xl md:text-4xl lg:text-[42px]">
+                                    <h1 className="text-xl font-bold leading-tight sm:text-2xl lg:text-3xl">
                                         {slide.title}
                                     </h1>
 
                                     {/* Description */}
-                                    <p className="mt-3 max-w-lg text-xs leading-5 text-white/85 sm:text-sm sm:leading-6">
+                                    <p className="mt-1.5 max-w-lg text-[10px] leading-relaxed text-white/85 sm:text-xs sm:leading-relaxed">
                                         {slide.description}
                                     </p>
 
                                     {/* Buttons */}
-                                    <div className="mt-5 flex flex-wrap gap-2.5">
+                                    <div className="mt-3.5 flex flex-wrap gap-2">
                                         <Link
                                             href={slide.primaryLink}
-                                            className="inline-flex items-center rounded-lg bg-[#123B5D] px-4 py-2.5 text-xs font-semibold text-white shadow-md transition hover:bg-[#0d2d46] sm:px-5 sm:py-2.5 sm:text-sm"
+                                            className="inline-flex items-center rounded-lg bg-[#123B5D] px-3.5 py-1.5 text-[11px] font-semibold text-white shadow-md transition hover:bg-[#0d2d46] sm:px-4.5 sm:py-2 sm:text-xs"
                                         >
                                             {slide.primaryButton}
-                                            <span className="ml-2">→</span>
+                                            <span className="ml-1.5">→</span>
                                         </Link>
 
                                         <Link
                                             href={slide.secondaryLink}
-                                            className="inline-flex items-center rounded-lg border border-white/70 bg-white/10 px-4 py-2.5 text-xs font-semibold text-white backdrop-blur-sm transition hover:bg-white hover:text-[#123B5D] sm:px-5 sm:py-2.5 sm:text-sm"
+                                            className="inline-flex items-center rounded-lg border border-white/70 bg-white/10 px-3.5 py-1.5 text-[11px] font-semibold text-white backdrop-blur-sm transition hover:bg-white hover:text-[#123B5D] sm:px-4.5 sm:py-2 sm:text-xs"
                                         >
                                             {slide.secondaryButton}
                                         </Link>
@@ -153,9 +153,9 @@ export default function Hero() {
                 type="button"
                 onClick={previousSlide}
                 aria-label="Previous slide"
-                className="absolute left-3 top-1/2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-[#123B5D] shadow-md backdrop-blur-sm transition hover:bg-white sm:left-5 sm:h-9 sm:w-9"
+                className="absolute left-3 top-1/2 z-20 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-[#123B5D] shadow-md backdrop-blur-sm transition hover:bg-white sm:left-5 sm:h-8 sm:w-8"
             >
-                <ChevronLeft size={19} />
+                <ChevronLeft size={16} />
             </button>
 
             {/* Next Button */}
@@ -163,22 +163,22 @@ export default function Hero() {
                 type="button"
                 onClick={nextSlide}
                 aria-label="Next slide"
-                className="absolute right-3 top-1/2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-[#123B5D] shadow-md backdrop-blur-sm transition hover:bg-white sm:right-5 sm:h-9 sm:w-9"
+                className="absolute right-3 top-1/2 z-20 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-[#123B5D] shadow-md backdrop-blur-sm transition hover:bg-white sm:right-5 sm:h-8 sm:w-8"
             >
-                <ChevronRight size={19} />
+                <ChevronRight size={16} />
             </button>
 
             {/* Dots */}
-            <div className="absolute bottom-3 left-1/2 z-20 flex -translate-x-1/2 items-center gap-1.5">
+            <div className="absolute bottom-2.5 left-1/2 z-20 flex -translate-x-1/2 items-center gap-1.2">
                 {slides.map((_, index) => (
                     <button
                         key={index}
                         type="button"
                         onClick={() => setCurrentSlide(index)}
                         aria-label={`Go to slide ${index + 1}`}
-                        className={`h-2 rounded-full transition-all duration-300 ${index === currentSlide
-                                ? "w-7 bg-[#123B5D]"
-                                : "w-2 bg-white/80 hover:bg-white"
+                        className={`h-1.5 rounded-full transition-all duration-300 ${index === currentSlide
+                                ? "w-5 bg-[#123B5D]"
+                                : "w-1.5 bg-white/80 hover:bg-white"
                             }`}
                     />
                 ))}
