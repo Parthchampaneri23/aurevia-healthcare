@@ -20,7 +20,7 @@ const contactItems = [
     {
         icon: Phone,
         title: "Phone",
-        value: "+91 00000 00000",
+        value: "+91 8677456564",
     },
     {
         icon: Clock3,

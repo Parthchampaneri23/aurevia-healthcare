@@ -171,7 +171,7 @@ export default function Footer() {
                                     className="shrink-0 text-[#2dd4bf]"
                                 />
 
-                                <span>+91 00000 00000</span>
+                                <span>+91 8677456564</span>
                             </a>
 
                             {/* Email */}
