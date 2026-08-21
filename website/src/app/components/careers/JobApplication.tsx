@@ -12,60 +12,16 @@ const jobs = [
 ];
 
 export default function JobApplication() {
-    const [formData, setFormData] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        currentCity: "",
-        position: "",
-        qualification: "",
-        experience: "",
-        currentCompany: "",
-        currentDesignation: "",
-        noticePeriod: "",
-        expectedSalary: "",
-        resume: null as File | null,
-        linkedin: "",
-        coverLetter: "",
-        confirm: false,
-    });
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [submitted, setSubmitted] = useState(false);
+    const [resumeName, setResumeName] = useState("");
 
-    const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-    ) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
-        if (errors[name]) {
+    const handleFormChange = (e: React.FormEvent<HTMLFormElement>) => {
+        const target = e.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+        if (target.name && errors[target.name]) {
             setErrors((prev) => {
                 const copy = { ...prev };
-                delete copy[name];
-                return copy;
-            });
-        }
-    };
-
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0] || null;
-        setFormData((prev) => ({ ...prev, resume: file }));
-        if (errors.resume) {
-            setErrors((prev) => {
-                const copy = { ...prev };
-                delete copy.resume;
-                return copy;
-            });
-        }
-    };
-
-    const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const checked = e.target.checked;
-        setFormData((prev) => ({ ...prev, confirm: checked }));
-        if (errors.confirm) {
-            setErrors((prev) => {
-                const copy = { ...prev };
-                delete copy.confirm;
+                delete copy[target.name];
                 return copy;
             });
         }
@@ -73,32 +29,36 @@ export default function JobApplication() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        
+        const data = new FormData(e.currentTarget);
         const newErrors: Record<string, string> = {};
-        if (!formData.firstName.trim()) newErrors.firstName = "First name is required";
-        if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
-        if (!formData.email.trim()) {
+
+        const firstName = data.get("firstName")?.toString().trim();
+        const lastName = data.get("lastName")?.toString().trim();
+        const email = data.get("email")?.toString().trim();
+        const phone = data.get("phone")?.toString().trim();
+        const currentCity = data.get("currentCity")?.toString().trim();
+        const position = data.get("position")?.toString();
+        const qualification = data.get("qualification")?.toString().trim();
+        const experience = data.get("experience")?.toString().trim();
+        const noticePeriod = data.get("noticePeriod")?.toString().trim();
+        const resumeFile = data.get("resume") as File | null;
+        const confirm = data.get("confirm");
+
+        if (!firstName) newErrors.firstName = "First name is required";
+        if (!lastName) newErrors.lastName = "Last name is required";
+        if (!email) {
             newErrors.email = "Email address is required";
-        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+        } else if (!/\S+@\S+\.\S+/.test(email)) {
             newErrors.email = "Please enter a valid email address";
         }
-        if (!formData.phone.trim()) newErrors.phone = "Phone number is required";
-        if (!formData.currentCity.trim()) newErrors.currentCity = "Current city is required";
-        if (!formData.position) newErrors.position = "Please select a position";
-        if (!formData.qualification.trim()) newErrors.qualification = "Highest qualification is required";
-        if (!formData.experience.trim()) newErrors.experience = "Total experience is required";
-        if (!formData.currentCompany.trim()) newErrors.currentCompany = "Current company is required";
-        if (!formData.currentDesignation.trim()) newErrors.currentDesignation = "Current designation is required";
-        if (!formData.noticePeriod.trim()) newErrors.noticePeriod = "Notice period is required";
-        if (!formData.expectedSalary.trim()) newErrors.expectedSalary = "Expected salary is required";
-        if (!formData.resume) newErrors.resume = "Please upload your resume";
-        if (!formData.linkedin.trim()) {
-            newErrors.linkedin = "LinkedIn profile URL is required";
-        } else if (!/^https?:\/\/(www\.)?linkedin\.com\/.*$/.test(formData.linkedin)) {
-            newErrors.linkedin = "Please enter a valid LinkedIn URL";
-        }
-        if (!formData.coverLetter.trim()) newErrors.coverLetter = "Cover letter is required";
-        if (!formData.confirm) newErrors.confirm = "You must confirm the details are accurate";
+        if (!phone) newErrors.phone = "Phone number is required";
+        if (!currentCity) newErrors.currentCity = "Current city is required";
+        if (!position) newErrors.position = "Please select a position";
+        if (!qualification) newErrors.qualification = "Highest qualification is required";
+        if (!experience) newErrors.experience = "Total experience is required";
+        if (!noticePeriod) newErrors.noticePeriod = "Notice period is required";
+        if (!resumeFile || resumeFile.size === 0) newErrors.resume = "Please upload your resume";
+        if (!confirm) newErrors.confirm = "You must confirm the details are accurate";
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
@@ -158,6 +118,7 @@ export default function JobApplication() {
                     <div className="lg:col-span-7">
                         <form
                             onSubmit={handleSubmit}
+                            onChange={handleFormChange}
                             noValidate
                             className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8 animate-form-fade-in"
                         >
@@ -169,8 +130,6 @@ export default function JobApplication() {
                                     <input
                                         type="text"
                                         name="firstName"
-                                        value={formData.firstName}
-                                        onChange={handleChange}
                                         className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-all duration-300 ${
                                             errors.firstName
                                                 ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
@@ -189,8 +148,6 @@ export default function JobApplication() {
                                     <input
                                         type="text"
                                         name="lastName"
-                                        value={formData.lastName}
-                                        onChange={handleChange}
                                         className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-all duration-300 ${
                                             errors.lastName
                                                 ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
@@ -209,8 +166,6 @@ export default function JobApplication() {
                                     <input
                                         type="email"
                                         name="email"
-                                        value={formData.email}
-                                        onChange={handleChange}
                                         className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-all duration-300 ${
                                             errors.email
                                                 ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
@@ -229,8 +184,6 @@ export default function JobApplication() {
                                     <input
                                         type="tel"
                                         name="phone"
-                                        value={formData.phone}
-                                        onChange={handleChange}
                                         className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-all duration-300 ${
                                             errors.phone
                                                 ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
@@ -249,8 +202,6 @@ export default function JobApplication() {
                                     <input
                                         type="text"
                                         name="currentCity"
-                                        value={formData.currentCity}
-                                        onChange={handleChange}
                                         className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-all duration-300 ${
                                             errors.currentCity
                                                 ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
@@ -268,8 +219,6 @@ export default function JobApplication() {
                                     </label>
                                     <select
                                         name="position"
-                                        value={formData.position}
-                                        onChange={handleChange}
                                         className={`mt-2 w-full rounded-lg border bg-white px-4 py-3 text-sm text-black outline-none transition-all duration-300 ${
                                             errors.position
                                                 ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
@@ -293,8 +242,6 @@ export default function JobApplication() {
                                     <input
                                         type="text"
                                         name="qualification"
-                                        value={formData.qualification}
-                                        onChange={handleChange}
                                         className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-all duration-300 ${
                                             errors.qualification
                                                 ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
@@ -313,8 +260,6 @@ export default function JobApplication() {
                                     <input
                                         type="text"
                                         name="experience"
-                                        value={formData.experience}
-                                        onChange={handleChange}
                                         placeholder="e.g. 2 Years"
                                         className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-all duration-300 ${
                                             errors.experience
@@ -329,42 +274,24 @@ export default function JobApplication() {
 
                                 <div>
                                     <label className="text-sm font-medium text-slate-700">
-                                        Current Company *
+                                        Current Company
                                     </label>
                                     <input
                                         type="text"
                                         name="currentCompany"
-                                        value={formData.currentCompany}
-                                        onChange={handleChange}
-                                        className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-all duration-300 ${
-                                            errors.currentCompany
-                                                ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
-                                                : "border-slate-300 focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
-                                        }`}
+                                        className="mt-2 w-full rounded-lg border border-slate-300 px-4 py-3 text-sm text-black outline-none transition-all duration-300 focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
                                     />
-                                    {errors.currentCompany && (
-                                        <p className="mt-1 text-xs text-red-500">{errors.currentCompany}</p>
-                                    )}
                                 </div>
 
                                 <div>
                                     <label className="text-sm font-medium text-slate-700">
-                                        Current Designation *
+                                        Current Designation
                                     </label>
                                     <input
                                         type="text"
                                         name="currentDesignation"
-                                        value={formData.currentDesignation}
-                                        onChange={handleChange}
-                                        className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-all duration-300 ${
-                                            errors.currentDesignation
-                                                ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
-                                                : "border-slate-300 focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
-                                        }`}
+                                        className="mt-2 w-full rounded-lg border border-slate-300 px-4 py-3 text-sm text-black outline-none transition-all duration-300 focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
                                     />
-                                    {errors.currentDesignation && (
-                                        <p className="mt-1 text-xs text-red-500">{errors.currentDesignation}</p>
-                                    )}
                                 </div>
 
                                 <div>
@@ -374,8 +301,6 @@ export default function JobApplication() {
                                     <input
                                         type="text"
                                         name="noticePeriod"
-                                        value={formData.noticePeriod}
-                                        onChange={handleChange}
                                         placeholder="e.g. 30 Days"
                                         className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-all duration-300 ${
                                             errors.noticePeriod
@@ -390,23 +315,14 @@ export default function JobApplication() {
 
                                 <div>
                                     <label className="text-sm font-medium text-slate-700">
-                                        Expected Salary *
+                                        Expected Salary
                                     </label>
                                     <input
                                         type="text"
                                         name="expectedSalary"
-                                        value={formData.expectedSalary}
-                                        onChange={handleChange}
                                         placeholder="Expected CTC"
-                                        className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-all duration-300 ${
-                                            errors.expectedSalary
-                                                ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
-                                                : "border-slate-300 focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
-                                        }`}
+                                        className="mt-2 w-full rounded-lg border border-slate-300 px-4 py-3 text-sm text-black outline-none transition-all duration-300 focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
                                     />
-                                    {errors.expectedSalary && (
-                                        <p className="mt-1 text-xs text-red-500">{errors.expectedSalary}</p>
-                                    )}
                                 </div>
 
                                 <div>
@@ -415,8 +331,9 @@ export default function JobApplication() {
                                     </label>
                                     <input
                                         type="file"
+                                        name="resume"
                                         accept=".pdf,.doc,.docx"
-                                        onChange={handleFileChange}
+                                        onChange={(e) => setResumeName(e.target.files?.[0]?.name || "")}
                                         className={`mt-2 w-full rounded-lg border px-4 py-2.5 text-sm text-black outline-none transition-all duration-300 ${
                                             errors.resume
                                                 ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
@@ -430,54 +347,35 @@ export default function JobApplication() {
 
                                 <div>
                                     <label className="text-sm font-medium text-slate-700">
-                                        LinkedIn Profile *
+                                        LinkedIn Profile
                                     </label>
                                     <input
                                         type="url"
                                         name="linkedin"
-                                        value={formData.linkedin}
-                                        onChange={handleChange}
                                         placeholder="https://linkedin.com/in/..."
-                                        className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-all duration-300 ${
-                                            errors.linkedin
-                                                ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
-                                                : "border-slate-300 focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
-                                        }`}
+                                        className="mt-2 w-full rounded-lg border border-slate-300 px-4 py-3 text-sm text-black outline-none transition-all duration-300 focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
                                     />
-                                    {errors.linkedin && (
-                                        <p className="mt-1 text-xs text-red-500">{errors.linkedin}</p>
-                                    )}
                                 </div>
                             </div>
 
                             <div className="mt-5">
                                 <label className="text-sm font-medium text-slate-700">
-                                    Cover Letter *
+                                    Cover Letter
                                 </label>
 
                                 <textarea
                                     rows={5}
                                     name="coverLetter"
-                                    value={formData.coverLetter}
-                                    onChange={handleChange}
-                                    className={`mt-2 w-full resize-none rounded-lg border px-4 py-3 text-sm text-black outline-none transition-all duration-300 ${
-                                        errors.coverLetter
-                                            ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
-                                            : "border-slate-300 focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
-                                    }`}
+                                    className="mt-2 w-full resize-none rounded-lg border border-slate-300 px-4 py-3 text-sm text-black outline-none transition-all duration-300 focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
                                     placeholder="Tell us briefly why you are interested in joining Aurevia Healthcare..."
                                 />
-                                {errors.coverLetter && (
-                                    <p className="mt-1 text-xs text-red-500">{errors.coverLetter}</p>
-                                )}
                             </div>
 
                             <div className="mt-6">
                                 <label className="flex items-start gap-3 text-sm text-slate-600 cursor-pointer">
                                     <input
                                         type="checkbox"
-                                        checked={formData.confirm}
-                                        onChange={handleCheckboxChange}
+                                        name="confirm"
                                         className="mt-1 h-4 w-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500"
                                     />
 

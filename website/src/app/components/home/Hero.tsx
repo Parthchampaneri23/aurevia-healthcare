@@ -86,8 +86,8 @@ export default function Hero() {
                     <div
                         key={slide.image}
                         className={`absolute inset-0 transition-opacity duration-700 ${index === currentSlide
-                                ? "z-10 opacity-100"
-                                : "z-0 opacity-0"
+                            ? "z-10 opacity-100"
+                            : "z-0 opacity-0"
                             }`}
                     >
                         {/* Background Image */}
@@ -177,8 +177,8 @@ export default function Hero() {
                         onClick={() => setCurrentSlide(index)}
                         aria-label={`Go to slide ${index + 1}`}
                         className={`h-1.5 rounded-full transition-all duration-300 ${index === currentSlide
-                                ? "w-5 bg-[#123B5D]"
-                                : "w-1.5 bg-white/80 hover:bg-white"
+                            ? "w-5 bg-[#123B5D]"
+                            : "w-1.5 bg-white/80 hover:bg-white"
                             }`}
                     />
                 ))}

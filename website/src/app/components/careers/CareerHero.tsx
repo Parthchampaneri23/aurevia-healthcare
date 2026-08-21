@@ -31,7 +31,7 @@ export default function CareerHero() {
 
                 <div className="absolute inset-0">
                     <div className="mx-auto flex h-full max-w-7xl items-center px-6 lg:px-8">
-                        <div className="max-w-2xl text-white animate-hero-content">
+                        <div className="max-w-2xl text-left text-white animate-hero-content">
                             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-teal-300">
                                 CAREERS AT AUREVIA
                             </p>

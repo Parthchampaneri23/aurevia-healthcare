@@ -18,7 +18,7 @@ export default function AboutHero() {
 
             {/* Content */}
             <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center px-6 lg:px-8">
-                <div className="max-w-2xl text-white">
+                <div className="max-w-2xl text-left text-white">
                     <p className="text-xs font-semibold uppercase tracking-[0.25em] text-white/80">
                         About Aurevia
                     </p>
