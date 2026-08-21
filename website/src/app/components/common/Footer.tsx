@@ -12,7 +12,7 @@ import {
 
 const companyLinks = [
     { name: "About", href: "/about" },
-    { name: "Manufacturing", href: "/manufacturing" },
+    { name: "Industries", href: "/industries" },
     { name: "Careers", href: "/careers" },
     { name: "Contact", href: "/contact" },
 ];
