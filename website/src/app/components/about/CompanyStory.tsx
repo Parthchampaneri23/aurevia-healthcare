@@ -24,15 +24,7 @@ export default function CompanyStory() {
                         {/* Soft Gradient Overlay */}
                         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
-                        {/* Experience Badge */}
-                        <div className="absolute bottom-6 left-6 translate-y-0 rounded-2xl border border-white/20 bg-white/90 px-6 py-4 shadow-xl backdrop-blur-md transition-all duration-500 group-hover:-translate-y-2 group-hover:bg-white">
-                            <p className="bg-gradient-to-r from-[#123B5D] to-[#0F766E] bg-clip-text text-xl font-extrabold text-transparent">
-                                Quality
-                            </p>
-                            <p className="mt-1 text-xs font-semibold text-slate-600 uppercase tracking-wider">
-                                Driven by Excellence
-                            </p>
-                        </div>
+
                     </div>
 
                     {/* Content Section */}
