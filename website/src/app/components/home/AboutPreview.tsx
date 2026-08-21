@@ -23,15 +23,6 @@ export default function AboutPreview() {
                         {/* Soft Gradient Overlay */}
                         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
-                        {/* Experience Badge */}
-                        <div className="absolute bottom-6 left-6 translate-y-0 rounded-2xl border border-white/20 bg-white/90 p-5 shadow-xl backdrop-blur-md transition-all duration-500 group-hover:-translate-y-2 group-hover:bg-white sm:p-6">
-                            <p className="bg-gradient-to-r from-[#123B5D] to-[#0F766E] bg-clip-text text-3xl font-extrabold text-transparent sm:text-4xl">
-                                15+
-                            </p>
-                            <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-slate-600 sm:text-sm">
-                                Years of Excellence
-                            </p>
-                        </div>
                     </div>
 
                     {/* Content Section */}
