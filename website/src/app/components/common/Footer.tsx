@@ -151,7 +151,7 @@ export default function Footer() {
 
                             {/* Location */}
                             <a
-                                href="https://maps.google.com/?q=Ahmedabad,+Gujarat,+India"
+                                href="https://maps.google.com/?q=Changodar+GIDC,+Ahmedabad,+Gujarat+382213,+India"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="group flex items-start gap-3 text-sm text-slate-400 transition hover:text-white"
@@ -162,7 +162,7 @@ export default function Footer() {
                                 />
 
                                 <p className="text-sm leading-5">
-                                    Ahmedabad, Gujarat, India
+                                    Changodar GIDC, Ahmedabad, Gujarat 382213, India
                                 </p>
                             </a>
 

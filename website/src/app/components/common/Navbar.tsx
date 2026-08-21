@@ -51,7 +51,7 @@ export default function Navbar() {
 
     return (
         <header className="sticky top-0 z-50 border-b border-slate-200 bg-white shadow-sm">
-            <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-8">
+            <nav className="mx-auto flex h-24 max-w-7xl items-center justify-between px-6 lg:px-8">
 
                 {/* Logo */}
                 <div className="flex lg:flex-1">
@@ -114,7 +114,7 @@ export default function Navbar() {
                         <Link
                             href="/products"
                             onClick={() => setProductsOpen(false)}
-                            className="relative flex items-center gap-1.5 py-7 text-sm font-medium text-slate-700 transition-colors duration-200 hover:text-[#0F766E]"
+                            className="relative flex items-center gap-1.5 py-9 text-sm font-medium text-slate-700 transition-colors duration-200 hover:text-[#0F766E]"
                         >
                             Products
 
@@ -125,7 +125,7 @@ export default function Navbar() {
                             />
 
                             <span
-                                className={`absolute bottom-[17px] left-0 h-[2px] bg-[#0F766E] transition-all duration-300 ${productsOpen ? "w-full" : "w-0"
+                                className={`absolute bottom-[25px] left-0 h-[2px] bg-[#0F766E] transition-all duration-300 ${productsOpen ? "w-full" : "w-0"
                                     }`}
                             />
                         </Link>
@@ -274,7 +274,7 @@ export default function Navbar() {
             {/* Mobile Navigation */}
             {isOpen && (
                 <div className="border-t border-slate-200 bg-white lg:hidden">
-                    <div className="mx-auto flex max-h-[calc(100vh-80px)] max-w-7xl flex-col overflow-y-auto px-6 py-4">
+                    <div className="mx-auto flex max-h-[calc(100vh-96px)] max-w-7xl flex-col overflow-y-auto px-6 py-4">
 
                         {/* Home + About */}
                         <Link

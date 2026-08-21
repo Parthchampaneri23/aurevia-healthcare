@@ -23,7 +23,7 @@ const jobs: Job[] = [
         title: "Production Executive",
         department: "Manufacturing",
         experience: "1–3 Years",
-        location: "Ahmedabad, Gujarat, India",
+        location: "Changodar GIDC, Ahmedabad, Gujarat 382213, India",
         description:
             "Support pharmaceutical manufacturing operations, production planning, process execution and production documentation.",
         details: {
@@ -45,7 +45,7 @@ const jobs: Job[] = [
         title: "Quality Control Executive",
         department: "Quality Control",
         experience: "1–3 Years",
-        location: "Ahmedabad, Gujarat, India",
+        location: "Changodar GIDC, Ahmedabad, Gujarat 382213, India",
         description:
             "Support laboratory testing, sampling, quality documentation and analytical activities.",
         details: {
@@ -67,7 +67,7 @@ const jobs: Job[] = [
         title: "Quality Assurance Executive",
         department: "Quality Assurance",
         experience: "1–3 Years",
-        location: "Ahmedabad, Gujarat, India",
+        location: "Changodar GIDC, Ahmedabad, Gujarat 382213, India",
         description:
             "Support quality systems, SOP compliance, batch documentation and continuous improvement initiatives.",
         details: {
@@ -89,7 +89,7 @@ const jobs: Job[] = [
         title: "Business Development Executive",
         department: "Sales & Business Development",
         experience: "1–3 Years",
-        location: "Ahmedabad, Gujarat, India",
+        location: "Changodar GIDC, Ahmedabad, Gujarat 382213, India",
         description:
             "Identify B2B opportunities, develop healthcare relationships and support pharmaceutical product enquiries.",
         details: {
@@ -111,7 +111,7 @@ const jobs: Job[] = [
         title: "Supply Chain Executive",
         department: "Supply Chain & Operations",
         experience: "1–3 Years",
-        location: "Ahmedabad, Gujarat, India",
+        location: "Changodar GIDC, Ahmedabad, Gujarat 382213, India",
         description:
             "Support procurement, inventory coordination, order processing and logistics activities.",
         details: {

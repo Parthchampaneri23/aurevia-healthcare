@@ -29,12 +29,12 @@ export default function ContactLocation() {
                                     </p>
 
                                     <a
-                                        href="https://maps.google.com/?q=Ahmedabad,+Gujarat,+India"
+                                        href="https://maps.google.com/?q=Changodar+GIDC,+Ahmedabad,+Gujarat+382213,+India"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="group inline-flex items-center gap-1.5 mt-1 text-2xl font-bold text-slate-900 hover:text-teal-600 transition-colors"
                                     >
-                                        Ahmedabad, Gujarat, India
+                                        Changodar GIDC, Ahmedabad, Gujarat 382213, India
                                     </a>
 
                                     <p className="mt-2 text-sm text-slate-650 leading-relaxed">
@@ -50,7 +50,7 @@ export default function ContactLocation() {
 
                         <div className="relative overflow-hidden rounded-xl border border-slate-200 h-[250px] sm:h-[300px] w-full shadow-sm hover:shadow-md transition-all duration-300">
                             <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117512.44199999999!2d72.50858!3d23.022505!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e848aba5bd449%3A0x4fccd11d087798c9!2sAhmedabad%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                                src="https://maps.google.com/maps?q=Changodar%20GIDC%2C%20Ahmedabad%2C%20Gujarat%20382213%2C%20India&t=&z=14&ie=UTF8&iwloc=&output=embed"
                                 width="100%"
                                 height="100%"
                                 style={{ border: 0 }}

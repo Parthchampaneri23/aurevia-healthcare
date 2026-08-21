@@ -10,8 +10,8 @@ const contactItems = [
     {
         icon: MapPin,
         title: "Head Office",
-        value: "Ahmedabad, Gujarat, India",
-        link: "https://maps.google.com/?q=Ahmedabad,+Gujarat,+India",
+        value: "Changodar GIDC, Ahmedabad, Gujarat 382213, India",
+        link: "https://maps.google.com/?q=Changodar+GIDC,+Ahmedabad,+Gujarat+382213,+India",
     },
     {
         icon: Mail,

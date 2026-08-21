@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/app/components/common/Navbar";
 import Footer from "@/app/components/common/Footer";
+import ScrollToTop from "@/app/components/common/ScrollToTop";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,7 +18,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Aurevia Healthcare | Pharmaceutical Manufacturing",
   description:
-    "Aurevia Healthcare is a B2B pharmaceutical manufacturing company providing quality-driven pharmaceutical solutions.",
+    "Aurevia Healthcare is B2B pharmaceutical manufacturing company providing quality-driven pharmaceutical solutions.",
 };
 
 export default function RootLayout({
@@ -38,6 +39,7 @@ export default function RootLayout({
         </main>
 
         <Footer />
+        <ScrollToTop />
       </body>
     </html>
   );
