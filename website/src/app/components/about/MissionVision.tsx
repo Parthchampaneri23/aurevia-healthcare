@@ -16,7 +16,7 @@ const items = [
         label: "Our Vision",
         title: "Building a Trusted Pharmaceutical Partner",
         description:
-            "To build a trusted pharmaceutical manufacturing organization recognized for quality, reliability, innovation and long-term partnerships.",
+            "To build a Pharmaceutical Manufacturing Built for Healthcare Businesses organization recognized for quality, reliability, innovation and long-term partnerships.",
         accentColor: "bg-[#123B5D]",
         borderColor: "hover:border-blue-100",
         iconBg: "bg-blue-50 text-[#123B5D] group-hover:bg-[#123B5D] group-hover:text-white",
