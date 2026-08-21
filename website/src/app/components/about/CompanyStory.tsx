@@ -110,7 +110,7 @@ export default function CompanyStory() {
                         {/* Button */}
                         <div className="mt-8">
                             <Link
-                                href="/contact"
+                                href="/contact#contact-form"
                                 className="group inline-flex items-center rounded-xl bg-gradient-to-r from-[#123B5D] to-[#1a5380] px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-cyan-900/10 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-cyan-900/20"
                             >
                                 Work With Us

@@ -123,10 +123,10 @@ export default function Manufacturing() {
                         {/* Button */}
                         <div className="mt-10">
                             <Link
-                                href="/manufacturing"
+                                href="/industries#industry-segments"
                                 className="group/btn inline-flex items-center gap-2 rounded-xl bg-[#123B5D] px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-900/10 transition-all duration-300 hover:bg-[#0d2d46] hover:shadow-xl hover:shadow-blue-900/20 hover:translate-x-0.5 active:scale-95"
                             >
-                                Explore Manufacturing
+                                Explore Industries
                                 <span className="transition-transform duration-300 group-hover/btn:translate-x-1">→</span>
                             </Link>
                         </div>

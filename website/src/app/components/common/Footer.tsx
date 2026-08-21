@@ -150,16 +150,21 @@ export default function Footer() {
                         <div className="mt-4 space-y-4">
 
                             {/* Location */}
-                            <div className="flex items-start gap-3">
+                            <a
+                                href="https://maps.google.com/?q=Ahmedabad,+Gujarat,+India"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group flex items-start gap-3 text-sm text-slate-400 transition hover:text-white"
+                            >
                                 <FaLocationDot
                                     size={15}
-                                    className="mt-1 shrink-0 text-[#2dd4bf]"
+                                    className="mt-1 shrink-0 text-[#2dd4bf] group-hover:scale-110 transition-transform"
                                 />
 
-                                <p className="text-sm leading-5 text-slate-400">
-                                    Gujarat, India
+                                <p className="text-sm leading-5">
+                                    Ahmedabad, Gujarat, India
                                 </p>
-                            </div>
+                            </a>
 
                             {/* Phone */}
                             <a

@@ -31,7 +31,7 @@ export default function IndustriesCTA() {
                     </p>
 
                     <Link
-                        href="/contact"
+                        href="/contact#contact-form"
                         className="mt-7 inline-flex items-center rounded-lg bg-white px-6 py-3 text-sm font-bold text-[#123B5D] shadow-md transition hover:bg-slate-100"
                     >
                         Start a Conversation

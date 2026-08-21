@@ -41,7 +41,7 @@ export default function ContactCTA() {
                         <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
 
                             <Link
-                                href="/contact?type=quote"
+                                href="/contact#contact-form"
                                 className="group inline-flex items-center justify-center rounded-lg bg-white px-5 py-3 text-sm font-semibold text-[#123B5D] transition hover:bg-slate-100"
                             >
                                 Get a Quote
@@ -52,7 +52,7 @@ export default function ContactCTA() {
                             </Link>
 
                             <Link
-                                href="/contact"
+                                href="/contact#contact-form"
                                 className="inline-flex items-center justify-center rounded-lg border border-white/30 px-5 py-3 text-sm font-semibold text-white transition hover:border-white hover:bg-white/10"
                             >
                                 Contact Us

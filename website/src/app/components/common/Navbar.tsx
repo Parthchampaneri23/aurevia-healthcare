@@ -111,11 +111,9 @@ export default function Navbar() {
                         onMouseEnter={() => setProductsOpen(true)}
                         onMouseLeave={() => setProductsOpen(false)}
                     >
-                        <button
-                            type="button"
-                            onClick={() =>
-                                setProductsOpen((prev) => !prev)
-                            }
+                        <Link
+                            href="/products"
+                            onClick={() => setProductsOpen(false)}
                             className="relative flex items-center gap-1.5 py-7 text-sm font-medium text-slate-700 transition-colors duration-200 hover:text-[#0F766E]"
                         >
                             Products
@@ -130,7 +128,7 @@ export default function Navbar() {
                                 className={`absolute bottom-[17px] left-0 h-[2px] bg-[#0F766E] transition-all duration-300 ${productsOpen ? "w-full" : "w-0"
                                     }`}
                             />
-                        </button>
+                        </Link>
 
                         {/* Mega Menu */}
                         <div
@@ -224,7 +222,7 @@ export default function Navbar() {
                                     </p>
 
                                     <Link
-                                        href="/contact"
+                                        href="/contact#contact-form"
                                         onClick={() =>
                                             setProductsOpen(false)
                                         }
@@ -265,7 +263,7 @@ export default function Navbar() {
                 {/* Request Quote */}
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
                     <Link
-                        href="/contact"
+                        href="/contact#contact-form"
                         className="rounded-lg bg-[#123B5D] px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.02] hover:bg-[#0F766E] hover:shadow-md active:scale-[0.98]"
                     >
                         Request a Quote
@@ -373,7 +371,7 @@ export default function Navbar() {
 
                         {/* Mobile Quote */}
                         <Link
-                            href="/contact"
+                            href="/contact#contact-form"
                             onClick={closeMenus}
                             className="mt-4 rounded-lg bg-[#123B5D] px-5 py-3 text-center text-sm font-semibold text-white transition hover:bg-[#0F766E]"
                         >

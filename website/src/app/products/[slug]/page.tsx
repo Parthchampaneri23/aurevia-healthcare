@@ -203,7 +203,7 @@ export default async function ProductDetailsPage({
                             <Link
                                 href={`/contact?product=${encodeURIComponent(
                                     product.name
-                                )}`}
+                                )}#contact-form`}
                                 className="inline-flex shrink-0 items-center rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-[#123B5D] shadow-md transition-all duration-300 hover:bg-slate-50 hover:scale-102 active:scale-98"
                             >
                                 Request a Quote

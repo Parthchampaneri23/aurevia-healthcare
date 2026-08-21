@@ -63,7 +63,7 @@ const industries = [
 
 export default function IndustrySegments() {
     return (
-        <section className="bg-white py-12 lg:py-12">
+        <section id="industry-segments" className="scroll-mt-24 bg-white py-12 lg:py-12">
             <style dangerouslySetInnerHTML={{
                 __html: `
                 @keyframes cardFadeIn {

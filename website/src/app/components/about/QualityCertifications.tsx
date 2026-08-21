@@ -7,15 +7,21 @@ import { X, Maximize2 } from "lucide-react";
 const certificates = [
     {
         image: "/about/certificate1.jpg",
-        title: "Quality Certification",
+        title: "WHO-GMP Certification",
+        description:
+            "Ensures that pharmaceutical products are consistently manufactured and controlled according to appropriate quality standards. GMP covers manufacturing processes, quality control, personnel, facilities, equipment, documentation, and prevention of contamination or product mix-ups.",
     },
     {
         image: "/about/certificate2.jpg",
-        title: "Quality Certification",
+        title: "ISO 9001:2015 Quality Management",
+        description:
+            "Demonstrates a structured quality management approach focused on consistent processes, customer requirements, continual improvement, risk-based thinking, and reliable product and service quality.",
     },
     {
         image: "/about/certificate3.jpg",
-        title: "Quality Certification",
+        title: "ISO 14001:2015 Environmental Management",
+        description:
+            "Demonstrates an organized approach to managing environmental responsibilities, improving environmental performance, reducing waste and resource consumption, and supporting sustainable business practices.",
     },
 ];
 
@@ -25,7 +31,7 @@ export default function QualityCertifications() {
     );
 
     return (
-        <section className="bg-slate-50 py-12 sm:py-12 lg:py-12 overflow-hidden">
+        <section id="quality-certifications" className="scroll-mt-24 bg-slate-50 py-12 sm:py-12 lg:py-12 overflow-hidden">
             <style dangerouslySetInnerHTML={{
                 __html: `
                 @keyframes modalBackdrop {
@@ -87,6 +93,7 @@ export default function QualityCertifications() {
                                     src={certificate.image}
                                     alt={certificate.title}
                                     fill
+                                    unoptimized={true}
                                     className="object-contain p-6 transition duration-750 ease-out group-hover:scale-105"
                                     sizes="(max-width: 768px) 100vw, 33vw"
                                 />
@@ -108,8 +115,12 @@ export default function QualityCertifications() {
                                     {certificate.title}
                                 </h3>
 
-                                <p className="mt-1.5 text-xs font-semibold text-slate-500 group-hover:text-slate-600 transition-colors duration-300">
-                                    Click to view certificate
+                                <p className="mt-2 text-xs leading-relaxed text-slate-500 group-hover:text-slate-600 transition-colors duration-300">
+                                    {certificate.description}
+                                </p>
+
+                                <p className="mt-3 text-[11px] font-semibold text-[#0F766E] group-hover:text-[#123B5D] transition-colors duration-300">
+                                    Click to view certificate →
                                 </p>
                             </div>
                         </button>
@@ -143,6 +154,7 @@ export default function QualityCertifications() {
                                 alt="Aurevia Healthcare certificate"
                                 width={1400}
                                 height={1000}
+                                unoptimized={true}
                                 className="h-auto max-h-[88vh] w-auto object-contain"
                             />
                         </div>

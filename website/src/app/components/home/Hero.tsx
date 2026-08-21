@@ -14,7 +14,7 @@ const slides = [
         description:
             "Quality-driven pharmaceutical manufacturing solutions built for reliable healthcare partnerships.",
         primaryButton: "Explore Products",
-        primaryLink: "/products",
+        primaryLink: "/products#explore",
         secondaryButton: "About Aurevia",
         secondaryLink: "/about",
     },
@@ -25,10 +25,10 @@ const slides = [
         title: "Precision in Every Manufacturing Process",
         description:
             "Modern infrastructure and controlled processes designed to deliver consistent pharmaceutical solutions.",
-        primaryButton: "Our Manufacturing",
-        primaryLink: "/manufacturing",
+        primaryButton: "Explore Industries",
+        primaryLink: "/industries#industry-segments",
         secondaryButton: "Explore Products",
-        secondaryLink: "/products",
+        secondaryLink: "/products#explore",
     },
     {
         image: "/hero/slide3.png",
@@ -37,8 +37,8 @@ const slides = [
         title: "Quality That Builds Trust",
         description:
             "From manufacturing to quality control, we focus on consistency, reliability and responsible pharmaceutical practices.",
-        primaryButton: "Our Quality Approach",
-        primaryLink: "/about",
+        primaryButton: "Quality & Certifications",
+        primaryLink: "/about#quality-certifications",
         secondaryButton: "Learn More",
         secondaryLink: "/about",
     },
@@ -50,9 +50,9 @@ const slides = [
         description:
             "Supporting healthcare businesses with dependable manufacturing capabilities and long-term partnerships.",
         primaryButton: "Get a Quote",
-        primaryLink: "/contact",
+        primaryLink: "/contact#contact-form",
         secondaryButton: "Contact Us",
-        secondaryLink: "/contact",
+        secondaryLink: "/contact#contact-form",
     },
 ];
 

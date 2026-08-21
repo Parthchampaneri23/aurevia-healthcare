@@ -23,6 +23,7 @@ export default function IndustriesHero() {
                     alt="Aurevia Healthcare industries and partnerships"
                     fill
                     priority
+                    unoptimized={true}
                     className="object-cover"
                     sizes="100vw"
                 />
@@ -51,7 +52,7 @@ export default function IndustriesHero() {
 
                             <div className="mt-4 flex flex-wrap gap-3">
                                 <Link
-                                    href="/contact"
+                                    href="/contact#contact-form"
                                     className="inline-flex items-center rounded-lg bg-[#123B5D] px-4 py-2 text-sm font-semibold text-white shadow-md transition hover:bg-[#0d2d46]"
                                 >
                                     Partner With Us

@@ -65,6 +65,7 @@ export default async function IndustryDetailsPage({
                         alt={industry.title}
                         fill
                         priority
+                        unoptimized={true}
                         className="object-cover"
                         sizes="100vw"
                     />
@@ -220,7 +221,7 @@ export default async function IndustryDetailsPage({
                                     <Link
                                         href={`/contact?industry=${encodeURIComponent(
                                             industry.title
-                                        )}`}
+                                        )}#contact-form`}
                                         className="inline-flex w-full items-center justify-center rounded-xl bg-[#123B5D] px-5 py-3 text-sm font-bold text-white shadow-sm transition-all duration-300 hover:scale-[1.02] hover:bg-[#0F766E] active:scale-[0.98]"
                                     >
                                         Inquire about collaboration

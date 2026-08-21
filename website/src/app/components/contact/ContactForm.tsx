@@ -13,17 +13,68 @@ const categories = [
 ];
 
 export default function ContactForm() {
+    const [formData, setFormData] = useState({
+        firstName: "",
+        lastName: "",
+        companyName: "",
+        email: "",
+        phone: "",
+        country: "",
+        product: "",
+        quantity: "",
+        subject: "",
+        message: "",
+    });
+    const [errors, setErrors] = useState<Record<string, string>>({});
     const [submitted, setSubmitted] = useState(false);
+
+    const handleChange = (
+        e: React.ChangeEvent<
+            HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+        >
+    ) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+        if (errors[name]) {
+            setErrors((prev) => {
+                const copy = { ...prev };
+                delete copy[name];
+                return copy;
+            });
+        }
+    };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        
+        const newErrors: Record<string, string> = {};
+        if (!formData.firstName.trim()) newErrors.firstName = "First name is required";
+        if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
+        if (!formData.companyName.trim()) newErrors.companyName = "Company name is required";
+        if (!formData.email.trim()) {
+            newErrors.email = "Business email is required";
+        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+            newErrors.email = "Please enter a valid email address";
+        }
+        if (!formData.phone.trim()) newErrors.phone = "Phone number is required";
+        if (!formData.country.trim()) newErrors.country = "Country is required";
+        if (!formData.product) newErrors.product = "Product selection is required";
+        if (!formData.quantity.trim()) newErrors.quantity = "Estimated quantity is required";
+        if (!formData.subject.trim()) newErrors.subject = "Subject is required";
+        if (!formData.message.trim()) newErrors.message = "Message is required";
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+        }
+
         setSubmitted(true);
     };
 
     return (
         <section
             id="contact-form"
-            className="bg-slate-50 py-12 lg:py-12"
+            className="scroll-mt-24 bg-slate-50 py-12 lg:py-12"
         >
             <style dangerouslySetInnerHTML={{
                 __html: `
@@ -53,6 +104,7 @@ export default function ContactForm() {
 
                 <form
                     onSubmit={handleSubmit}
+                    noValidate
                     className="mt-10 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8 animate-form-fade-in"
                 >
                     <div className="grid gap-5 sm:grid-cols-2">
@@ -62,10 +114,19 @@ export default function ContactForm() {
                             </label>
 
                             <input
-                                required
                                 type="text"
-                                className="mt-2 w-full rounded-lg border border-slate-300 px-4 py-3 text-sm outline-none focus:border-teal-600"
+                                name="firstName"
+                                value={formData.firstName}
+                                onChange={handleChange}
+                                className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-colors duration-200 ${
+                                    errors.firstName
+                                        ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
+                                        : "border-slate-300 focus:border-teal-600"
+                                }`}
                             />
+                            {errors.firstName && (
+                                <p className="mt-1 text-xs text-red-500">{errors.firstName}</p>
+                            )}
                         </div>
 
                         <div>
@@ -74,10 +135,19 @@ export default function ContactForm() {
                             </label>
 
                             <input
-                                required
                                 type="text"
-                                className="mt-2 w-full rounded-lg border border-slate-300 px-4 py-3 text-sm outline-none focus:border-teal-600"
+                                name="lastName"
+                                value={formData.lastName}
+                                onChange={handleChange}
+                                className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-colors duration-200 ${
+                                    errors.lastName
+                                        ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
+                                        : "border-slate-300 focus:border-teal-600"
+                                }`}
                             />
+                            {errors.lastName && (
+                                <p className="mt-1 text-xs text-red-500">{errors.lastName}</p>
+                            )}
                         </div>
 
                         <div>
@@ -86,10 +156,19 @@ export default function ContactForm() {
                             </label>
 
                             <input
-                                required
                                 type="text"
-                                className="mt-2 w-full rounded-lg border border-slate-300 px-4 py-3 text-sm outline-none focus:border-teal-600"
+                                name="companyName"
+                                value={formData.companyName}
+                                onChange={handleChange}
+                                className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-colors duration-200 ${
+                                    errors.companyName
+                                        ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
+                                        : "border-slate-300 focus:border-teal-600"
+                                }`}
                             />
+                            {errors.companyName && (
+                                <p className="mt-1 text-xs text-red-500">{errors.companyName}</p>
+                            )}
                         </div>
 
                         <div>
@@ -98,33 +177,62 @@ export default function ContactForm() {
                             </label>
 
                             <input
-                                required
                                 type="email"
-                                className="mt-2 w-full rounded-lg border border-slate-300 px-4 py-3 text-sm outline-none focus:border-teal-600"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-colors duration-200 ${
+                                    errors.email
+                                        ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
+                                        : "border-slate-300 focus:border-teal-600"
+                                }`}
                             />
+                            {errors.email && (
+                                <p className="mt-1 text-xs text-red-500">{errors.email}</p>
+                            )}
                         </div>
 
                         <div>
                             <label className="text-sm font-medium text-slate-700">
-                                Phone Number
+                                Phone Number *
                             </label>
 
                             <input
                                 type="tel"
-                                className="mt-2 w-full rounded-lg border border-slate-300 px-4 py-3 text-sm outline-none focus:border-teal-600"
+                                name="phone"
+                                value={formData.phone}
+                                onChange={handleChange}
+                                className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-colors duration-200 ${
+                                    errors.phone
+                                        ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
+                                        : "border-slate-300 focus:border-teal-600"
+                                }`}
                             />
+                            {errors.phone && (
+                                <p className="mt-1 text-xs text-red-500">{errors.phone}</p>
+                            )}
                         </div>
 
                         <div>
                             <label className="text-sm font-medium text-slate-700">
-                                Country
+                                Country *
                             </label>
 
                             <input
                                 type="text"
+                                name="country"
+                                value={formData.country}
+                                onChange={handleChange}
                                 placeholder="e.g. India"
-                                className="mt-2 w-full rounded-lg border border-slate-300 px-4 py-3 text-sm outline-none focus:border-teal-600"
+                                className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-colors duration-200 ${
+                                    errors.country
+                                        ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
+                                        : "border-slate-300 focus:border-teal-600"
+                                }`}
                             />
+                            {errors.country && (
+                                <p className="mt-1 text-xs text-red-500">{errors.country}</p>
+                            )}
                         </div>
                     </div>
 
@@ -138,9 +246,14 @@ export default function ContactForm() {
                         </p>
 
                         <select
-                            required
                             name="product"
-                            className="mt-3 w-full rounded-lg border border-slate-300 px-4 py-3 text-sm outline-none focus:border-teal-600 focus:ring-2 focus:ring-teal-100 bg-white cursor-pointer text-black font-medium"
+                            value={formData.product}
+                            onChange={handleChange}
+                            className={`mt-3 w-full rounded-lg border px-4 py-3 text-sm outline-none bg-white cursor-pointer text-black font-medium transition-colors duration-200 ${
+                                errors.product
+                                    ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
+                                    : "border-slate-300 focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
+                            }`}
                         >
                             <option value="" className="text-slate-500 bg-white">Select a product...</option>
                             {categories.map((category) => {
@@ -158,19 +271,32 @@ export default function ContactForm() {
                                 );
                             })}
                         </select>
+                        {errors.product && (
+                            <p className="mt-1 text-xs text-red-500">{errors.product}</p>
+                        )}
                     </div>
 
                     <div className="mt-6 grid gap-5 sm:grid-cols-2">
                         <div>
                             <label className="text-sm font-medium text-slate-700">
-                                Estimated Quantity
+                                Estimated Quantity *
                             </label>
 
                             <input
                                 type="text"
+                                name="quantity"
+                                value={formData.quantity}
+                                onChange={handleChange}
                                 placeholder="e.g. 10,000 units"
-                                className="mt-2 w-full rounded-lg border border-slate-300 px-4 py-3 text-sm outline-none focus:border-teal-600"
+                                className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-colors duration-200 ${
+                                    errors.quantity
+                                        ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
+                                        : "border-slate-300 focus:border-teal-600"
+                                }`}
                             />
+                            {errors.quantity && (
+                                <p className="mt-1 text-xs text-red-500">{errors.quantity}</p>
+                            )}
                         </div>
 
                         <div>
@@ -179,11 +305,20 @@ export default function ContactForm() {
                             </label>
 
                             <input
-                                required
                                 type="text"
+                                name="subject"
+                                value={formData.subject}
+                                onChange={handleChange}
                                 placeholder="Briefly describe your enquiry"
-                                className="mt-2 w-full rounded-lg border border-slate-300 px-4 py-3 text-sm outline-none focus:border-teal-600"
+                                className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-colors duration-200 ${
+                                    errors.subject
+                                        ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
+                                        : "border-slate-300 focus:border-teal-600"
+                                }`}
                             />
+                            {errors.subject && (
+                                <p className="mt-1 text-xs text-red-500">{errors.subject}</p>
+                            )}
                         </div>
                     </div>
 
@@ -193,11 +328,20 @@ export default function ContactForm() {
                         </label>
 
                         <textarea
-                            required
                             rows={6}
+                            name="message"
+                            value={formData.message}
+                            onChange={handleChange}
                             placeholder="Tell us about your product, quantity, packaging or manufacturing requirements..."
-                            className="mt-2 w-full resize-none rounded-lg border border-slate-300 px-4 py-3 text-sm outline-none focus:border-teal-600"
+                            className={`mt-2 w-full resize-none rounded-lg border px-4 py-3 text-sm text-black outline-none transition-colors duration-200 ${
+                                errors.message
+                                    ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
+                                    : "border-slate-300 focus:border-teal-600"
+                            }`}
                         />
+                        {errors.message && (
+                            <p className="mt-1 text-xs text-red-500">{errors.message}</p>
+                        )}
                     </div>
 
                     <button

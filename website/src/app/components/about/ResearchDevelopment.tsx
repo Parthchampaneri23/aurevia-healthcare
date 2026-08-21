@@ -36,7 +36,7 @@ const researchAreas = [
 
 export default function ResearchDevelopment() {
     return (
-        <section className="bg-white py-12 sm:py-12 lg:py-12 overflow-hidden">
+        <section id="research-development" className="scroll-mt-24 bg-white py-12 sm:py-12 lg:py-12 overflow-hidden">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
 
                 {/* Heading */}

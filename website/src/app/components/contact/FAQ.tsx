@@ -35,7 +35,7 @@ export default function FAQ() {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
 
     return (
-        <section className="bg-slate-50 py-16 lg:py-20">
+        <section className="bg-slate-50 py-12 lg:py-12">
             <style dangerouslySetInnerHTML={{
                 __html: `
                 @keyframes faqSlideUp {
@@ -73,11 +73,10 @@ export default function FAQ() {
                         return (
                             <div
                                 key={faq.question}
-                                className={`overflow-hidden rounded-2xl border transition-all duration-500 animate-faq-item ${
-                                    isOpen
-                                        ? "border-teal-200 bg-white shadow-lg shadow-teal-900/5"
-                                        : "border-slate-200 bg-white hover:border-slate-350 hover:shadow-md hover:-translate-y-0.5"
-                                }`}
+                                className={`overflow-hidden rounded-2xl border transition-all duration-500 animate-faq-item ${isOpen
+                                    ? "border-teal-200 bg-white shadow-lg shadow-teal-900/5"
+                                    : "border-slate-200 bg-white hover:border-slate-350 hover:shadow-md hover:-translate-y-0.5"
+                                    }`}
                                 style={{ animationDelay: `${index * 80}ms` }}
                             >
                                 <button
@@ -91,32 +90,28 @@ export default function FAQ() {
                                     aria-expanded={isOpen}
                                 >
                                     <div className="flex items-center gap-3">
-                                        <div className={`flex h-8 w-8 items-center justify-center rounded-lg transition-all duration-300 ${
-                                            isOpen 
-                                                ? "bg-teal-50 text-[#0F766E]" 
-                                                : "bg-slate-50 text-slate-400 group-hover:bg-slate-100"
-                                        }`}>
+                                        <div className={`flex h-8 w-8 items-center justify-center rounded-lg transition-all duration-300 ${isOpen
+                                            ? "bg-teal-50 text-[#0F766E]"
+                                            : "bg-slate-50 text-slate-400 group-hover:bg-slate-100"
+                                            }`}>
                                             <HelpCircle size={18} />
                                         </div>
-                                        <span className={`text-sm font-bold sm:text-base transition-colors duration-300 ${
-                                            isOpen ? "text-[#123B5D]" : "text-slate-800"
-                                        }`}>
+                                        <span className={`text-sm font-bold sm:text-base transition-colors duration-300 ${isOpen ? "text-[#123B5D]" : "text-slate-800"
+                                            }`}>
                                             {faq.question}
                                         </span>
                                     </div>
 
-                                    <div className={`flex h-7 w-7 items-center justify-center rounded-full border transition-all duration-300 ${
-                                        isOpen
-                                            ? "border-[#0F766E]/30 bg-[#0F766E]/5 text-[#0F766E] rotate-180"
-                                            : "border-slate-200 bg-slate-50 text-slate-400"
-                                    }`}>
+                                    <div className={`flex h-7 w-7 items-center justify-center rounded-full border transition-all duration-300 ${isOpen
+                                        ? "border-[#0F766E]/30 bg-[#0F766E]/5 text-[#0F766E] rotate-180"
+                                        : "border-slate-200 bg-slate-50 text-slate-400"
+                                        }`}>
                                         <ChevronDown size={16} />
                                     </div>
                                 </button>
 
-                                <div className={`grid transition-all duration-300 ease-in-out ${
-                                    isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
-                                }`}>
+                                <div className={`grid transition-all duration-300 ease-in-out ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                                    }`}>
                                     <div className="overflow-hidden">
                                         <div className="border-t border-slate-100/80 px-6 pb-5 pt-4 bg-slate-50/50">
                                             <p className="text-sm leading-7 text-slate-600 font-medium">

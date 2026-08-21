@@ -40,7 +40,7 @@ export default function CareerCTA() {
                         </Link>
 
                         <Link
-                            href="/contact"
+                            href="/contact#contact-form"
                             className="rounded-lg border border-white/60 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-white/10"
                         >
                             Contact Us

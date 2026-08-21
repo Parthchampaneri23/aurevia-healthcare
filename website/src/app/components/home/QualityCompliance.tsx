@@ -100,7 +100,7 @@ export default function QualityCompliance() {
                         href="/about#quality-certifications"
                         className="group/btn inline-flex items-center gap-2 rounded-xl border border-[#123B5D] bg-white px-6 py-3.5 text-sm font-bold text-[#123B5D] transition-all duration-300 hover:bg-[#123B5D] hover:text-white hover:shadow-lg hover:shadow-blue-900/10 active:scale-95"
                     >
-                        Learn About Our Quality
+                        Quality and Certification
                         <span className="transition-transform duration-300 group-hover/btn:translate-x-1">→</span>
                     </Link>
                 </div>

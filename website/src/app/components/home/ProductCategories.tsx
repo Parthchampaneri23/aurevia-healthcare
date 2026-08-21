@@ -122,7 +122,7 @@ export default function ProductCategories() {
                 {/* View All Products */}
                 <div className="mt-12 text-center">
                     <Link
-                        href="/products"
+                        href="/products#explore"
                         className="group/btn inline-flex items-center gap-2 rounded-xl bg-[#123B5D] px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-900/10 transition-all duration-300 hover:bg-[#0d2d46] hover:shadow-xl hover:shadow-blue-900/20 hover:translate-x-0.5 active:scale-95"
                     >
                         View All Products

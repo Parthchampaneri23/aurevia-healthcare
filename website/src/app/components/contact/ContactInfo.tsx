@@ -10,17 +10,20 @@ const contactItems = [
     {
         icon: MapPin,
         title: "Head Office",
-        value: "Gujarat, India",
+        value: "Ahmedabad, Gujarat, India",
+        link: "https://maps.google.com/?q=Ahmedabad,+Gujarat,+India",
     },
     {
         icon: Mail,
         title: "Email",
         value: "info@aureviahealthcare.com",
+        link: "mailto:info@aureviahealthcare.com",
     },
     {
         icon: Phone,
         title: "Phone",
         value: "+91 8677456564",
+        link: "tel:+918677456564",
     },
     {
         icon: Clock3,
@@ -62,12 +65,20 @@ export default function ContactInfo() {
                     <div className="mt-8 grid gap-5 sm:grid-cols-2">
                         {contactItems.map((item, index) => {
                             const Icon = item.icon;
+                            const isLink = !!item.link;
+                            const Component = isLink ? "a" : "div";
+                            const linkProps = isLink ? {
+                                href: item.link,
+                                target: item.link.startsWith("http") ? "_blank" : undefined,
+                                rel: item.link.startsWith("http") ? "noopener noreferrer" : undefined,
+                            } : {};
 
                             return (
-                                <div
+                                <Component
                                     key={item.title}
                                     className="group flex gap-4 p-4 rounded-xl border border-slate-100 bg-slate-50 transition-all duration-500 hover:-translate-y-1 hover:shadow-lg hover:bg-white hover:border-slate-200 animate-card-fade-in"
                                     style={{ animationDelay: `${index * 80}ms` }}
+                                    {...linkProps}
                                 >
                                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#123B5D]/10 text-[#123B5D] transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 group-hover:bg-[#123B5D] group-hover:text-white">
                                         <Icon size={19} />
@@ -82,7 +93,7 @@ export default function ContactInfo() {
                                             {item.value}
                                         </p>
                                     </div>
-                                </div>
+                                </Component>
                             );
                         })}
                     </div>

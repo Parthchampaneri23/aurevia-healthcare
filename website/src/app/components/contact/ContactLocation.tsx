@@ -28,9 +28,14 @@ export default function ContactLocation() {
                                         OUR LOCATION
                                     </p>
 
-                                    <h2 className="mt-1 text-2xl font-bold text-slate-900">
+                                    <a
+                                        href="https://maps.google.com/?q=Ahmedabad,+Gujarat,+India"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="group inline-flex items-center gap-1.5 mt-1 text-2xl font-bold text-slate-900 hover:text-teal-600 transition-colors"
+                                    >
                                         Ahmedabad, Gujarat, India
-                                    </h2>
+                                    </a>
 
                                     <p className="mt-2 text-sm text-slate-650 leading-relaxed">
                                         Aurevia Healthcare — Pharmaceutical Manufacturing & Healthcare Solutions.

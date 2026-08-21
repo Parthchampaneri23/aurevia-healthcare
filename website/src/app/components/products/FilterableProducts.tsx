@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import ProductCard from "./ProductCard";
 import products from "./productData";
@@ -27,6 +27,7 @@ const categoryMap: { [key: string]: string } = {
 export default function FilterableProducts() {
     const searchParams = useSearchParams();
     const router = useRouter();
+    const containerRef = useRef<HTMLDivElement>(null);
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [filteredProducts, setFilteredProducts] = useState(products);
     const [animateGrid, setAnimateGrid] = useState(false);
@@ -49,6 +50,10 @@ export default function FilterableProducts() {
                     setSelectedCategory("All");
                 }
             }
+            // Scroll to the products section
+            setTimeout(() => {
+                containerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }, 150);
         } else {
             setSelectedCategory("All");
         }
@@ -84,7 +89,7 @@ export default function FilterableProducts() {
     };
 
     return (
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div id="explore" ref={containerRef} className="mx-auto max-w-7xl px-6 lg:px-8 scroll-mt-24">
             <style dangerouslySetInnerHTML={{
                 __html: `
                 @keyframes cardFadeIn {
