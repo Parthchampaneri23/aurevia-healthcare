@@ -230,7 +230,7 @@ export default function JobOpportunities() {
                     onClick={() => setSelectedJob(null)}
                 >
                     <div 
-                        className="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl border border-slate-100 flex flex-col animate-modal-fade-in"
+                        className="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl border border-slate-100 flex flex-col animate-modal-fade-in pt-6"
                         onClick={(e) => e.stopPropagation()}
                     >
                         {/* Header */}

@@ -17,7 +17,7 @@ export default function IndustriesHero() {
                     animation: heroSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
                 }
             `}} />
-            <div className="relative h-[250px] sm:h-[290px] lg:h-[330px]">
+            <div className="relative h-[200px] overflow-hidden sm:h-[240px] lg:h-[280px]">
                 <Image
                     src="/industries/industrybanner.png"
                     alt="Aurevia Healthcare industries and partnerships"
