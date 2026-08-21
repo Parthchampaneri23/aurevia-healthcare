@@ -10,12 +10,19 @@ import {
     Handshake,
 } from "lucide-react";
 
+import industry1 from "../../../../public/industries/industry1.jpg";
+import industry2 from "../../../../public/industries/industry2.jpg";
+import industry3 from "../../../../public/industries/industry3.jpg";
+import industry4 from "../../../../public/industries/industry4.jpg";
+import industry5 from "../../../../public/industries/industry5.jpg";
+import industry6 from "../../../../public/industries/industry6.jpg";
+
 const industries = [
     {
         title: "Hospitals & Healthcare Institutions",
         description:
             "Supporting hospitals, healthcare institutions and organized care networks with dependable pharmaceutical product requirements.",
-        image: "/industries/industry1.jpg",
+        image: industry1,
         icon: Building2,
         href: "/industries/hospitals-healthcare",
     },
@@ -23,7 +30,7 @@ const industries = [
         title: "Pharmacy & Retail Networks",
         description:
             "Providing pharmaceutical products for pharmacies, organized retail networks and businesses serving everyday healthcare needs.",
-        image: "/industries/industry2.jpg",
+        image: industry2,
         icon: Store,
         href: "/industries/pharmacy-retail",
     },
@@ -31,7 +38,7 @@ const industries = [
         title: "Pharmaceutical Distributors",
         description:
             "Supporting distributors, stockists and regional supply networks with reliable products and consistent business coordination.",
-        image: "/industries/industry3.jpg",
+        image: industry3,
         icon: Truck,
         href: "/industries/distributors",
     },
@@ -39,7 +46,7 @@ const industries = [
         title: "Diagnostic & Clinical Networks",
         description:
             "Supporting diagnostic networks, laboratories and clinical testing centers with reliable healthcare solutions.",
-        image: "/industries/industry4.jpg",
+        image: industry4,
         icon: Stethoscope,
         href: "/industries/diagnostic-clinical",
     },
@@ -47,7 +54,7 @@ const industries = [
         title: "Wellness & Nutrition Businesses",
         description:
             "Supporting wellness and nutrition-focused businesses with nutraceutical and health-oriented product solutions.",
-        image: "/industries/industry5.jpg",
+        image: industry5,
         icon: HeartPulse,
         href: "/industries/wellness-nutrition",
     },
@@ -55,7 +62,7 @@ const industries = [
         title: "Healthcare Brand Owners",
         description:
             "Working with healthcare businesses that need dependable pharmaceutical manufacturing and product supply partnerships.",
-        image: "/industries/industry6.jpg",
+        image: industry6,
         icon: Handshake,
         href: "/industries/healthcare-brands",
     },
@@ -108,15 +115,13 @@ export default function IndustrySegments() {
                                 <div className="absolute top-0 left-0 z-10 h-[3px] w-0 bg-[#0F766E] transition-all duration-300 group-hover:w-full" />
 
                                 <div className="relative h-48 overflow-hidden bg-slate-50">
-                                    <div className="absolute inset-4 overflow-hidden rounded-lg">
-                                        <Image
-                                            src={industry.image}
-                                            alt={industry.title}
-                                            fill
-                                            className="object-contain transition-all duration-500 group-hover:scale-105"
-                                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                                        />
-                                    </div>
+                                    <Image
+                                        src={industry.image}
+                                        alt={industry.title}
+                                        fill
+                                        className="object-cover transition-all duration-500 group-hover:scale-105"
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                    />
 
                                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent pointer-events-none" />
 
