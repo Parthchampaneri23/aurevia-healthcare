@@ -27,7 +27,7 @@ type ProductDetailsPageProps = {
     }>;
 };
 
-const API_URL = "http://localhost:5000/api/products";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default async function ProductDetailsPage({
     params,
@@ -37,23 +37,25 @@ export default async function ProductDetailsPage({
     let product: Product;
 
     try {
-        const response = await fetch(`${API_URL}/${slug}`, {
+        if (!API_URL) {
+            console.error("NEXT_PUBLIC_API_URL is not configured");
+            notFound();
+        }
+
+        const response = await fetch(`${API_URL}/api/products/${slug}`, {
             cache: "no-store",
         });
 
         if (!response.ok) {
+            console.error(
+                `Failed to fetch product ${slug}: ${response.status}`
+            );
             notFound();
         }
 
         const data = await response.json();
 
         console.log("Product details API response:", data);
-
-        // Backend returns:
-        // {
-        //   success: true,
-        //   product: {...}
-        // }
 
         if (!data.success || !data.product) {
             console.error("Invalid product response:", data);
@@ -243,8 +245,7 @@ export default async function ProductDetailsPage({
                                         (specification, index) => (
                                             <tr
                                                 key={
-                                                    specification.label +
-                                                    index
+                                                    specification.label + index
                                                 }
                                                 className={`transition-colors duration-200 hover:bg-slate-50/80 ${index % 2 === 0
                                                         ? "bg-slate-50/50"
