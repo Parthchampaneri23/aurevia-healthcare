@@ -13,20 +13,41 @@ const app = express();
 
 connectDB();
 
+// Allowed frontend origins
+const allowedOrigins = [
+    "http://localhost:3000",
+    "https://aurevia-healthcare-one.vercel.app",
+];
+
 app.use(
     cors({
-        origin: process.env.CLIENT_URL,
+        origin: function (origin, callback) {
+            // Allow requests with no origin
+            // (Postman, server-to-server requests, etc.)
+            if (!origin) {
+                return callback(null, true);
+            }
+
+            if (allowedOrigins.includes(origin)) {
+                return callback(null, true);
+            }
+
+            return callback(new Error("Not allowed by CORS"));
+        },
         credentials: true,
     })
 );
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 app.use("/uploads", express.static("uploads"));
+
 app.use("/api/products", productRoutes);
 app.use("/api/industries", industryRoutes);
 app.use("/api/enquiries", enquiryRoutes);
 app.use("/api/careers", careerRoutes);
+
 app.get("/", (req, res) => {
     res.json({
         success: true,
