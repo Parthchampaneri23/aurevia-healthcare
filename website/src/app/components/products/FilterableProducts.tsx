@@ -24,7 +24,7 @@ const categoryMap: Record<string, string> = {
     nutraceuticals: "Nutraceuticals",
 };
 
-const API_URL = "http://localhost:5000/api/products";
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/products`;
 
 export default function FilterableProducts() {
     const searchParams = useSearchParams();
@@ -205,8 +205,8 @@ export default function FilterableProducts() {
                             type="button"
                             onClick={() => handleCategoryClick(category)}
                             className={`cursor-pointer rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-300 ${isActive
-                                    ? "scale-105 bg-[#123B5D] text-white shadow-lg shadow-blue-900/10"
-                                    : "border border-slate-200 bg-white text-slate-600 hover:scale-102 hover:border-[#123B5D] hover:text-[#123B5D]"
+                                ? "scale-105 bg-[#123B5D] text-white shadow-lg shadow-blue-900/10"
+                                : "border border-slate-200 bg-white text-slate-600 hover:scale-102 hover:border-[#123B5D] hover:text-[#123B5D]"
                                 }`}
                         >
                             {category}
