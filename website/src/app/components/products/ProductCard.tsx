@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import type { Product } from "./productData";
+import type { Product } from "./productTypes";
 
 type ProductCardProps = {
     product: Product;
@@ -13,12 +13,12 @@ export default function ProductCard({ product }: ProductCardProps) {
             href={`/products/${product.slug}`}
             className="group relative flex flex-col overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-md transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-slate-300/60"
         >
-            {/* Slide-in Accent Bar */}
-            <div className="absolute top-0 left-0 z-10 h-[4px] w-0 bg-gradient-to-r from-[#0F766E] to-[#123B5D] transition-all duration-500 group-hover:w-full" />
+            {/* Accent Bar */}
+            <div className="absolute left-0 top-0 z-10 h-[4px] w-0 bg-gradient-to-r from-[#0F766E] to-[#123B5D] transition-all duration-500 group-hover:w-full" />
 
-            {/* Image Container with contain fit and padding */}
-            <div className="relative h-60 overflow-hidden bg-slate-50 p-5 flex items-center justify-center border-b border-slate-100">
-                <div className="relative w-full h-full rounded-2xl border border-slate-200/80 bg-white p-3 shadow-sm transition-all duration-300 group-hover:border-[#0F766E]/40 group-hover:shadow-md">
+            {/* Image */}
+            <div className="relative flex h-60 items-center justify-center overflow-hidden border-b border-slate-100 bg-slate-50 p-5">
+                <div className="relative h-full w-full rounded-2xl border border-slate-200/80 bg-white p-3 shadow-sm transition-all duration-300 group-hover:border-[#0F766E]/40 group-hover:shadow-md">
                     <Image
                         src={product.image}
                         alt={product.name}
@@ -45,6 +45,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
                 <div className="mt-6 inline-flex items-center text-sm font-bold text-[#123B5D] transition-colors duration-300 group-hover:text-[#0F766E]">
                     View Details
+
                     <ArrowRight
                         size={16}
                         className="ml-2 transition-transform duration-300 group-hover:translate-x-1.5"
