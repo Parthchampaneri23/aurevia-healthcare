@@ -208,7 +208,7 @@ export default function Dashboard() {
       case "contacted":
         return "bg-amber-50 text-amber-700";
 
-      case "completed":
+      case "resolved":
         return "bg-emerald-50 text-emerald-700";
 
       default:
