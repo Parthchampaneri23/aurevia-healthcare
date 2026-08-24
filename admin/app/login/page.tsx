@@ -2,7 +2,15 @@
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { LockKeyhole, User, Loader2 } from "lucide-react";
+import Image from "next/image";
+import {
+    LockKeyhole,
+    User,
+    Loader2,
+    ShieldCheck,
+    Eye,
+    EyeOff,
+} from "lucide-react";
 
 const API_URL =
     process.env.NEXT_PUBLIC_API_URL ||
@@ -11,9 +19,9 @@ const API_URL =
 export default function LoginPage() {
     const router = useRouter();
 
-
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
@@ -49,12 +57,15 @@ export default function LoginPage() {
                 );
             }
 
+            // Keep the existing authentication storage
             localStorage.setItem("aurevia_admin_token", data.token);
+
             localStorage.setItem(
                 "aurevia_admin_user",
                 JSON.stringify(data.admin)
             );
 
+            // Keep the existing working redirect
             router.push("/");
         } catch (error) {
             console.error("Login error:", error);
@@ -70,36 +81,83 @@ export default function LoginPage() {
     };
 
     return (
-        <main className="flex min-h-screen items-center justify-center bg-slate-50 px-6">
-            <div className="w-full max-w-md">
-                <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-lg">
-                    <div className="mb-8 text-center">
-                        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-teal-50 text-teal-700">
-                            <LockKeyhole size={26} />
-                        </div>
+        <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#f3f7f9] px-5 py-10">
 
-                        <h1 className="mt-5 text-2xl font-bold text-slate-900">
-                            Admin Login
-                        </h1>
+            {/* Background decoration */}
+            <div className="pointer-events-none absolute -left-40 -top-40 h-[420px] w-[420px] rounded-full bg-[#123B5D]/5 blur-3xl" />
 
-                        <p className="mt-2 text-sm text-slate-500">
-                            Sign in to manage Aurevia Healthcare
-                        </p>
+            <div className="pointer-events-none absolute -bottom-40 -right-40 h-[420px] w-[420px] rounded-full bg-[#0F766E]/5 blur-3xl" />
+
+            <div className="pointer-events-none absolute left-1/2 top-0 hidden h-full w-px bg-slate-200/40 lg:block" />
+
+            {/* Main container */}
+            <div className="relative z-10 w-full max-w-[430px]">
+
+                {/* Company Branding */}
+                <div className="mb-8 text-center">
+
+                    <div className="mx-auto mb-5 flex h-[78px] items-center justify-center">
+                        <Image
+                            src="/logo.png"
+                            alt="Aurevia Healthcare"
+                            width={240}
+                            height={80}
+                            priority
+                            className="h-auto max-h-[78px] w-auto object-contain"
+                        />
                     </div>
 
+                    <div className="mx-auto flex items-center justify-center gap-2">
+                        <span className="h-px w-8 bg-slate-300" />
+
+                        <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#0F766E]">
+                            Administration Portal
+                        </p>
+
+                        <span className="h-px w-8 bg-slate-300" />
+                    </div>
+
+                </div>
+
+                {/* Login Card */}
+                <div className="rounded-3xl border border-slate-200 bg-white p-7 shadow-[0_20px_60px_rgba(18,59,93,0.10)] sm:p-9">
+
+                    {/* Header */}
+                    <div className="mb-8">
+
+                        <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-[#123B5D] text-white shadow-md shadow-[#123B5D]/20">
+                            <LockKeyhole size={21} />
+                        </div>
+
+                        <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+                            Welcome back
+                        </h1>
+
+                        <p className="mt-2 text-sm leading-6 text-slate-500">
+                            Sign in to manage your Aurevia Healthcare
+                            administration portal.
+                        </p>
+
+                    </div>
+
+                    {/* Form */}
                     <form onSubmit={handleSubmit} className="space-y-5">
+
+                        {/* Username */}
                         <div>
+
                             <label
                                 htmlFor="username"
-                                className="text-sm font-medium text-slate-700"
+                                className="text-sm font-semibold text-slate-700"
                             >
                                 Username
                             </label>
 
-                            <div className="relative mt-2">
+                            <div className="relative mt-2.5">
+
                                 <User
                                     size={18}
-                                    className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+                                    className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
                                 />
 
                                 <input
@@ -111,51 +169,96 @@ export default function LoginPage() {
                                     }
                                     placeholder="admin@aurevia"
                                     autoComplete="username"
-                                    className="w-full rounded-lg border border-slate-300 py-3 pl-10 pr-4 text-sm text-slate-900 outline-none transition focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
+                                    disabled={loading}
+                                    className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50/70 pl-11 pr-4 text-sm text-slate-900 outline-none transition-all placeholder:text-slate-400 hover:border-slate-300 focus:border-[#0F766E] focus:bg-white focus:ring-4 focus:ring-[#0F766E]/10 disabled:cursor-not-allowed disabled:opacity-60"
                                 />
+
                             </div>
+
                         </div>
 
+                        {/* Password */}
                         <div>
+
                             <label
                                 htmlFor="password"
-                                className="text-sm font-medium text-slate-700"
+                                className="text-sm font-semibold text-slate-700"
                             >
                                 Password
                             </label>
 
-                            <div className="relative mt-2">
+                            <div className="relative mt-2.5">
+
                                 <LockKeyhole
                                     size={18}
-                                    className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+                                    className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
                                 />
 
                                 <input
                                     id="password"
-                                    type="password"
+                                    type={
+                                        showPassword
+                                            ? "text"
+                                            : "password"
+                                    }
                                     value={password}
                                     onChange={(e) =>
                                         setPassword(e.target.value)
                                     }
-                                    placeholder="Enter password"
+                                    placeholder="Enter your password"
                                     autoComplete="current-password"
-                                    className="w-full rounded-lg border border-slate-300 py-3 pl-10 pr-4 text-sm text-slate-900 outline-none transition focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
+                                    disabled={loading}
+                                    className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50/70 pl-11 pr-12 text-sm text-slate-900 outline-none transition-all placeholder:text-slate-400 hover:border-slate-300 focus:border-[#0F766E] focus:bg-white focus:ring-4 focus:ring-[#0F766E]/10 disabled:cursor-not-allowed disabled:opacity-60"
                                 />
+
+                                <button
+                                    type="button"
+                                    onClick={() =>
+                                        setShowPassword(
+                                            (previous) => !previous
+                                        )
+                                    }
+                                    disabled={loading}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600 disabled:cursor-not-allowed"
+                                    aria-label={
+                                        showPassword
+                                            ? "Hide password"
+                                            : "Show password"
+                                    }
+                                >
+                                    {showPassword ? (
+                                        <EyeOff size={18} />
+                                    ) : (
+                                        <Eye size={18} />
+                                    )}
+                                </button>
+
                             </div>
+
                         </div>
 
+                        {/* Error */}
                         {error && (
-                            <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3">
-                                <p className="text-sm font-medium text-red-600">
-                                    {error}
-                                </p>
+                            <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3">
+
+                                <div className="flex items-start gap-3">
+
+                                    <div className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-red-500" />
+
+                                    <p className="text-sm font-medium leading-5 text-red-600">
+                                        {error}
+                                    </p>
+
+                                </div>
+
                             </div>
                         )}
 
+                        {/* Sign In */}
                         <button
                             type="submit"
                             disabled={loading}
-                            className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#123B5D] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#0d2d46] disabled:cursor-not-allowed disabled:opacity-60"
+                            className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#123B5D] px-5 text-sm font-bold text-white shadow-md shadow-[#123B5D]/15 transition-all duration-200 hover:bg-[#0d2d46] hover:shadow-lg active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
                         >
                             {loading ? (
                                 <>
@@ -163,20 +266,57 @@ export default function LoginPage() {
                                         size={18}
                                         className="animate-spin"
                                     />
+
                                     Signing in...
                                 </>
                             ) : (
-                                "Sign In"
+                                <>
+                                    Sign In
+                                </>
                             )}
                         </button>
+
                     </form>
+
+                    {/* Security Information */}
+                    <div className="mt-7 border-t border-slate-100 pt-6">
+
+                        <div className="flex items-center gap-3">
+
+                            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600">
+                                <ShieldCheck size={18} />
+                            </div>
+
+                            <div>
+                                <p className="text-xs font-semibold text-slate-700">
+                                    Secure Admin Access
+                                </p>
+
+                                <p className="mt-0.5 text-[11px] text-slate-400">
+                                    Authorized personnel only
+                                </p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
                 </div>
 
-                <p className="mt-6 text-center text-xs text-slate-400">
-                    Aurevia Healthcare Admin Panel
-                </p>
+                {/* Footer */}
+                <div className="mt-7 text-center">
+
+                    <p className="text-xs font-medium text-slate-400">
+                        © {new Date().getFullYear()} Aurevia Healthcare
+                    </p>
+
+                    <p className="mt-1 text-[10px] uppercase tracking-[0.18em] text-slate-300">
+                        Admin Management Portal
+                    </p>
+
+                </div>
+
             </div>
         </main>
     );
-
 }
