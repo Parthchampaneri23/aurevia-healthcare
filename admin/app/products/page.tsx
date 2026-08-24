@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Image from "next/image";
 import {
     Search,
     Plus,
@@ -115,6 +114,55 @@ export default function ProductsPage() {
     const inactiveProducts = products.filter(
         (product) => !product.isActive
     ).length;
+
+    /*
+     * Convert database image value into a usable URL.
+     *
+     * Examples:
+     *
+     * "tablet1.jpg"
+     * -> https://aurevia-healthcare.onrender.com/uploads/products/tablet1.jpg
+     *
+     * "/uploads/products/tablet1.jpg"
+     * -> https://aurevia-healthcare.onrender.com/uploads/products/tablet1.jpg
+     *
+     * "uploads/products/tablet1.jpg"
+     * -> https://aurevia-healthcare.onrender.com/uploads/products/tablet1.jpg
+     *
+     * "https://..."
+     * -> unchanged
+     */
+    const getImageUrl = (image: string) => {
+        if (!image) {
+            return "";
+        }
+
+        // Already a complete URL
+        if (
+            image.startsWith("http://") ||
+            image.startsWith("https://")
+        ) {
+            return image;
+        }
+
+        let cleanImage = image.trim();
+
+        // Remove leading slash
+        cleanImage = cleanImage.replace(/^\/+/, "");
+
+        // If database already contains uploads/products/
+        if (cleanImage.startsWith("uploads/products/")) {
+            return `${API_URL}/${cleanImage}`;
+        }
+
+        // If database contains products/
+        if (cleanImage.startsWith("products/")) {
+            return `${API_URL}/uploads/${cleanImage}`;
+        }
+
+        // If database contains only filename
+        return `${API_URL}/uploads/products/${cleanImage}`;
+    };
 
     return (
         <main className="min-h-screen bg-slate-50 p-6 lg:p-8">
@@ -347,12 +395,9 @@ export default function ProductsPage() {
 
                             <tbody>
                                 {filteredProducts.map((product) => {
-                                    const imageUrl = product.image
-                                        ? product.image.startsWith("http")
-                                            ? product.image
-                                            : `${API_URL}${product.image.startsWith("/") ? "" : "/"
-                                            }${product.image}`
-                                        : "";
+                                    const imageUrl = getImageUrl(
+                                        product.image
+                                    );
 
                                     return (
                                         <tr
@@ -362,22 +407,29 @@ export default function ProductsPage() {
                                             {/* Product */}
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center gap-4">
-                                                    <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
+                                                    <div className="relative flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
                                                         {imageUrl ? (
-                                                            <Image
+                                                            <img
                                                                 src={imageUrl}
                                                                 alt={product.name}
-                                                                fill
-                                                                className="object-contain p-1"
-                                                                sizes="56px"
+                                                                className="h-full w-full object-contain p-1"
+                                                                onError={(
+                                                                    event
+                                                                ) => {
+                                                                    console.error(
+                                                                        "Product image failed:",
+                                                                        imageUrl
+                                                                    );
+
+                                                                    event.currentTarget.style.display =
+                                                                        "none";
+                                                                }}
                                                             />
                                                         ) : (
-                                                            <div className="flex h-full items-center justify-center">
-                                                                <Package
-                                                                    size={20}
-                                                                    className="text-slate-300"
-                                                                />
-                                                            </div>
+                                                            <Package
+                                                                size={20}
+                                                                className="text-slate-300"
+                                                            />
                                                         )}
                                                     </div>
 
@@ -391,6 +443,12 @@ export default function ProductsPage() {
                                                                 product.shortDescription
                                                             }
                                                         </p>
+
+                                                        {imageUrl && (
+                                                            <p className="mt-1 max-w-md truncate text-[10px] text-slate-300">
+                                                                {imageUrl}
+                                                            </p>
+                                                        )}
                                                     </div>
                                                 </div>
                                             </td>
