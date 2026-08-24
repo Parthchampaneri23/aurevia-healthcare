@@ -221,6 +221,21 @@ ${formData.message}
                 .animate-form-fade-in {
                     animation: formFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
                 }
+
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+                @keyframes scaleIn {
+                    from { opacity: 0; transform: scale(0.95); }
+                    to { opacity: 1; transform: scale(1); }
+                }
+                .animate-fade-in {
+                    animation: fadeIn 0.3s ease-out forwards;
+                }
+                .animate-scale-in {
+                    animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+                }
             `,
                 }}
             />
@@ -543,16 +558,51 @@ ${formData.message}
                             ? "Submitting..."
                             : "Submit Enquiry"}
                     </button>
-
-                    {/* Success */}
-                    {submitted && (
-                        <p className="mt-4 text-sm font-medium text-teal-700">
-                            Thank you. Your enquiry has been submitted
-                            successfully.
-                        </p>
-                    )}
                 </form>
             </div>
+
+            {/* Success Modal */}
+            {submitted && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
+                    <div className="relative w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-center shadow-2xl transition-all border border-slate-100 animate-scale-in">
+                        {/* Checkmark Icon */}
+                        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-teal-50 text-teal-600 mb-4">
+                            <svg
+                                className="h-10 w-10"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                strokeWidth="2.5"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M5 13l4 4L19 7"
+                                />
+                            </svg>
+                        </div>
+                        
+                        {/* Title */}
+                        <h3 className="text-xl font-bold text-slate-900 mb-2">
+                            Enquiry Submitted!
+                        </h3>
+                        
+                        {/* Message */}
+                        <p className="text-sm text-slate-600 mb-6">
+                            Thank you for reaching out. Your enquiry has been submitted successfully. Our team will get back to you shortly.
+                        </p>
+                        
+                        {/* Action Button */}
+                        <button
+                            type="button"
+                            onClick={() => setSubmitted(false)}
+                            className="w-full rounded-xl bg-[#123B5D] py-3 text-sm font-semibold text-white transition hover:bg-[#0d2d46] active:scale-[0.98]"
+                        >
+                            Got it, thanks!
+                        </button>
+                    </div>
+                </div>
+            )}
         </section>
     );
 }
