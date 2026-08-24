@@ -24,81 +24,16 @@ type Enquiry = {
   product?: string;
   productName?: string;
   createdAt?: string;
-  date?: string;
   status?: string;
 };
 
-type DashboardData = {
-  products: number;
-  industries: number;
-  enquiries: number;
-  applications: number;
-};
-
-const getArrayFromResponse = (data: any, possibleKeys: string[]) => {
-  if (Array.isArray(data)) {
-    return data;
-  }
-
-  for (const key of possibleKeys) {
-    if (Array.isArray(data?.[key])) {
-      return data[key];
-    }
-  }
-
-  return [];
-};
-
-const getCountFromResponse = (
-  data: any,
-  possibleKeys: string[]
-) => {
-  if (typeof data?.count === "number") {
-    return data.count;
-  }
-
-  for (const key of possibleKeys) {
-    if (Array.isArray(data?.[key])) {
-      return data[key].length;
-    }
-  }
-
-  if (Array.isArray(data)) {
-    return data.length;
-  }
-
-  return 0;
-};
-
-const formatDate = (date?: string) => {
-  if (!date) {
-    return "—";
-  }
-
-  const parsedDate = new Date(date);
-
-  if (Number.isNaN(parsedDate.getTime())) {
-    return date;
-  }
-
-  return parsedDate.toLocaleDateString("en-IN", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
-};
-
 export default function Dashboard() {
-  const [dashboard, setDashboard] = useState<DashboardData>({
-    products: 0,
-    industries: 0,
-    enquiries: 0,
-    applications: 0,
-  });
+  const [productsCount, setProductsCount] = useState(0);
+  const [industriesCount, setIndustriesCount] = useState(0);
+  const [enquiriesCount, setEnquiriesCount] = useState(0);
+  const [applicationsCount, setApplicationsCount] = useState(0);
 
-  const [recentEnquiries, setRecentEnquiries] = useState<Enquiry[]>(
-    []
-  );
+  const [recentEnquiries, setRecentEnquiries] = useState<Enquiry[]>([]);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -114,10 +49,10 @@ export default function Dashboard() {
         enquiriesResponse,
         applicationsResponse,
       ] = await Promise.all([
-        fetch(`${API_URL}/api/products`),
+        fetch(`${API_URL}/api/products/admin`),
         fetch(`${API_URL}/api/industries`),
         fetch(`${API_URL}/api/enquiries`),
-        fetch(`${API_URL}/api/applications`),
+        fetch(`${API_URL}/api/careers`),
       ]);
 
       if (!productsResponse.ok) {
@@ -148,56 +83,76 @@ export default function Dashboard() {
         applicationsResponse.json(),
       ]);
 
-      const enquiries = getArrayFromResponse(
-        enquiriesData,
-        ["enquiries", "data", "results"]
+      /*
+       * PRODUCTS
+       */
+      setProductsCount(
+        productsData.products?.length ??
+        productsData.count ??
+        0
       );
 
-      setDashboard({
-        products: getCountFromResponse(
-          productsData,
-          ["products", "data", "results"]
-        ),
+      /*
+       * INDUSTRIES
+       */
+      setIndustriesCount(
+        industriesData.industries?.length ??
+        industriesData.count ??
+        0
+      );
 
-        industries: getCountFromResponse(
-          industriesData,
-          ["industries", "data", "results"]
-        ),
+      /*
+       * ENQUIRIES
+       */
+      const enquiries =
+        enquiriesData.enquiries ||
+        enquiriesData.data ||
+        [];
 
-        enquiries: getCountFromResponse(
-          enquiriesData,
-          ["enquiries", "data", "results"]
-        ),
+      setEnquiriesCount(
+        enquiriesData.count ?? enquiries.length
+      );
 
-        applications: getCountFromResponse(
-          applicationsData,
-          [
-            "applications",
-            "careerApplications",
-            "data",
-            "results",
-          ]
-        ),
-      });
-
+      /*
+       * Show latest 4 enquiries
+       */
       const sortedEnquiries = [...enquiries]
         .sort((a: Enquiry, b: Enquiry) => {
-          const dateA = a.createdAt || a.date || "";
-          const dateB = b.createdAt || b.date || "";
+          const dateA = a.createdAt
+            ? new Date(a.createdAt).getTime()
+            : 0;
 
-          return (
-            new Date(dateB).getTime() -
-            new Date(dateA).getTime()
-          );
+          const dateB = b.createdAt
+            ? new Date(b.createdAt).getTime()
+            : 0;
+
+          return dateB - dateA;
         })
         .slice(0, 4);
 
       setRecentEnquiries(sortedEnquiries);
-    } catch (err) {
-      console.error("Dashboard fetch error:", err);
+
+      /*
+       * CAREER APPLICATIONS
+       *
+       * Backend route is:
+       * /api/careers
+       */
+      const applications =
+        applicationsData.applications ||
+        applicationsData.data ||
+        [];
+
+      setApplicationsCount(
+        applicationsData.count ?? applications.length
+      );
+    } catch (error) {
+      console.error("Dashboard fetch error:", error);
 
       setError(
-        "Unable to load dashboard data. Please check that the backend is running."
+        error instanceof Error
+          ? error.message
+          : "Failed to load dashboard data"
       );
     } finally {
       setLoading(false);
@@ -211,29 +166,55 @@ export default function Dashboard() {
   const stats = [
     {
       title: "Total Products",
-      value: dashboard.products,
+      value: productsCount,
       description: "Products in catalogue",
       icon: Package,
     },
     {
       title: "Industries",
-      value: dashboard.industries,
+      value: industriesCount,
       description: "Industries served",
       icon: Building2,
     },
     {
       title: "Enquiries",
-      value: dashboard.enquiries,
+      value: enquiriesCount,
       description: "Total enquiries received",
       icon: MessageSquare,
     },
     {
       title: "Applications",
-      value: dashboard.applications,
+      value: applicationsCount,
       description: "Career applications",
       icon: BriefcaseBusiness,
     },
   ];
+
+  const formatDate = (date?: string) => {
+    if (!date) return "—";
+
+    return new Date(date).toLocaleDateString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+  };
+
+  const getStatusClass = (status?: string) => {
+    switch (status?.toLowerCase()) {
+      case "new":
+        return "bg-blue-50 text-blue-700";
+
+      case "contacted":
+        return "bg-amber-50 text-amber-700";
+
+      case "completed":
+        return "bg-emerald-50 text-emerald-700";
+
+      default:
+        return "bg-slate-100 text-slate-600";
+    }
+  };
 
   return (
     <main className="min-h-screen bg-slate-50 p-6 lg:p-8">
@@ -249,8 +230,7 @@ export default function Dashboard() {
           </h1>
 
           <p className="mt-2 text-sm text-slate-500">
-            Here's an overview of your Aurevia Healthcare
-            website.
+            Here's an overview of your Aurevia Healthcare website.
           </p>
         </div>
 
@@ -258,13 +238,11 @@ export default function Dashboard() {
           type="button"
           onClick={fetchDashboardData}
           disabled={loading}
-          className="inline-flex items-center justify-center gap-2 self-start rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50 sm:self-auto"
+          className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition-all hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
         >
           <RefreshCw
             size={16}
-            className={
-              loading ? "animate-spin" : ""
-            }
+            className={loading ? "animate-spin" : ""}
           />
           Refresh
         </button>
@@ -274,16 +252,12 @@ export default function Dashboard() {
       {error && (
         <div className="mb-6 rounded-2xl border border-red-200 bg-red-50 p-4">
           <p className="text-sm font-semibold text-red-700">
-            {error}
+            Unable to load dashboard data
           </p>
 
-          <button
-            type="button"
-            onClick={fetchDashboardData}
-            className="mt-2 text-sm font-semibold text-red-700 underline"
-          >
-            Try again
-          </button>
+          <p className="mt-1 text-xs text-red-600">
+            {error}
+          </p>
         </div>
       )}
 
@@ -332,8 +306,7 @@ export default function Dashboard() {
               </h2>
 
               <p className="mt-1 text-xs text-slate-500">
-                Latest enquiries received from website
-                visitors
+                Latest enquiries received from website visitors
               </p>
             </div>
 
@@ -346,133 +319,113 @@ export default function Dashboard() {
             </a>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[700px] text-left">
-              <thead>
-                <tr className="border-b border-slate-100 bg-slate-50/70">
-                  <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">
-                    Name
-                  </th>
+          {loading ? (
+            <div className="flex min-h-[250px] items-center justify-center">
+              <RefreshCw
+                size={25}
+                className="animate-spin text-teal-600"
+              />
+            </div>
+          ) : recentEnquiries.length === 0 ? (
+            <div className="flex min-h-[250px] items-center justify-center">
+              <div className="text-center">
+                <MessageSquare
+                  size={35}
+                  className="mx-auto text-slate-300"
+                />
 
-                  <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">
-                    Company
-                  </th>
+                <p className="mt-3 text-sm font-semibold text-slate-600">
+                  No enquiries yet
+                </p>
 
-                  <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">
-                    Product
-                  </th>
+                <p className="mt-1 text-xs text-slate-400">
+                  New website enquiries will appear here.
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[700px] text-left">
+                <thead>
+                  <tr className="border-b border-slate-100 bg-slate-50/70">
+                    <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">
+                      Name
+                    </th>
 
-                  <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">
-                    Date
-                  </th>
+                    <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">
+                      Company
+                    </th>
 
-                  <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">
-                    Status
-                  </th>
-                </tr>
-              </thead>
+                    <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">
+                      Product
+                    </th>
 
-              <tbody>
-                {loading ? (
-                  <tr>
-                    <td
-                      colSpan={5}
-                      className="px-6 py-12 text-center"
-                    >
-                      <RefreshCw
-                        size={22}
-                        className="mx-auto animate-spin text-teal-600"
-                      />
+                    <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">
+                      Date
+                    </th>
 
-                      <p className="mt-2 text-sm text-slate-500">
-                        Loading enquiries...
-                      </p>
-                    </td>
+                    <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">
+                      Status
+                    </th>
                   </tr>
-                ) : recentEnquiries.length === 0 ? (
-                  <tr>
-                    <td
-                      colSpan={5}
-                      className="px-6 py-12 text-center text-sm text-slate-400"
-                    >
-                      No enquiries found.
-                    </td>
-                  </tr>
-                ) : (
-                  recentEnquiries.map(
-                    (enquiry) => {
-                      const name =
-                        enquiry.name ||
-                        enquiry.fullName ||
-                        "—";
+                </thead>
 
-                      const company =
-                        enquiry.company ||
-                        enquiry.companyName ||
-                        "—";
+                <tbody>
+                  {recentEnquiries.map((enquiry) => {
+                    const name =
+                      enquiry.name ||
+                      enquiry.fullName ||
+                      "Unknown";
 
-                      const product =
-                        enquiry.product ||
-                        enquiry.productName ||
-                        "—";
+                    const company =
+                      enquiry.company ||
+                      enquiry.companyName ||
+                      "—";
 
-                      const status =
-                        enquiry.status ||
-                        "New";
+                    const product =
+                      enquiry.product ||
+                      enquiry.productName ||
+                      "—";
 
-                      return (
-                        <tr
-                          key={
-                            enquiry._id
-                          }
-                          className="border-b border-slate-100 last:border-0 hover:bg-slate-50/60"
-                        >
-                          <td className="px-6 py-4">
-                            <p className="text-sm font-semibold text-slate-800">
-                              {name}
-                            </p>
-                          </td>
+                    return (
+                      <tr
+                        key={enquiry._id}
+                        className="border-b border-slate-100 last:border-0 hover:bg-slate-50/60"
+                      >
+                        <td className="px-6 py-4">
+                          <p className="text-sm font-semibold text-slate-800">
+                            {name}
+                          </p>
+                        </td>
 
-                          <td className="px-6 py-4 text-sm text-slate-600">
-                            {company}
-                          </td>
+                        <td className="px-6 py-4 text-sm text-slate-600">
+                          {company}
+                        </td>
 
-                          <td className="px-6 py-4 text-sm text-slate-600">
-                            {product}
-                          </td>
+                        <td className="px-6 py-4 text-sm text-slate-600">
+                          {product}
+                        </td>
 
-                          <td className="px-6 py-4 text-sm text-slate-500">
-                            {formatDate(
-                              enquiry.createdAt ||
-                              enquiry.date
-                            )}
-                          </td>
+                        <td className="px-6 py-4 text-sm text-slate-500">
+                          {formatDate(enquiry.createdAt)}
+                        </td>
 
-                          <td className="px-6 py-4">
-                            <span
-                              className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${status.toLowerCase() ===
-                                  "new"
-                                  ? "bg-blue-50 text-blue-700"
-                                  : status
-                                    .toLowerCase()
-                                    .includes(
-                                      "contact"
-                                    )
-                                    ? "bg-amber-50 text-amber-700"
-                                    : "bg-emerald-50 text-emerald-700"
-                                }`}
-                            >
-                              {status}
-                            </span>
-                          </td>
-                        </tr>
-                      );
-                    }
-                  )
-                )}
-              </tbody>
-            </table>
-          </div>
+                        <td className="px-6 py-4">
+                          <span
+                            className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${getStatusClass(
+                              enquiry.status
+                            )}`}
+                          >
+                            {enquiry.status || "New"}
+                          </span>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
         </section>
 
         {/* Quick Actions */}
@@ -551,11 +504,11 @@ export default function Dashboard() {
 
                 <div>
                   <p className="text-sm font-semibold text-slate-800">
-                    Enquiries
+                    View Enquiries
                   </p>
 
                   <p className="text-xs text-slate-400">
-                    View customer enquiries
+                    Check customer enquiries
                   </p>
                 </div>
               </div>
@@ -605,7 +558,7 @@ export default function Dashboard() {
 
             <div className="mt-2 flex items-center gap-2 text-xs text-slate-400">
               <Clock3 size={13} />
-              Backend data loaded successfully
+              {loading ? "Checking..." : "Backend connected"}
             </div>
           </div>
         </section>
