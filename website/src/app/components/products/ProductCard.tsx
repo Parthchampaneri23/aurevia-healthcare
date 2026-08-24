@@ -1,13 +1,53 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Package } from "lucide-react";
 import type { Product } from "./productTypes";
 
 type ProductCardProps = {
     product: Product;
 };
 
-export default function ProductCard({ product }: ProductCardProps) {
+const API_URL =
+    process.env.NEXT_PUBLIC_API_URL ||
+    "https://aurevia-healthcare.onrender.com";
+
+function getImageUrl(image?: string) {
+    if (!image) {
+        return "";
+    }
+
+    // Already a complete URL
+    if (
+        image.startsWith("http://") ||
+        image.startsWith("https://")
+    ) {
+        return image;
+    }
+
+    let cleanImage = image.trim();
+
+    // Remove leading slash
+    cleanImage = cleanImage.replace(/^\/+/, "");
+
+    // uploads/products/product.jpg
+    if (cleanImage.startsWith("uploads/products/")) {
+        return `${API_URL}/${cleanImage}`;
+    }
+
+    // products/product.jpg
+    if (cleanImage.startsWith("products/")) {
+        return `${API_URL}/uploads/${cleanImage}`;
+    }
+
+    // Just product.jpg
+    return `${API_URL}/uploads/products/${cleanImage}`;
+}
+
+export default function ProductCard({
+    product,
+}: ProductCardProps) {
+    const imageUrl = getImageUrl(product.image);
+
     return (
         <Link
             href={`/products/${product.slug}`}
@@ -19,13 +59,22 @@ export default function ProductCard({ product }: ProductCardProps) {
             {/* Image */}
             <div className="relative flex h-60 items-center justify-center overflow-hidden border-b border-slate-100 bg-slate-50 p-5">
                 <div className="relative h-full w-full rounded-2xl border border-slate-200/80 bg-white p-3 shadow-sm transition-all duration-300 group-hover:border-[#0F766E]/40 group-hover:shadow-md">
-                    <Image
-                        src={product.image}
-                        alt={product.name}
-                        fill
-                        className="object-contain p-2 transition-transform duration-700 ease-out group-hover:scale-105"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
+                    {imageUrl ? (
+                        <Image
+                            src={imageUrl}
+                            alt={product.name}
+                            fill
+                            className="object-contain p-2 transition-transform duration-700 ease-out group-hover:scale-105"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                    ) : (
+                        <div className="flex h-full w-full items-center justify-center">
+                            <Package
+                                size={42}
+                                className="text-slate-300"
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
 
