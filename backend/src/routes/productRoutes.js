@@ -8,6 +8,7 @@ import {
     updateProduct,
     deleteProduct,
     uploadProductImage,
+    fixProductImagePaths,
 } from "../controllers/productController.js";
 
 import uploadProductImageMiddleware from "../middleware/uploadMiddleware.js";
@@ -29,6 +30,12 @@ router.get("/", getProducts);
 // Get all products including inactive products
 router.get("/admin", getAdminProducts);
 
+// Temporary route to fix old image paths
+router.put(
+    "/admin/fix-image-paths",
+    fixProductImagePaths
+);
+
 // Create product
 router.post("/", createProduct);
 
@@ -47,7 +54,7 @@ router.post(
 
 // ======================================================
 // Public single product route
-// Keep this AFTER /admin
+// Keep this AFTER /admin routes
 // ======================================================
 
 router.get("/:slug", getProductBySlug);

@@ -181,3 +181,38 @@ export const uploadProductImage = async (req, res, next) => {
         next(error);
     }
 };
+
+// ======================================================
+// PUT /api/products/admin/fix-image-paths
+// Fix old product image paths
+// ======================================================
+export const fixProductImagePaths = async (req, res, next) => {
+    try {
+        const products = await Product.find({});
+
+        let updatedCount = 0;
+
+        for (const product of products) {
+            if (
+                product.image &&
+                product.image.startsWith("/products/")
+            ) {
+                product.image = product.image.replace(
+                    "/products/",
+                    "/uploads/products/"
+                );
+
+                await product.save();
+                updatedCount++;
+            }
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Product image paths fixed successfully",
+            updatedCount,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
