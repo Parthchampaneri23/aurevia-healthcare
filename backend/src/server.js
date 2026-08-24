@@ -32,6 +32,7 @@ const allowedOrigins = [
     "http://localhost:3000",
     "http://localhost:3001",
     "https://aurevia-healthcare-one.vercel.app",
+    "https://aurevia-healthcare-admin-two.vercel.app",
 ];
 
 app.use(
