@@ -6,15 +6,15 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "aurevia-healthcare.onrender.com",
-        pathname: "/uploads/products/**",
-      },
-      {
         protocol: "http",
         hostname: "localhost",
         port: "5000",
-        pathname: "/uploads/products/**",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "aurevia-healthcare.onrender.com",
+        pathname: "/**",
       },
     ],
   },

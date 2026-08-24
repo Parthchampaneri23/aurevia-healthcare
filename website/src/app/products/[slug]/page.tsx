@@ -27,7 +27,58 @@ type ProductDetailsPageProps = {
     }>;
 };
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL =
+    process.env.NEXT_PUBLIC_API_URL ||
+    "https://aurevia-healthcare.onrender.com";
+
+/* ----------------------------------
+   Product Image URL Helper
+---------------------------------- */
+
+function getProductImageUrl(image?: string) {
+    if (!image) {
+        return "/products/productbanner.png";
+    }
+
+    const cleanImage = image.trim();
+
+    // Already a complete URL
+    if (
+        cleanImage.startsWith("http://") ||
+        cleanImage.startsWith("https://")
+    ) {
+        return cleanImage;
+    }
+
+    // Remove leading slash
+    const normalizedImage = cleanImage.replace(/^\/+/, "");
+
+    /*
+     * Backend database examples:
+     *
+     * /products/tablet1.jpg
+     * products/tablet1.jpg
+     */
+    if (normalizedImage.startsWith("products/")) {
+        return `${API_URL}/${normalizedImage}`;
+    }
+
+    /*
+     * Backend database example:
+     *
+     * uploads/products/tablet1.jpg
+     */
+    if (normalizedImage.startsWith("uploads/products/")) {
+        return `${API_URL}/${normalizedImage}`;
+    }
+
+    /*
+     * Fallback:
+     *
+     * tablet1.jpg
+     */
+    return `${API_URL}/products/${normalizedImage}`;
+}
 
 export default async function ProductDetailsPage({
     params,
@@ -37,19 +88,18 @@ export default async function ProductDetailsPage({
     let product: Product;
 
     try {
-        if (!API_URL) {
-            console.error("NEXT_PUBLIC_API_URL is not configured");
-            notFound();
-        }
-
-        const response = await fetch(`${API_URL}/api/products/${slug}`, {
-            cache: "no-store",
-        });
+        const response = await fetch(
+            `${API_URL}/api/products/${slug}`,
+            {
+                cache: "no-store",
+            }
+        );
 
         if (!response.ok) {
             console.error(
                 `Failed to fetch product ${slug}: ${response.status}`
             );
+
             notFound();
         }
 
@@ -58,15 +108,27 @@ export default async function ProductDetailsPage({
         console.log("Product details API response:", data);
 
         if (!data.success || !data.product) {
-            console.error("Invalid product response:", data);
+            console.error(
+                "Invalid product response:",
+                data
+            );
+
             notFound();
         }
 
         product = data.product;
     } catch (error) {
-        console.error("Failed to fetch product:", error);
+        console.error(
+            "Failed to fetch product:",
+            error
+        );
+
         notFound();
     }
+
+    const productImageUrl = getProductImageUrl(
+        product.image
+    );
 
     return (
         <main className="overflow-hidden bg-white">
@@ -74,8 +136,13 @@ export default async function ProductDetailsPage({
                 dangerouslySetInnerHTML={{
                     __html: `
                         @keyframes pageFadeIn {
-                            from { opacity: 0; }
-                            to { opacity: 1; }
+                            from {
+                                opacity: 0;
+                            }
+
+                            to {
+                                opacity: 1;
+                            }
                         }
 
                         @keyframes detailSlideUp {
@@ -83,6 +150,7 @@ export default async function ProductDetailsPage({
                                 opacity: 0;
                                 transform: translateY(24px);
                             }
+
                             to {
                                 opacity: 1;
                                 transform: translateY(0);
@@ -90,11 +158,15 @@ export default async function ProductDetailsPage({
                         }
 
                         .animate-page-fade {
-                            animation: pageFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+                            animation: pageFadeIn 0.6s
+                                cubic-bezier(0.16, 1, 0.3, 1)
+                                forwards;
                         }
 
                         .animate-detail-slide {
-                            animation: detailSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+                            animation: detailSlideUp 0.8s
+                                cubic-bezier(0.16, 1, 0.3, 1)
+                                forwards;
                         }
                     `,
                 }}
@@ -123,6 +195,7 @@ export default async function ProductDetailsPage({
                                 size={14}
                                 className="transition-transform duration-300 group-hover:-translate-x-0.5"
                             />
+
                             Back to Products
                         </Link>
                     </div>
@@ -143,11 +216,12 @@ export default async function ProductDetailsPage({
             <section className="animate-page-fade py-12 lg:py-12">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
                     <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+
                         {/* Product Image */}
                         <div className="relative flex h-[380px] items-center justify-center overflow-hidden rounded-3xl border border-slate-100/60 bg-slate-50 p-8 shadow-md transition-all duration-500 hover:shadow-xl sm:h-[480px]">
                             <div className="relative h-full w-full rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
                                 <Image
-                                    src={product.image}
+                                    src={productImageUrl}
                                     alt={product.name}
                                     fill
                                     priority
@@ -201,21 +275,24 @@ export default async function ProductDetailsPage({
                             </p>
 
                             <p>
-                                At Aurevia Healthcare, we ensure that every
-                                batch of {product.name} is produced using
-                                state-of-the-art manufacturing methodologies.
-                                Our dedicated quality assurance teams monitor
-                                crucial production parameters from raw
-                                ingredient testing to final packaging
+                                At Aurevia Healthcare, we ensure
+                                that every batch of {product.name}
+                                is produced using state-of-the-art
+                                manufacturing methodologies. Our
+                                dedicated quality assurance teams
+                                monitor crucial production
+                                parameters from raw ingredient
+                                testing to final packaging
                                 compliance.
                             </p>
 
                             <p>
-                                Built upon a foundation of scientific
-                                evaluation and formulation optimization, this
-                                product represents our commitment to consistent
-                                quality, reliability, and healthcare
-                                excellence.
+                                Built upon a foundation of
+                                scientific evaluation and
+                                formulation optimization, this
+                                product represents our commitment
+                                to consistent quality, reliability,
+                                and healthcare excellence.
                             </p>
                         </div>
                     </div>
@@ -245,7 +322,8 @@ export default async function ProductDetailsPage({
                                         (specification, index) => (
                                             <tr
                                                 key={
-                                                    specification.label + index
+                                                    specification.label +
+                                                    index
                                                 }
                                                 className={`transition-colors duration-200 hover:bg-slate-50/80 ${index % 2 === 0
                                                         ? "bg-slate-50/50"
@@ -253,11 +331,15 @@ export default async function ProductDetailsPage({
                                                     }`}
                                             >
                                                 <th className="w-1/3 border-b border-slate-100 px-6 py-4 text-sm font-bold text-[#123B5D]">
-                                                    {specification.label}
+                                                    {
+                                                        specification.label
+                                                    }
                                                 </th>
 
                                                 <td className="border-b border-slate-100 px-6 py-4 text-sm text-slate-600">
-                                                    {specification.value}
+                                                    {
+                                                        specification.value
+                                                    }
                                                 </td>
                                             </tr>
                                         )
@@ -274,10 +356,11 @@ export default async function ProductDetailsPage({
                                 </h3>
 
                                 <p className="mt-2 max-w-xl text-sm leading-relaxed text-teal-100/90">
-                                    Contact Aurevia Healthcare for product
-                                    customization, contract manufacturing
-                                    opportunities, or wholesale purchase
-                                    enquiries.
+                                    Contact Aurevia Healthcare
+                                    for product customization,
+                                    contract manufacturing
+                                    opportunities, or wholesale
+                                    purchase enquiries.
                                 </p>
                             </div>
 
