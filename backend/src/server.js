@@ -9,6 +9,7 @@ import productRoutes from "./routes/productRoutes.js";
 import industryRoutes from "./routes/industryRoutes.js";
 import enquiryRoutes from "./routes/enquiryRoutes.js";
 import careerRoutes from "./routes/careerRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 
 dotenv.config();
 
@@ -85,6 +86,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/industries", industryRoutes);
 app.use("/api/enquiries", enquiryRoutes);
 app.use("/api/careers", careerRoutes);
+app.use("/api/auth", authRoutes);
 
 /* ----------------------------------
    Root Route
