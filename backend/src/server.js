@@ -1,6 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
+
 import connectDB from "./config/db.js";
 import productRoutes from "./routes/productRoutes.js";
 import industryRoutes from "./routes/industryRoutes.js";
@@ -13,7 +16,17 @@ const app = express();
 
 connectDB();
 
-// Allowed frontend origins
+/* ----------------------------------
+   ES Module Path Setup
+---------------------------------- */
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+/* ----------------------------------
+   Allowed Frontend Origins
+---------------------------------- */
+
 const allowedOrigins = [
     "http://localhost:3000",
     "http://localhost:3001",
@@ -24,7 +37,7 @@ app.use(
     cors({
         origin: function (origin, callback) {
             // Allow requests with no origin
-            // (Postman, server-to-server requests, etc.)
+            // Postman, server-to-server requests, etc.
             if (!origin) {
                 return callback(null, true);
             }
@@ -39,15 +52,43 @@ app.use(
     })
 );
 
+/* ----------------------------------
+   Body Parsers
+---------------------------------- */
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/uploads", express.static("uploads"));
+/* ----------------------------------
+   Static Files
+---------------------------------- */
+
+// Existing uploads route
+app.use(
+    "/uploads",
+    express.static(path.join(__dirname, "../uploads"))
+);
+
+// Product images
+// Database stores: /products/tablet1.jpg
+// Actual file: uploads/products/tablet1.jpg
+app.use(
+    "/products",
+    express.static(path.join(__dirname, "../uploads/products"))
+);
+
+/* ----------------------------------
+   API Routes
+---------------------------------- */
 
 app.use("/api/products", productRoutes);
 app.use("/api/industries", industryRoutes);
 app.use("/api/enquiries", enquiryRoutes);
 app.use("/api/careers", careerRoutes);
+
+/* ----------------------------------
+   Root Route
+---------------------------------- */
 
 app.get("/", (req, res) => {
     res.json({
@@ -55,6 +96,10 @@ app.get("/", (req, res) => {
         message: "Aurevia Healthcare API is running",
     });
 });
+
+/* ----------------------------------
+   Server
+---------------------------------- */
 
 const PORT = process.env.PORT || 5000;
 

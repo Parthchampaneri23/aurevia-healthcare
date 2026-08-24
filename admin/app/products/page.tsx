@@ -54,7 +54,9 @@ export default function ProductsPage() {
             const data = await response.json();
 
             if (!data.success) {
-                throw new Error(data.message || "Failed to fetch products");
+                throw new Error(
+                    data.message || "Failed to fetch products"
+                );
             }
 
             setProducts(data.products || []);
@@ -83,23 +85,26 @@ export default function ProductsPage() {
 
     const filteredProducts = useMemo(() => {
         return products.filter((product) => {
+            const searchTerm = search.toLowerCase();
+
             const matchesSearch =
-                product.name
-                    .toLowerCase()
-                    .includes(search.toLowerCase()) ||
-                product.category
-                    .toLowerCase()
-                    .includes(search.toLowerCase());
+                product.name.toLowerCase().includes(searchTerm) ||
+                product.category.toLowerCase().includes(searchTerm);
 
             const matchesCategory =
-                category === "All" || product.category === category;
+                category === "All" ||
+                product.category === category;
 
             const matchesStatus =
                 status === "All" ||
                 (status === "Active" && product.isActive) ||
                 (status === "Inactive" && !product.isActive);
 
-            return matchesSearch && matchesCategory && matchesStatus;
+            return (
+                matchesSearch &&
+                matchesCategory &&
+                matchesStatus
+            );
         });
     }, [products, search, category, status]);
 
@@ -141,6 +146,7 @@ export default function ProductsPage() {
 
             {/* Summary Cards */}
             <div className="mt-8 grid gap-4 sm:grid-cols-3">
+                {/* Total */}
                 <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
                     <div className="flex items-center justify-between">
                         <div>
@@ -159,6 +165,7 @@ export default function ProductsPage() {
                     </div>
                 </div>
 
+                {/* Active */}
                 <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
                     <p className="text-sm font-medium text-slate-500">
                         Active Products
@@ -169,6 +176,7 @@ export default function ProductsPage() {
                     </p>
                 </div>
 
+                {/* Inactive */}
                 <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
                     <p className="text-sm font-medium text-slate-500">
                         Inactive Products
@@ -204,7 +212,9 @@ export default function ProductsPage() {
                     {/* Category */}
                     <select
                         value={category}
-                        onChange={(event) => setCategory(event.target.value)}
+                        onChange={(event) =>
+                            setCategory(event.target.value)
+                        }
                         className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-500/10"
                     >
                         {categories.map((item) => (
@@ -219,7 +229,9 @@ export default function ProductsPage() {
                     {/* Status */}
                     <select
                         value={status}
-                        onChange={(event) => setStatus(event.target.value)}
+                        onChange={(event) =>
+                            setStatus(event.target.value)
+                        }
                         className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-500/10"
                     >
                         <option value="All">All Status</option>
@@ -236,7 +248,9 @@ export default function ProductsPage() {
                     >
                         <RefreshCw
                             size={17}
-                            className={loading ? "animate-spin" : ""}
+                            className={
+                                loading ? "animate-spin" : ""
+                            }
                         />
                         Refresh
                     </button>
@@ -275,6 +289,7 @@ export default function ProductsPage() {
                     </div>
                 </div>
 
+                {/* Loading */}
                 {loading ? (
                     <div className="flex min-h-[300px] items-center justify-center">
                         <div className="text-center">
@@ -289,6 +304,7 @@ export default function ProductsPage() {
                         </div>
                     </div>
                 ) : filteredProducts.length === 0 ? (
+                    /* Empty */
                     <div className="flex min-h-[300px] items-center justify-center px-6">
                         <div className="text-center">
                             <Package
@@ -306,6 +322,7 @@ export default function ProductsPage() {
                         </div>
                     </div>
                 ) : (
+                    /* Table */
                     <div className="overflow-x-auto">
                         <table className="w-full min-w-[900px] text-left">
                             <thead>
@@ -329,95 +346,110 @@ export default function ProductsPage() {
                             </thead>
 
                             <tbody>
-                                {filteredProducts.map((product) => (
-                                    <tr
-                                        key={product._id}
-                                        className="border-b border-slate-100 last:border-0 hover:bg-slate-50/60"
-                                    >
-                                        {/* Product */}
-                                        <td className="px-6 py-4">
-                                            <div className="flex items-center gap-4">
-                                                <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
-                                                    {product.image ? (
-                                                        <Image
-                                                            src={product.image}
-                                                            alt={product.name}
-                                                            fill
-                                                            className="object-contain p-1"
-                                                            sizes="56px"
-                                                        />
-                                                    ) : (
-                                                        <div className="flex h-full items-center justify-center">
-                                                            <Package
-                                                                size={20}
-                                                                className="text-slate-300"
+                                {filteredProducts.map((product) => {
+                                    const imageUrl = product.image
+                                        ? product.image.startsWith("http")
+                                            ? product.image
+                                            : `${API_URL}${product.image.startsWith("/") ? "" : "/"
+                                            }${product.image}`
+                                        : "";
+
+                                    return (
+                                        <tr
+                                            key={product._id}
+                                            className="border-b border-slate-100 last:border-0 hover:bg-slate-50/60"
+                                        >
+                                            {/* Product */}
+                                            <td className="px-6 py-4">
+                                                <div className="flex items-center gap-4">
+                                                    <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
+                                                        {imageUrl ? (
+                                                            <Image
+                                                                src={imageUrl}
+                                                                alt={product.name}
+                                                                fill
+                                                                className="object-contain p-1"
+                                                                sizes="56px"
                                                             />
-                                                        </div>
-                                                    )}
+                                                        ) : (
+                                                            <div className="flex h-full items-center justify-center">
+                                                                <Package
+                                                                    size={20}
+                                                                    className="text-slate-300"
+                                                                />
+                                                            </div>
+                                                        )}
+                                                    </div>
+
+                                                    <div>
+                                                        <p className="text-sm font-bold text-slate-800">
+                                                            {product.name}
+                                                        </p>
+
+                                                        <p className="mt-1 max-w-md truncate text-xs text-slate-400">
+                                                            {
+                                                                product.shortDescription
+                                                            }
+                                                        </p>
+                                                    </div>
                                                 </div>
+                                            </td>
 
-                                                <div>
-                                                    <p className="text-sm font-bold text-slate-800">
-                                                        {product.name}
-                                                    </p>
+                                            {/* Category */}
+                                            <td className="px-6 py-4">
+                                                <span className="rounded-lg bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-600">
+                                                    {product.category}
+                                                </span>
+                                            </td>
 
-                                                    <p className="mt-1 max-w-md truncate text-xs text-slate-400">
-                                                        {product.shortDescription}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </td>
-
-                                        {/* Category */}
-                                        <td className="px-6 py-4">
-                                            <span className="rounded-lg bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-600">
-                                                {product.category}
-                                            </span>
-                                        </td>
-
-                                        {/* Status */}
-                                        <td className="px-6 py-4">
-                                            <span
-                                                className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold ${product.isActive
-                                                        ? "bg-emerald-50 text-emerald-700"
-                                                        : "bg-slate-100 text-slate-500"
-                                                    }`}
-                                            >
+                                            {/* Status */}
+                                            <td className="px-6 py-4">
                                                 <span
-                                                    className={`h-1.5 w-1.5 rounded-full ${product.isActive
-                                                            ? "bg-emerald-500"
-                                                            : "bg-slate-400"
+                                                    className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold ${product.isActive
+                                                            ? "bg-emerald-50 text-emerald-700"
+                                                            : "bg-slate-100 text-slate-500"
                                                         }`}
-                                                />
-
-                                                {product.isActive
-                                                    ? "Active"
-                                                    : "Inactive"}
-                                            </span>
-                                        </td>
-
-                                        {/* Actions */}
-                                        <td className="px-6 py-4">
-                                            <div className="flex justify-end gap-2">
-                                                <button
-                                                    type="button"
-                                                    className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-slate-500 transition-all hover:border-teal-200 hover:bg-teal-50 hover:text-teal-700"
-                                                    title="Edit product"
                                                 >
-                                                    <Pencil size={16} />
-                                                </button>
+                                                    <span
+                                                        className={`h-1.5 w-1.5 rounded-full ${product.isActive
+                                                                ? "bg-emerald-500"
+                                                                : "bg-slate-400"
+                                                            }`}
+                                                    />
 
-                                                <button
-                                                    type="button"
-                                                    className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-slate-500 transition-all hover:border-red-200 hover:bg-red-50 hover:text-red-600"
-                                                    title="Delete product"
-                                                >
-                                                    <Trash2 size={16} />
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))}
+                                                    {product.isActive
+                                                        ? "Active"
+                                                        : "Inactive"}
+                                                </span>
+                                            </td>
+
+                                            {/* Actions */}
+                                            <td className="px-6 py-4">
+                                                <div className="flex justify-end gap-2">
+                                                    <button
+                                                        type="button"
+                                                        className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-slate-500 transition-all hover:border-teal-200 hover:bg-teal-50 hover:text-teal-700"
+                                                        title="Edit product"
+                                                    >
+                                                        <Pencil
+                                                            size={16}
+                                                        />
+                                                    </button>
+
+                                                    <button
+                                                        type="button"
+                                                        className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-slate-500 transition-all hover:border-red-200 hover:bg-red-50 hover:text-red-600"
+                                                        title="Delete product"
+                                                    >
+                                                        <Trash2
+                                                            size={16}
+                                                        />
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
                             </tbody>
                         </table>
                     </div>
