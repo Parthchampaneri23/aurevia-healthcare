@@ -39,17 +39,26 @@ export default function ProductsPage() {
     const [category, setCategory] = useState("All");
     const [status, setStatus] = useState("All");
 
+    // ======================================================
+    // FETCH PRODUCTS
+    // ======================================================
     const fetchProducts = async () => {
         try {
             setLoading(true);
             setError("");
 
             const response = await fetch(
-                `${API_URL} /api/products / admin`
+                `${API_URL}/api/products/admin`,
+                {
+                    method: "GET",
+                    cache: "no-store",
+                }
             );
 
             if (!response.ok) {
-                throw new Error("Failed to fetch products");
+                throw new Error(
+                    `Failed to fetch products (${response.status})`
+                );
             }
 
             const data = await response.json();
@@ -65,7 +74,7 @@ export default function ProductsPage() {
             console.error("Products fetch error:", err);
 
             setError(
-                "Unable to load products. Please check that the backend is running."
+                "Unable to load products. Please check that the backend is running and the API route is available."
             );
         } finally {
             setLoading(false);
@@ -76,6 +85,9 @@ export default function ProductsPage() {
         fetchProducts();
     }, []);
 
+    // ======================================================
+    // CATEGORIES
+    // ======================================================
     const categories = useMemo(() => {
         const uniqueCategories = Array.from(
             new Set(products.map((product) => product.category))
@@ -84,6 +96,9 @@ export default function ProductsPage() {
         return ["All", ...uniqueCategories];
     }, [products]);
 
+    // ======================================================
+    // FILTER PRODUCTS
+    // ======================================================
     const filteredProducts = useMemo(() => {
         return products.filter((product) => {
             const searchTerm = search.toLowerCase().trim();
@@ -109,6 +124,9 @@ export default function ProductsPage() {
         });
     }, [products, search, category, status]);
 
+    // ======================================================
+    // SUMMARY
+    // ======================================================
     const activeProducts = products.filter(
         (product) => product.isActive
     ).length;
@@ -117,11 +135,15 @@ export default function ProductsPage() {
         (product) => !product.isActive
     ).length;
 
+    // ======================================================
+    // IMAGE URL
+    // ======================================================
     const getImageUrl = (image: string) => {
         if (!image) {
             return "";
         }
 
+        // Already complete URL
         if (
             image.startsWith("http://") ||
             image.startsWith("https://")
@@ -131,28 +153,37 @@ export default function ProductsPage() {
 
         let cleanImage = image.trim();
 
+        // Remove leading slash
         cleanImage = cleanImage.replace(/^\/+/, "");
 
+        // uploads/products/filename.jpg
         if (cleanImage.startsWith("uploads/products/")) {
             return `${API_URL}/${cleanImage}`;
         }
 
+        // products/filename.jpg
         if (cleanImage.startsWith("products/")) {
             return `${API_URL}/uploads/${cleanImage}`;
         }
 
+        // filename.jpg
         return `${API_URL}/uploads/products/${cleanImage}`;
     };
 
-    const handleDemoAction = (action: string) => {
-        alert(
-            `${action} feature is available for demonstration only. No database changes will be made.`
-        );
+    // ======================================================
+    // DISPLAY-ONLY ACTIONS
+    // CRUD IS NOT ACTIVE FOR NOW
+    // ======================================================
+    const handleDisplayAction = (action: string) => {
+        console.log(`${action} action is display-only for now.`);
     };
 
     return (
         <main className="min-h-screen bg-slate-50 p-6 lg:p-8">
-            {/* Header */}
+
+            {/* ======================================================
+                HEADER
+            ====================================================== */}
             <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                     <p className="text-sm font-semibold uppercase tracking-wider text-teal-600">
@@ -164,15 +195,17 @@ export default function ProductsPage() {
                     </h1>
 
                     <p className="mt-2 text-sm text-slate-500">
-                        View and manage Aurevia Healthcare product
-                        catalogue information.
+                        Manage and view Aurevia Healthcare product catalogue
+                        information.
                     </p>
                 </div>
 
-                {/* Demo-only Add Product */}
+                {/* Display-only button */}
                 <button
                     type="button"
-                    onClick={() => handleDemoAction("Add Product")}
+                    onClick={() =>
+                        handleDisplayAction("Add Product")
+                    }
                     className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#123B5D] px-5 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-[#0d304b] hover:shadow-md"
                 >
                     <Plus size={18} />
@@ -180,8 +213,11 @@ export default function ProductsPage() {
                 </button>
             </div>
 
-            {/* Summary Cards */}
+            {/* ======================================================
+                SUMMARY CARDS
+            ====================================================== */}
             <div className="mt-8 grid gap-4 sm:grid-cols-3">
+
                 {/* Total */}
                 <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
                     <div className="flex items-center justify-between">
@@ -224,9 +260,12 @@ export default function ProductsPage() {
                 </div>
             </div>
 
-            {/* Filters */}
+            {/* ======================================================
+                FILTERS
+            ====================================================== */}
             <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-center">
+
                     {/* Search */}
                     <div className="relative flex-1">
                         <Search
@@ -288,12 +327,15 @@ export default function ProductsPage() {
                                 loading ? "animate-spin" : ""
                             }
                         />
+
                         Refresh
                     </button>
                 </div>
             </div>
 
-            {/* Error */}
+            {/* ======================================================
+                ERROR
+            ====================================================== */}
             {error && (
                 <div className="mt-6 rounded-2xl border border-red-200 bg-red-50 p-5">
                     <p className="text-sm font-semibold text-red-700">
@@ -310,8 +352,12 @@ export default function ProductsPage() {
                 </div>
             )}
 
-            {/* Product Catalogue */}
+            {/* ======================================================
+                PRODUCT TABLE
+            ====================================================== */}
             <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+
+                {/* Table Header */}
                 <div className="flex items-center justify-between border-b border-slate-100 px-6 py-5">
                     <div>
                         <h2 className="text-lg font-bold text-slate-900">
@@ -340,6 +386,8 @@ export default function ProductsPage() {
                         </div>
                     </div>
                 ) : filteredProducts.length === 0 ? (
+
+                    /* Empty */
                     <div className="flex min-h-[300px] items-center justify-center px-6">
                         <div className="text-center">
                             <Package
@@ -356,11 +404,16 @@ export default function ProductsPage() {
                             </p>
                         </div>
                     </div>
+
                 ) : (
+
+                    /* Table */
                     <div className="overflow-x-auto">
                         <table className="w-full min-w-[900px] text-left">
+
                             <thead>
                                 <tr className="border-b border-slate-100 bg-slate-50/70">
+
                                     <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">
                                         Product
                                     </th>
@@ -376,11 +429,13 @@ export default function ProductsPage() {
                                     <th className="px-6 py-4 text-right text-xs font-bold uppercase tracking-wider text-slate-500">
                                         Actions
                                     </th>
+
                                 </tr>
                             </thead>
 
                             <tbody>
                                 {filteredProducts.map((product) => {
+
                                     const imageUrl = getImageUrl(
                                         product.image
                                     );
@@ -390,10 +445,13 @@ export default function ProductsPage() {
                                             key={product._id}
                                             className="border-b border-slate-100 last:border-0 hover:bg-slate-50/60"
                                         >
+
                                             {/* Product */}
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center gap-4">
+
                                                     <div className="relative flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
+
                                                         {imageUrl ? (
                                                             <img
                                                                 src={imageUrl}
@@ -417,6 +475,7 @@ export default function ProductsPage() {
                                                                 className="text-slate-300"
                                                             />
                                                         )}
+
                                                     </div>
 
                                                     <div>
@@ -430,6 +489,7 @@ export default function ProductsPage() {
                                                             }
                                                         </p>
                                                     </div>
+
                                                 </div>
                                             </td>
 
@@ -444,57 +504,67 @@ export default function ProductsPage() {
                                             <td className="px-6 py-4">
                                                 <span
                                                     className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold ${product.isActive
-                                                        ? "bg-emerald-50 text-emerald-700"
-                                                        : "bg-slate-100 text-slate-500"
+                                                            ? "bg-emerald-50 text-emerald-700"
+                                                            : "bg-slate-100 text-slate-500"
                                                         }`}
                                                 >
+
                                                     <span
                                                         className={`h-1.5 w-1.5 rounded-full ${product.isActive
-                                                            ? "bg-emerald-500"
-                                                            : "bg-slate-400"
+                                                                ? "bg-emerald-500"
+                                                                : "bg-slate-400"
                                                             }`}
                                                     />
 
                                                     {product.isActive
                                                         ? "Active"
                                                         : "Inactive"}
+
                                                 </span>
                                             </td>
 
-                                            {/* Demo Actions */}
+                                            {/* Display-only Actions */}
                                             <td className="px-6 py-4">
                                                 <div className="flex justify-end gap-2">
+
                                                     <button
                                                         type="button"
                                                         onClick={() =>
-                                                            handleDemoAction(
-                                                                `Edit "${product.name}"`
+                                                            handleDisplayAction(
+                                                                "Edit Product"
                                                             )
                                                         }
                                                         className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-slate-500 transition-all hover:border-teal-200 hover:bg-teal-50 hover:text-teal-700"
-                                                        title="Edit product - Demo only"
+                                                        title="Edit product (display only)"
                                                     >
-                                                        <Pencil size={16} />
+                                                        <Pencil
+                                                            size={16}
+                                                        />
                                                     </button>
 
                                                     <button
                                                         type="button"
                                                         onClick={() =>
-                                                            handleDemoAction(
-                                                                `Delete "${product.name}"`
+                                                            handleDisplayAction(
+                                                                "Delete Product"
                                                             )
                                                         }
                                                         className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-slate-500 transition-all hover:border-red-200 hover:bg-red-50 hover:text-red-600"
-                                                        title="Delete product - Demo only"
+                                                        title="Delete product (display only)"
                                                     >
-                                                        <Trash2 size={16} />
+                                                        <Trash2
+                                                            size={16}
+                                                        />
                                                     </button>
+
                                                 </div>
                                             </td>
+
                                         </tr>
                                     );
                                 })}
                             </tbody>
+
                         </table>
                     </div>
                 )}
