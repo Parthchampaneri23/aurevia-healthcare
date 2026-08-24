@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import {
   Package,
   Building2,
@@ -5,83 +8,284 @@ import {
   BriefcaseBusiness,
   ArrowUpRight,
   Clock3,
+  RefreshCw,
 } from "lucide-react";
 
-const stats = [
-  {
-    title: "Total Products",
-    value: "25",
-    description: "Products in catalogue",
-    icon: Package,
-  },
-  {
-    title: "Industries",
-    value: "10",
-    description: "Industries served",
-    icon: Building2,
-  },
-  {
-    title: "Enquiries",
-    value: "12",
-    description: "Total enquiries received",
-    icon: MessageSquare,
-  },
-  {
-    title: "Applications",
-    value: "8",
-    description: "Career applications",
-    icon: BriefcaseBusiness,
-  },
-];
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL ||
+  "https://aurevia-healthcare.onrender.com";
 
-const recentEnquiries = [
-  {
-    name: "Rahul Mehta",
-    company: "Medicare Pharma",
-    product: "Tablets",
-    date: "24 Aug 2026",
-    status: "New",
-  },
-  {
-    name: "Priya Shah",
-    company: "HealthPlus Ltd.",
-    product: "Capsules",
-    date: "23 Aug 2026",
-    status: "Contacted",
-  },
-  {
-    name: "Amit Patel",
-    company: "WellCare Healthcare",
-    product: "Syrups",
-    date: "22 Aug 2026",
-    status: "New",
-  },
-  {
-    name: "Neha Desai",
-    company: "Nova Medics",
-    product: "Nutraceuticals",
-    date: "21 Aug 2026",
-    status: "Completed",
-  },
-];
+type Enquiry = {
+  _id: string;
+  name?: string;
+  fullName?: string;
+  company?: string;
+  companyName?: string;
+  product?: string;
+  productName?: string;
+  createdAt?: string;
+  date?: string;
+  status?: string;
+};
+
+type DashboardData = {
+  products: number;
+  industries: number;
+  enquiries: number;
+  applications: number;
+};
+
+const getArrayFromResponse = (data: any, possibleKeys: string[]) => {
+  if (Array.isArray(data)) {
+    return data;
+  }
+
+  for (const key of possibleKeys) {
+    if (Array.isArray(data?.[key])) {
+      return data[key];
+    }
+  }
+
+  return [];
+};
+
+const getCountFromResponse = (
+  data: any,
+  possibleKeys: string[]
+) => {
+  if (typeof data?.count === "number") {
+    return data.count;
+  }
+
+  for (const key of possibleKeys) {
+    if (Array.isArray(data?.[key])) {
+      return data[key].length;
+    }
+  }
+
+  if (Array.isArray(data)) {
+    return data.length;
+  }
+
+  return 0;
+};
+
+const formatDate = (date?: string) => {
+  if (!date) {
+    return "—";
+  }
+
+  const parsedDate = new Date(date);
+
+  if (Number.isNaN(parsedDate.getTime())) {
+    return date;
+  }
+
+  return parsedDate.toLocaleDateString("en-IN", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+};
 
 export default function Dashboard() {
+  const [dashboard, setDashboard] = useState<DashboardData>({
+    products: 0,
+    industries: 0,
+    enquiries: 0,
+    applications: 0,
+  });
+
+  const [recentEnquiries, setRecentEnquiries] = useState<Enquiry[]>(
+    []
+  );
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  const fetchDashboardData = async () => {
+    try {
+      setLoading(true);
+      setError("");
+
+      const [
+        productsResponse,
+        industriesResponse,
+        enquiriesResponse,
+        applicationsResponse,
+      ] = await Promise.all([
+        fetch(`${API_URL}/api/products`),
+        fetch(`${API_URL}/api/industries`),
+        fetch(`${API_URL}/api/enquiries`),
+        fetch(`${API_URL}/api/applications`),
+      ]);
+
+      if (!productsResponse.ok) {
+        throw new Error("Failed to fetch products");
+      }
+
+      if (!industriesResponse.ok) {
+        throw new Error("Failed to fetch industries");
+      }
+
+      if (!enquiriesResponse.ok) {
+        throw new Error("Failed to fetch enquiries");
+      }
+
+      if (!applicationsResponse.ok) {
+        throw new Error("Failed to fetch applications");
+      }
+
+      const [
+        productsData,
+        industriesData,
+        enquiriesData,
+        applicationsData,
+      ] = await Promise.all([
+        productsResponse.json(),
+        industriesResponse.json(),
+        enquiriesResponse.json(),
+        applicationsResponse.json(),
+      ]);
+
+      const enquiries = getArrayFromResponse(
+        enquiriesData,
+        ["enquiries", "data", "results"]
+      );
+
+      setDashboard({
+        products: getCountFromResponse(
+          productsData,
+          ["products", "data", "results"]
+        ),
+
+        industries: getCountFromResponse(
+          industriesData,
+          ["industries", "data", "results"]
+        ),
+
+        enquiries: getCountFromResponse(
+          enquiriesData,
+          ["enquiries", "data", "results"]
+        ),
+
+        applications: getCountFromResponse(
+          applicationsData,
+          [
+            "applications",
+            "careerApplications",
+            "data",
+            "results",
+          ]
+        ),
+      });
+
+      const sortedEnquiries = [...enquiries]
+        .sort((a: Enquiry, b: Enquiry) => {
+          const dateA = a.createdAt || a.date || "";
+          const dateB = b.createdAt || b.date || "";
+
+          return (
+            new Date(dateB).getTime() -
+            new Date(dateA).getTime()
+          );
+        })
+        .slice(0, 4);
+
+      setRecentEnquiries(sortedEnquiries);
+    } catch (err) {
+      console.error("Dashboard fetch error:", err);
+
+      setError(
+        "Unable to load dashboard data. Please check that the backend is running."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
+
+  const stats = [
+    {
+      title: "Total Products",
+      value: dashboard.products,
+      description: "Products in catalogue",
+      icon: Package,
+    },
+    {
+      title: "Industries",
+      value: dashboard.industries,
+      description: "Industries served",
+      icon: Building2,
+    },
+    {
+      title: "Enquiries",
+      value: dashboard.enquiries,
+      description: "Total enquiries received",
+      icon: MessageSquare,
+    },
+    {
+      title: "Applications",
+      value: dashboard.applications,
+      description: "Career applications",
+      icon: BriefcaseBusiness,
+    },
+  ];
+
   return (
     <main className="min-h-screen bg-slate-50 p-6 lg:p-8">
       {/* Page Heading */}
-      <div className="mb-8">
-        <p className="text-sm font-semibold uppercase tracking-wider text-teal-600">
-          Dashboard
-        </p>
+      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-wider text-teal-600">
+            Dashboard
+          </p>
 
-        <h1 className="mt-1 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
-          Good morning, Admin 👋
-        </h1>
+          <h1 className="mt-1 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+            Good morning, Admin 👋
+          </h1>
 
-        <p className="mt-2 text-sm text-slate-500">
-          Here's an overview of your Aurevia Healthcare website.
-        </p>
+          <p className="mt-2 text-sm text-slate-500">
+            Here's an overview of your Aurevia Healthcare
+            website.
+          </p>
+        </div>
+
+        <button
+          type="button"
+          onClick={fetchDashboardData}
+          disabled={loading}
+          className="inline-flex items-center justify-center gap-2 self-start rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50 sm:self-auto"
+        >
+          <RefreshCw
+            size={16}
+            className={
+              loading ? "animate-spin" : ""
+            }
+          />
+          Refresh
+        </button>
       </div>
+
+      {/* Error */}
+      {error && (
+        <div className="mb-6 rounded-2xl border border-red-200 bg-red-50 p-4">
+          <p className="text-sm font-semibold text-red-700">
+            {error}
+          </p>
+
+          <button
+            type="button"
+            onClick={fetchDashboardData}
+            className="mt-2 text-sm font-semibold text-red-700 underline"
+          >
+            Try again
+          </button>
+        </div>
+      )}
 
       {/* Statistics */}
       <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
@@ -100,7 +304,7 @@ export default function Dashboard() {
                   </p>
 
                   <p className="mt-2 text-3xl font-bold text-slate-900">
-                    {stat.value}
+                    {loading ? "—" : stat.value}
                   </p>
                 </div>
 
@@ -128,14 +332,18 @@ export default function Dashboard() {
               </h2>
 
               <p className="mt-1 text-xs text-slate-500">
-                Latest enquiries received from website visitors
+                Latest enquiries received from website
+                visitors
               </p>
             </div>
 
-            <button className="inline-flex items-center gap-1 text-sm font-semibold text-teal-600 transition-colors hover:text-teal-700">
+            <a
+              href="/enquiries"
+              className="inline-flex items-center gap-1 text-sm font-semibold text-teal-600 transition-colors hover:text-teal-700"
+            >
               View all
               <ArrowUpRight size={15} />
-            </button>
+            </a>
           </div>
 
           <div className="overflow-x-auto">
@@ -165,44 +373,103 @@ export default function Dashboard() {
               </thead>
 
               <tbody>
-                {recentEnquiries.map((enquiry) => (
-                  <tr
-                    key={`${enquiry.name}-${enquiry.date}`}
-                    className="border-b border-slate-100 last:border-0 hover:bg-slate-50/60"
-                  >
-                    <td className="px-6 py-4">
-                      <p className="text-sm font-semibold text-slate-800">
-                        {enquiry.name}
+                {loading ? (
+                  <tr>
+                    <td
+                      colSpan={5}
+                      className="px-6 py-12 text-center"
+                    >
+                      <RefreshCw
+                        size={22}
+                        className="mx-auto animate-spin text-teal-600"
+                      />
+
+                      <p className="mt-2 text-sm text-slate-500">
+                        Loading enquiries...
                       </p>
                     </td>
-
-                    <td className="px-6 py-4 text-sm text-slate-600">
-                      {enquiry.company}
-                    </td>
-
-                    <td className="px-6 py-4 text-sm text-slate-600">
-                      {enquiry.product}
-                    </td>
-
-                    <td className="px-6 py-4 text-sm text-slate-500">
-                      {enquiry.date}
-                    </td>
-
-                    <td className="px-6 py-4">
-                      <span
-                        className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${enquiry.status === "New"
-                            ? "bg-blue-50 text-blue-700"
-                            : enquiry.status ===
-                              "Contacted"
-                              ? "bg-amber-50 text-amber-700"
-                              : "bg-emerald-50 text-emerald-700"
-                          }`}
-                      >
-                        {enquiry.status}
-                      </span>
+                  </tr>
+                ) : recentEnquiries.length === 0 ? (
+                  <tr>
+                    <td
+                      colSpan={5}
+                      className="px-6 py-12 text-center text-sm text-slate-400"
+                    >
+                      No enquiries found.
                     </td>
                   </tr>
-                ))}
+                ) : (
+                  recentEnquiries.map(
+                    (enquiry) => {
+                      const name =
+                        enquiry.name ||
+                        enquiry.fullName ||
+                        "—";
+
+                      const company =
+                        enquiry.company ||
+                        enquiry.companyName ||
+                        "—";
+
+                      const product =
+                        enquiry.product ||
+                        enquiry.productName ||
+                        "—";
+
+                      const status =
+                        enquiry.status ||
+                        "New";
+
+                      return (
+                        <tr
+                          key={
+                            enquiry._id
+                          }
+                          className="border-b border-slate-100 last:border-0 hover:bg-slate-50/60"
+                        >
+                          <td className="px-6 py-4">
+                            <p className="text-sm font-semibold text-slate-800">
+                              {name}
+                            </p>
+                          </td>
+
+                          <td className="px-6 py-4 text-sm text-slate-600">
+                            {company}
+                          </td>
+
+                          <td className="px-6 py-4 text-sm text-slate-600">
+                            {product}
+                          </td>
+
+                          <td className="px-6 py-4 text-sm text-slate-500">
+                            {formatDate(
+                              enquiry.createdAt ||
+                              enquiry.date
+                            )}
+                          </td>
+
+                          <td className="px-6 py-4">
+                            <span
+                              className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${status.toLowerCase() ===
+                                  "new"
+                                  ? "bg-blue-50 text-blue-700"
+                                  : status
+                                    .toLowerCase()
+                                    .includes(
+                                      "contact"
+                                    )
+                                    ? "bg-amber-50 text-amber-700"
+                                    : "bg-emerald-50 text-emerald-700"
+                                }`}
+                            >
+                              {status}
+                            </span>
+                          </td>
+                        </tr>
+                      );
+                    }
+                  )
+                )}
               </tbody>
             </table>
           </div>
@@ -221,7 +488,10 @@ export default function Dashboard() {
           </div>
 
           <div className="mt-6 space-y-3">
-            <button className="flex w-full items-center justify-between rounded-xl border border-slate-200 p-4 text-left transition-all duration-200 hover:border-teal-200 hover:bg-teal-50/50">
+            <a
+              href="/products"
+              className="flex w-full items-center justify-between rounded-xl border border-slate-200 p-4 text-left transition-all duration-200 hover:border-teal-200 hover:bg-teal-50/50"
+            >
               <div className="flex items-center gap-3">
                 <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-teal-50 text-teal-700">
                   <Package size={18} />
@@ -229,11 +499,11 @@ export default function Dashboard() {
 
                 <div>
                   <p className="text-sm font-semibold text-slate-800">
-                    Add Product
+                    Products
                   </p>
 
                   <p className="text-xs text-slate-400">
-                    Add a new product
+                    View product catalogue
                   </p>
                 </div>
               </div>
@@ -242,9 +512,12 @@ export default function Dashboard() {
                 size={16}
                 className="text-slate-400"
               />
-            </button>
+            </a>
 
-            <button className="flex w-full items-center justify-between rounded-xl border border-slate-200 p-4 text-left transition-all duration-200 hover:border-teal-200 hover:bg-teal-50/50">
+            <a
+              href="/industries"
+              className="flex w-full items-center justify-between rounded-xl border border-slate-200 p-4 text-left transition-all duration-200 hover:border-teal-200 hover:bg-teal-50/50"
+            >
               <div className="flex items-center gap-3">
                 <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-teal-50 text-teal-700">
                   <Building2 size={18} />
@@ -252,11 +525,11 @@ export default function Dashboard() {
 
                 <div>
                   <p className="text-sm font-semibold text-slate-800">
-                    Add Industry
+                    Industries
                   </p>
 
                   <p className="text-xs text-slate-400">
-                    Add a new industry
+                    View industries
                   </p>
                 </div>
               </div>
@@ -265,9 +538,12 @@ export default function Dashboard() {
                 size={16}
                 className="text-slate-400"
               />
-            </button>
+            </a>
 
-            <button className="flex w-full items-center justify-between rounded-xl border border-slate-200 p-4 text-left transition-all duration-200 hover:border-teal-200 hover:bg-teal-50/50">
+            <a
+              href="/enquiries"
+              className="flex w-full items-center justify-between rounded-xl border border-slate-200 p-4 text-left transition-all duration-200 hover:border-teal-200 hover:bg-teal-50/50"
+            >
               <div className="flex items-center gap-3">
                 <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-teal-50 text-teal-700">
                   <MessageSquare size={18} />
@@ -275,11 +551,11 @@ export default function Dashboard() {
 
                 <div>
                   <p className="text-sm font-semibold text-slate-800">
-                    View Enquiries
+                    Enquiries
                   </p>
 
                   <p className="text-xs text-slate-400">
-                    Check customer enquiries
+                    View customer enquiries
                   </p>
                 </div>
               </div>
@@ -288,7 +564,33 @@ export default function Dashboard() {
                 size={16}
                 className="text-slate-400"
               />
-            </button>
+            </a>
+
+            <a
+              href="/careers"
+              className="flex w-full items-center justify-between rounded-xl border border-slate-200 p-4 text-left transition-all duration-200 hover:border-teal-200 hover:bg-teal-50/50"
+            >
+              <div className="flex items-center gap-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-teal-50 text-teal-700">
+                  <BriefcaseBusiness size={18} />
+                </div>
+
+                <div>
+                  <p className="text-sm font-semibold text-slate-800">
+                    Applications
+                  </p>
+
+                  <p className="text-xs text-slate-400">
+                    View career applications
+                  </p>
+                </div>
+              </div>
+
+              <ArrowUpRight
+                size={16}
+                className="text-slate-400"
+              />
+            </a>
           </div>
 
           {/* System Status */}
@@ -303,7 +605,7 @@ export default function Dashboard() {
 
             <div className="mt-2 flex items-center gap-2 text-xs text-slate-400">
               <Clock3 size={13} />
-              Last checked just now
+              Backend data loaded successfully
             </div>
           </div>
         </section>
