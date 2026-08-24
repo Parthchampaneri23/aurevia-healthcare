@@ -16,6 +16,7 @@ connectDB();
 // Allowed frontend origins
 const allowedOrigins = [
     "http://localhost:3000",
+    "http://localhost:3001",
     "https://aurevia-healthcare-one.vercel.app",
 ];
 
