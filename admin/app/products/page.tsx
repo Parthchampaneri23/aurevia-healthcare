@@ -44,7 +44,7 @@ export default function ProductsPage() {
             setLoading(true);
             setError("");
 
-            const response = await fetch(`${API_URL}/api/products`);
+            const response = await fetch(`${API_URL}/api/products/admin`);
 
             if (!response.ok) {
                 throw new Error("Failed to fetch products");
@@ -464,14 +464,14 @@ export default function ProductsPage() {
                                             <td className="px-6 py-4">
                                                 <span
                                                     className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold ${product.isActive
-                                                            ? "bg-emerald-50 text-emerald-700"
-                                                            : "bg-slate-100 text-slate-500"
+                                                        ? "bg-emerald-50 text-emerald-700"
+                                                        : "bg-slate-100 text-slate-500"
                                                         }`}
                                                 >
                                                     <span
                                                         className={`h-1.5 w-1.5 rounded-full ${product.isActive
-                                                                ? "bg-emerald-500"
-                                                                : "bg-slate-400"
+                                                            ? "bg-emerald-500"
+                                                            : "bg-slate-400"
                                                             }`}
                                                     />
 

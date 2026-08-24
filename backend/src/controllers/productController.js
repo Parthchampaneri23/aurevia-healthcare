@@ -20,6 +20,24 @@ export const getProducts = async (req, res, next) => {
     }
 };
 
+// ======================================================
+// GET /api/products/admin
+// Get all products for Admin Panel
+// ======================================================
+export const getAdminProducts = async (req, res, next) => {
+    try {
+        const products = await Product.find({})
+            .sort({ createdAt: -1 });
+
+        res.status(200).json({
+            success: true,
+            count: products.length,
+            products,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
 
 // ======================================================
 // GET /api/products/:slug
@@ -48,7 +66,6 @@ export const getProductBySlug = async (req, res, next) => {
     }
 };
 
-
 // ======================================================
 // POST /api/products
 // Create product
@@ -66,7 +83,6 @@ export const createProduct = async (req, res, next) => {
         next(error);
     }
 };
-
 
 // ======================================================
 // PUT /api/products/:id
@@ -100,7 +116,6 @@ export const updateProduct = async (req, res, next) => {
     }
 };
 
-
 // ======================================================
 // DELETE /api/products/:id
 // Delete product
@@ -126,7 +141,6 @@ export const deleteProduct = async (req, res, next) => {
         next(error);
     }
 };
-
 
 // ======================================================
 // POST /api/products/:id/image
