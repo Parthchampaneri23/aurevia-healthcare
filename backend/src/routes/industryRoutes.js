@@ -2,25 +2,68 @@ import express from "express";
 
 import {
     getIndustries,
+    getAdminIndustries,
     getIndustryBySlug,
     createIndustry,
     updateIndustry,
     deleteIndustry,
 } from "../controllers/industryController.js";
 
+import protect from "../middleware/authMiddleware.js";
+
 const router = express.Router();
 
-// Public routes
+// ======================================================
+// PUBLIC ROUTES
+// ======================================================
+
+// Get all active industries
 router.get("/", getIndustries);
 
-router.get("/:slug", getIndustryBySlug);
 
-// Admin routes
-// Authentication will be added later
-router.post("/", createIndustry);
+// ======================================================
+// ADMIN ROUTES
+// ======================================================
 
-router.put("/:id", updateIndustry);
+// Get ALL industries including inactive
+// IMPORTANT: This MUST be before /:slug
+router.get(
+    "/admin",
+    protect,
+    getAdminIndustries
+);
 
-router.delete("/:id", deleteIndustry);
+// Create industry
+router.post(
+    "/",
+    protect,
+    createIndustry
+);
+
+// Update industry
+router.put(
+    "/:id",
+    protect,
+    updateIndustry
+);
+
+// Delete industry
+router.delete(
+    "/:id",
+    protect,
+    deleteIndustry
+);
+
+
+// ======================================================
+// PUBLIC SINGLE INDUSTRY
+// ======================================================
+
+// Get active industry by slug
+// MUST remain LAST
+router.get(
+    "/:slug",
+    getIndustryBySlug
+);
 
 export default router;

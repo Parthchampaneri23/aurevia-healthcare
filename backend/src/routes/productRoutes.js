@@ -12,51 +12,71 @@ import {
 } from "../controllers/productController.js";
 
 import uploadProductImageMiddleware from "../middleware/uploadMiddleware.js";
+import protect from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 // ======================================================
-// Public routes
+// PUBLIC ROUTES
 // ======================================================
 
-// Get active products
+// Get all active products
 router.get("/", getProducts);
 
+
 // ======================================================
-// Admin routes
-// Authentication will be added later
+// ADMIN ROUTES
 // ======================================================
 
 // Get all products including inactive products
-router.get("/admin", getAdminProducts);
+router.get("/admin", protect, getAdminProducts);
 
-// Temporary route to fix old image paths
+// Fix old product image paths
 router.put(
     "/admin/fix-image-paths",
+    protect,
     fixProductImagePaths
 );
 
 // Create product
-router.post("/", createProduct);
+router.post(
+    "/",
+    protect,
+    createProduct
+);
 
 // Update product
-router.put("/:id", updateProduct);
+router.put(
+    "/:id",
+    protect,
+    updateProduct
+);
 
 // Delete product
-router.delete("/:id", deleteProduct);
+router.delete(
+    "/:id",
+    protect,
+    deleteProduct
+);
 
 // Upload product image
 router.post(
     "/:id/image",
+    protect,
     uploadProductImageMiddleware.single("image"),
     uploadProductImage
 );
 
+
 // ======================================================
-// Public single product route
-// Keep this AFTER /admin routes
+// PUBLIC SINGLE PRODUCT
 // ======================================================
 
-router.get("/:slug", getProductBySlug);
+// Get active product by slug
+// Keep this AFTER /admin routes
+router.get(
+    "/:slug",
+    getProductBySlug
+);
 
 export default router;
