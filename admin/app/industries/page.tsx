@@ -11,11 +11,19 @@ import {
     X,
     Loader2,
     Package,
+    Upload,
 } from "lucide-react";
 
 type Company = {
     name: string;
     description: string;
+};
+
+type IndustrySEO = {
+    metaTitle: string;
+    metaDescription: string;
+    metaKeywords: string;
+    schema: Record<string, unknown>;
 };
 
 type Industry = {
@@ -28,6 +36,7 @@ type Industry = {
     overview: string;
     companies?: Company[];
     supportPoints?: string[];
+    seo?: IndustrySEO;
     isActive: boolean;
     createdAt?: string;
     updatedAt?: string;
@@ -46,6 +55,10 @@ const emptyForm = {
     overview: "",
     companies: "",
     supportPoints: "",
+    metaTitle: "",
+    metaDescription: "",
+    metaKeywords: "",
+    schema: "",
     isActive: true,
 };
 
@@ -63,6 +76,7 @@ export default function IndustriesPage() {
 
     const [form, setForm] = useState(emptyForm);
     const [saving, setSaving] = useState(false);
+    const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
     // ======================================================
     // TOKEN
@@ -252,6 +266,7 @@ export default function IndustriesPage() {
     const openAddModal = () => {
         setEditingIndustry(null);
         setForm(emptyForm);
+        setSelectedImage(null);
         setError("");
         setModalOpen(true);
     };
@@ -284,9 +299,16 @@ export default function IndustriesPage() {
             overview: industry.overview || "",
             companies,
             supportPoints,
+            metaTitle: industry.seo?.metaTitle || "",
+            metaDescription: industry.seo?.metaDescription || "",
+            metaKeywords: industry.seo?.metaKeywords || "",
+            schema: industry.seo?.schema
+                ? JSON.stringify(industry.seo.schema, null, 2)
+                : "",
             isActive: industry.isActive,
         });
 
+        setSelectedImage(null);
         setError("");
         setModalOpen(true);
     };
@@ -302,6 +324,7 @@ export default function IndustriesPage() {
 
         setModalOpen(false);
         setEditingIndustry(null);
+        setSelectedImage(null);
         setForm(emptyForm);
     };
 
@@ -377,16 +400,49 @@ export default function IndustriesPage() {
                     .map((point) => point.trim())
                     .filter(Boolean);
 
+            // ==================================================
+            // SEO SCHEMA
+            // ==================================================
+
+            let schema: Record<string, unknown> = {};
+
+            if (form.schema.trim()) {
+                try {
+                    const parsedSchema = JSON.parse(form.schema);
+
+                    if (
+                        typeof parsedSchema !== "object" ||
+                        parsedSchema === null ||
+                        Array.isArray(parsedSchema)
+                    ) {
+                        throw new Error("Schema must be a JSON object.");
+                    }
+
+                    schema = parsedSchema;
+                } catch (schemaError) {
+                    throw new Error(
+                        schemaError instanceof Error
+                            ? schemaError.message
+                            : "Schema Markup must contain valid JSON."
+                    );
+                }
+            }
+
             const payload = {
                 slug: form.slug.trim(),
                 eyebrow: form.eyebrow.trim(),
                 title: form.title.trim(),
                 image: form.image.trim(),
-                description:
-                    form.description.trim(),
+                description: form.description.trim(),
                 overview: form.overview.trim(),
                 companies,
                 supportPoints,
+                seo: {
+                    metaTitle: form.metaTitle.trim(),
+                    metaDescription: form.metaDescription.trim(),
+                    metaKeywords: form.metaKeywords.trim(),
+                    schema,
+                },
                 isActive: form.isActive,
             };
 
@@ -428,6 +484,50 @@ export default function IndustriesPage() {
                     data.message ||
                     "Failed to save industry"
                 );
+            }
+
+            const savedIndustry: Industry = data.industry;
+
+            // ==================================================
+            // IMAGE UPLOAD
+            // ==================================================
+
+            if (selectedImage && savedIndustry?._id) {
+                const imageFormData = new FormData();
+
+                imageFormData.append(
+                    "image",
+                    selectedImage
+                );
+
+                const imageResponse = await fetch(
+                    `${API_URL}/api/industries/${savedIndustry._id}/image`,
+                    {
+                        method: "POST",
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                        body: imageFormData,
+                    }
+                );
+
+                if (imageResponse.status === 401) {
+                    window.location.href = "/login";
+                    return;
+                }
+
+                const imageData =
+                    await imageResponse.json();
+
+                if (
+                    !imageResponse.ok ||
+                    !imageData.success
+                ) {
+                    throw new Error(
+                        imageData.message ||
+                        "Industry saved but image upload failed"
+                    );
+                }
             }
 
             closeModal();
@@ -520,6 +620,16 @@ export default function IndustriesPage() {
             );
         }
     };
+
+    // ======================================================
+    // INPUT CLASSES
+    // ======================================================
+
+    const inputClass =
+        "mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-black outline-none placeholder:text-slate-400 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/10";
+
+    const textareaClass =
+        "mt-2 w-full resize-none rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-black outline-none placeholder:text-slate-400 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/10";
 
     // ======================================================
     // RENDER
@@ -1127,37 +1237,54 @@ export default function IndustriesPage() {
                                 {/* Image */}
                                 <div className="sm:col-span-2">
                                     <label className="text-sm font-semibold text-slate-700">
-                                        Image Path / URL
+                                        Industry Image
                                     </label>
 
-                                    <input
-                                        value={
-                                            form.image
-                                        }
-                                        onChange={(
-                                            event
-                                        ) =>
-                                            setForm(
-                                                (
-                                                    current
-                                                ) => ({
-                                                    ...current,
-                                                    image:
-                                                        event
-                                                            .target
-                                                            .value,
-                                                })
-                                            )
-                                        }
-                                        placeholder="uploads/industries/pharma.jpg"
-                                        className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-black outline-none placeholder:text-slate-400 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/10"
-                                    />
+                                    {/* Preview current/selected image */}
+                                    {(selectedImage || form.image) && (
+                                        <div className="mt-2 mb-3 relative h-40 w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-center">
+                                            <img
+                                                src={
+                                                    selectedImage
+                                                        ? URL.createObjectURL(selectedImage)
+                                                        : getImageUrl(form.image)
+                                                }
+                                                alt="Industry preview"
+                                                className="h-full object-contain"
+                                            />
+                                        </div>
+                                    )}
 
-                                    <p className="mt-1 text-[11px] text-slate-400">
-                                        Enter an existing image
-                                        path or complete image
-                                        URL.
-                                    </p>
+                                    <label className="mt-2 flex cursor-pointer items-center gap-4 rounded-xl border-2 border-dashed border-slate-200 bg-slate-50 p-5 transition hover:border-teal-300 hover:bg-teal-50/30">
+                                        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white text-teal-700 shadow-sm">
+                                            <Upload size={20} />
+                                        </div>
+
+                                        <div className="flex-1">
+                                            <p className="text-sm font-semibold text-slate-900 flex items-center gap-2">
+                                                {selectedImage
+                                                    ? selectedImage.name
+                                                    : "Choose industry image"}
+                                            </p>
+
+                                            <p className="mt-1 text-xs text-slate-500">
+                                                JPG, JPEG, PNG or WEBP · Max 5MB
+                                            </p>
+                                        </div>
+
+                                        <input
+                                            type="file"
+                                            accept="image/jpeg,image/jpg,image/png,image/webp"
+                                            className="hidden"
+                                            onChange={(event) =>
+                                                setSelectedImage(
+                                                    event.target
+                                                        .files?.[0] ||
+                                                    null
+                                                )
+                                            }
+                                        />
+                                    </label>
                                 </div>
 
                                 {/* Description */}
@@ -1299,6 +1426,136 @@ export default function IndustriesPage() {
                                         Enter one support point
                                         per line.
                                     </p>
+                                </div>
+
+                                {/* SEO Settings */}
+                                <div className="sm:col-span-2">
+                                    <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-5">
+                                        <div className="mb-5">
+                                            <div className="flex items-center gap-2">
+                                                <p className="text-sm font-bold text-slate-900">
+                                                    SEO Settings
+                                                </p>
+                                                <span className="rounded-full bg-teal-50 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-teal-700">
+                                                    Basic
+                                                </span>
+                                            </div>
+                                            <p className="mt-1 text-xs text-slate-500">
+                                                Add search engine optimization details for this industry.
+                                            </p>
+                                        </div>
+
+                                        {/* Meta Title */}
+                                        <div>
+                                            <div className="flex items-center justify-between">
+                                                <label className="text-sm font-semibold text-slate-900">
+                                                    Meta Title
+                                                </label>
+                                                <span className="text-[11px] text-slate-400">
+                                                    {form.metaTitle?.length || 0}/60
+                                                </span>
+                                            </div>
+                                            <input
+                                                type="text"
+                                                value={form.metaTitle || ""}
+                                                onChange={(event) =>
+                                                    setForm((current) => ({
+                                                        ...current,
+                                                        metaTitle: event.target.value,
+                                                    }))
+                                                }
+                                                placeholder="e.g. Pharmaceutical Industries We Serve | Aurevia Healthcare"
+                                                maxLength={60}
+                                                className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-black outline-none placeholder:text-slate-400 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/10"
+                                            />
+                                            <p className="mt-1 text-[11px] text-slate-500">
+                                                Recommended: around 50–60 characters.
+                                            </p>
+                                        </div>
+
+                                        {/* Meta Description */}
+                                        <div className="mt-5">
+                                            <div className="flex items-center justify-between">
+                                                <label className="text-sm font-semibold text-slate-900">
+                                                    Meta Description
+                                                </label>
+                                                <span className="text-[11px] text-slate-400">
+                                                    {form.metaDescription?.length || 0}/160
+                                                </span>
+                                            </div>
+                                            <textarea
+                                                rows={3}
+                                                value={form.metaDescription || ""}
+                                                onChange={(event) =>
+                                                    setForm((current) => ({
+                                                        ...current,
+                                                        metaDescription: event.target.value,
+                                                    }))
+                                                }
+                                                placeholder="Enter a short description that may appear in search results..."
+                                                maxLength={160}
+                                                className="mt-2 w-full resize-none rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-black outline-none placeholder:text-slate-400 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/10"
+                                            />
+                                            <p className="mt-1 text-[11px] text-slate-500">
+                                                Recommended: around 140–160 characters.
+                                            </p>
+                                        </div>
+
+                                        {/* Meta Keywords */}
+                                        <div className="mt-5">
+                                            <div className="flex items-center justify-between">
+                                                <label className="text-sm font-semibold text-slate-900">
+                                                    Meta Keywords
+                                                </label>
+                                            </div>
+                                            <input
+                                                type="text"
+                                                value={form.metaKeywords || ""}
+                                                onChange={(event) =>
+                                                    setForm((current) => ({
+                                                        ...current,
+                                                        metaKeywords: event.target.value,
+                                                    }))
+                                                }
+                                                placeholder="e.g. Pharmaceutical, Manufacturing, Healthcare"
+                                                className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-black outline-none placeholder:text-slate-400 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/10"
+                                            />
+                                            <p className="mt-1 text-[11px] text-slate-500">
+                                                Enter keywords separated by commas.
+                                            </p>
+                                        </div>
+
+                                        {/* Schema Markup */}
+                                        <div className="mt-5">
+                                            <div className="flex items-center justify-between">
+                                                <label className="text-sm font-semibold text-slate-900">
+                                                    Schema Markup
+                                                </label>
+                                                <span className="rounded-full bg-teal-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-teal-700">
+                                                    Optional
+                                                </span>
+                                            </div>
+                                            <textarea
+                                                rows={8}
+                                                value={form.schema || ""}
+                                                onChange={(event) =>
+                                                    setForm((current) => ({
+                                                        ...current,
+                                                        schema: event.target.value,
+                                                    }))
+                                                }
+                                                placeholder={`{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Industry Name"
+}`}
+                                                className="mt-2 w-full resize-none rounded-xl border border-slate-200 bg-white px-4 py-3 font-mono text-xs text-black outline-none placeholder:text-slate-400 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/10"
+                                            />
+                                            <p className="mt-1 text-[11px] text-slate-500">
+                                                Paste valid JSON-LD schema here. Leave empty if not required.
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 

@@ -7,8 +7,10 @@ import {
     createIndustry,
     updateIndustry,
     deleteIndustry,
+    uploadIndustryImage,
 } from "../controllers/industryController.js";
 
+import { uploadIndustryImage as uploadIndustryImageMiddleware } from "../middleware/uploadMiddleware.js";
 import protect from "../middleware/authMiddleware.js";
 
 const router = express.Router();
@@ -52,6 +54,14 @@ router.delete(
     "/:id",
     protect,
     deleteIndustry
+);
+
+// Upload industry image
+router.post(
+    "/:id/image",
+    protect,
+    uploadIndustryImageMiddleware.single("image"),
+    uploadIndustryImage
 );
 
 

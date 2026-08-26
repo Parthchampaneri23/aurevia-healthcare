@@ -18,6 +18,13 @@ type Specification = {
     value: string;
 };
 
+type ProductSEO = {
+    metaTitle: string;
+    metaDescription: string;
+    metaKeywords: string;
+    schema: Record<string, unknown>;
+};
+
 type Product = {
     _id: string;
     slug: string;
@@ -28,6 +35,7 @@ type Product = {
     description: string;
     applications?: string[];
     specifications?: Specification[];
+    seo?: ProductSEO;
     isActive: boolean;
 };
 
@@ -43,6 +51,10 @@ const emptyForm = {
     description: "",
     applications: "",
     specifications: "",
+    metaTitle: "",
+    metaDescription: "",
+    metaKeywords: "",
+    schema: "",
     isActive: true,
 };
 
@@ -257,6 +269,12 @@ export default function ProductsPage() {
                             `${item.label}: ${item.value}`
                     )
                     .join("\n") || "",
+            metaTitle: product.seo?.metaTitle || "",
+            metaDescription: product.seo?.metaDescription || "",
+            metaKeywords: product.seo?.metaKeywords || "",
+            schema: product.seo?.schema
+                ? JSON.stringify(product.seo.schema, null, 2)
+                : "",
             isActive: product.isActive,
         });
 
@@ -342,15 +360,48 @@ export default function ProductsPage() {
                     (item) => item.label && item.value
                 );
 
+            // ==================================================
+            // SEO SCHEMA
+            // ==================================================
+
+            let schema: Record<string, unknown> = {};
+
+            if (form.schema.trim()) {
+                try {
+                    const parsedSchema = JSON.parse(form.schema);
+
+                    if (
+                        typeof parsedSchema !== "object" ||
+                        parsedSchema === null ||
+                        Array.isArray(parsedSchema)
+                    ) {
+                        throw new Error("Schema must be a JSON object.");
+                    }
+
+                    schema = parsedSchema;
+                } catch (schemaError) {
+                    throw new Error(
+                        schemaError instanceof Error
+                            ? schemaError.message
+                            : "Schema Markup must contain valid JSON."
+                    );
+                }
+            }
+
             const payload = {
                 name: form.name.trim(),
                 slug: form.slug.trim(),
                 category: form.category.trim(),
-                shortDescription:
-                    form.shortDescription.trim(),
+                shortDescription: form.shortDescription.trim(),
                 description: form.description.trim(),
                 applications,
                 specifications,
+                seo: {
+                    metaTitle: form.metaTitle.trim(),
+                    metaDescription: form.metaDescription.trim(),
+                    metaKeywords: form.metaKeywords.trim(),
+                    schema,
+                },
                 isActive: form.isActive,
             };
 
@@ -999,6 +1050,59 @@ export default function ProductsPage() {
                                     </select>
                                 </div>
 
+                                {/* Image */}
+                                <div className="sm:col-span-2">
+                                    <label className="text-sm font-semibold text-slate-900">
+                                        Product Image
+                                    </label>
+
+                                    {/* Preview current/selected image */}
+                                    {(selectedImage || editingProduct?.image) && (
+                                        <div className="mt-2 mb-3 relative h-40 w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-center">
+                                            <img
+                                                src={
+                                                    selectedImage
+                                                        ? URL.createObjectURL(selectedImage)
+                                                        : getImageUrl(editingProduct?.image || "")
+                                                }
+                                                alt="Product preview"
+                                                className="h-full object-contain"
+                                            />
+                                        </div>
+                                    )}
+
+                                    <label className="mt-2 flex cursor-pointer items-center gap-4 rounded-xl border-2 border-dashed border-slate-200 bg-slate-50 p-5 transition hover:border-teal-300 hover:bg-teal-50/30">
+                                        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white text-teal-700 shadow-sm">
+                                            <Upload size={20} />
+                                        </div>
+
+                                        <div className="flex-1">
+                                            <p className="text-sm font-semibold text-slate-900">
+                                                {selectedImage
+                                                    ? selectedImage.name
+                                                    : "Choose product image"}
+                                            </p>
+
+                                            <p className="mt-1 text-xs text-slate-500">
+                                                JPG, JPEG, PNG or WEBP · Max 5MB
+                                            </p>
+                                        </div>
+
+                                        <input
+                                            type="file"
+                                            accept="image/jpeg,image/jpg,image/png,image/webp"
+                                            className="hidden"
+                                            onChange={(event) =>
+                                                setSelectedImage(
+                                                    event.target
+                                                        .files?.[0] ||
+                                                    null
+                                                )
+                                            }
+                                        />
+                                    </label>
+                                </div>
+
                                 {/* Short Description */}
                                 <div className="sm:col-span-2">
                                     <label className="text-sm font-semibold text-slate-900">
@@ -1112,43 +1216,135 @@ export default function ProductsPage() {
                                     </p>
                                 </div>
 
-                                {/* Image */}
-                                <div className="sm:col-span-2">
-                                    <label className="text-sm font-semibold text-slate-900">
-                                        Product Image
-                                    </label>
+                                 {/* SEO Settings */}
+                                 <div className="sm:col-span-2">
+                                     <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-5">
+                                         <div className="mb-5">
+                                             <div className="flex items-center gap-2">
+                                                 <p className="text-sm font-bold text-slate-900">
+                                                     SEO Settings
+                                                 </p>
+                                                 <span className="rounded-full bg-teal-50 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-teal-700">
+                                                     Basic
+                                                 </span>
+                                             </div>
+                                             <p className="mt-1 text-xs text-slate-500">
+                                                 Add search engine optimization details for this product.
+                                             </p>
+                                         </div>
 
-                                    <label className="mt-2 flex cursor-pointer items-center gap-4 rounded-xl border-2 border-dashed border-slate-200 bg-slate-50 p-5 transition hover:border-teal-300 hover:bg-teal-50/30">
-                                        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white text-teal-700 shadow-sm">
-                                            <Upload size={20} />
-                                        </div>
+                                         {/* Meta Title */}
+                                         <div>
+                                             <div className="flex items-center justify-between">
+                                                 <label className="text-sm font-semibold text-slate-900">
+                                                     Meta Title
+                                                 </label>
+                                                 <span className="text-[11px] text-slate-400">
+                                                     {form.metaTitle.length}/60
+                                                 </span>
+                                             </div>
+                                             <input
+                                                 type="text"
+                                                 value={form.metaTitle}
+                                                 onChange={(event) =>
+                                                     setForm((current) => ({
+                                                         ...current,
+                                                         metaTitle: event.target.value,
+                                                     }))
+                                                 }
+                                                 placeholder="e.g. Paracetamol 500mg Tablets | Aurevia Healthcare"
+                                                 maxLength={60}
+                                                 className={inputClass}
+                                             />
+                                             <p className="mt-1 text-[11px] text-slate-500">
+                                                 Recommended: around 50–60 characters.
+                                             </p>
+                                         </div>
 
-                                        <div className="flex-1">
-                                            <p className="text-sm font-semibold text-slate-900">
-                                                {selectedImage
-                                                    ? selectedImage.name
-                                                    : "Choose product image"}
-                                            </p>
+                                         {/* Meta Description */}
+                                         <div className="mt-5">
+                                             <div className="flex items-center justify-between">
+                                                 <label className="text-sm font-semibold text-slate-900">
+                                                     Meta Description
+                                                 </label>
+                                                 <span className="text-[11px] text-slate-400">
+                                                     {form.metaDescription.length}/160
+                                                 </span>
+                                             </div>
+                                             <textarea
+                                                 rows={3}
+                                                 value={form.metaDescription}
+                                                 onChange={(event) =>
+                                                     setForm((current) => ({
+                                                         ...current,
+                                                         metaDescription: event.target.value,
+                                                     }))
+                                                 }
+                                                 placeholder="Enter a short description that may appear in search results..."
+                                                 maxLength={160}
+                                                 className={textareaClass}
+                                             />
+                                             <p className="mt-1 text-[11px] text-slate-500">
+                                                 Recommended: around 140–160 characters.
+                                             </p>
+                                         </div>
 
-                                            <p className="mt-1 text-xs text-slate-500">
-                                                JPG, JPEG, PNG or WEBP · Max 5MB
-                                            </p>
-                                        </div>
+                                         {/* Meta Keywords */}
+                                         <div className="mt-5">
+                                             <div className="flex items-center justify-between">
+                                                 <label className="text-sm font-semibold text-slate-900">
+                                                     Meta Keywords
+                                                 </label>
+                                             </div>
+                                             <input
+                                                 type="text"
+                                                 value={form.metaKeywords}
+                                                 onChange={(event) =>
+                                                     setForm((current) => ({
+                                                         ...current,
+                                                         metaKeywords: event.target.value,
+                                                     }))
+                                                 }
+                                                 placeholder="e.g. Paracetamol, Tablets, Pain Relief"
+                                                 className={inputClass}
+                                             />
+                                             <p className="mt-1 text-[11px] text-slate-500">
+                                                 Enter keywords separated by commas.
+                                             </p>
+                                         </div>
 
-                                        <input
-                                            type="file"
-                                            accept="image/jpeg,image/jpg,image/png,image/webp"
-                                            className="hidden"
-                                            onChange={(event) =>
-                                                setSelectedImage(
-                                                    event.target
-                                                        .files?.[0] ||
-                                                    null
-                                                )
-                                            }
-                                        />
-                                    </label>
-                                </div>
+                                         {/* Schema Markup */}
+                                         <div className="mt-5">
+                                             <div className="flex items-center justify-between">
+                                                 <label className="text-sm font-semibold text-slate-900">
+                                                     Schema Markup
+                                                 </label>
+                                                 <span className="rounded-full bg-teal-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-teal-700">
+                                                     Optional
+                                                 </span>
+                                             </div>
+                                             <textarea
+                                                 rows={8}
+                                                 value={form.schema}
+                                                 onChange={(event) =>
+                                                     setForm((current) => ({
+                                                         ...current,
+                                                         schema: event.target.value,
+                                                     }))
+                                                 }
+                                                 placeholder={`{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Product Name"
+}`}
+                                                 className={`${textareaClass} font-mono text-xs`}
+                                             />
+                                             <p className="mt-1 text-[11px] text-slate-500">
+                                                 Paste valid JSON-LD schema here. Leave empty if not required.
+                                             </p>
+                                         </div>
+                                     </div>
+                                 </div>
                             </div>
 
                             {/* Modal Footer */}

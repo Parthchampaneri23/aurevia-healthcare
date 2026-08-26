@@ -295,3 +295,44 @@ export const deleteIndustry = async (req, res, next) => {
         next(error);
     }
 };
+
+// ======================================================
+// UPLOAD INDUSTRY IMAGE
+// POST /api/industries/:id/image
+// ADMIN
+// ======================================================
+export const uploadIndustryImage = async (req, res, next) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({
+                success: false,
+                message: "Please upload an image",
+            });
+        }
+
+        const industry = await Industry.findByIdAndUpdate(
+            req.params.id,
+            {
+                image: `/uploads/industries/${req.file.filename}`,
+            },
+            {
+                new: true,
+            }
+        );
+
+        if (!industry) {
+            return res.status(404).json({
+                success: false,
+                message: "Industry not found",
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Industry image uploaded successfully",
+            industry,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
