@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ShieldCheck, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import Breadcrumb from "@/app/components/common/Breadcrumb";
 
 export default function PrivacyPolicyPage() {
     return (
@@ -27,7 +28,7 @@ export default function PrivacyPolicyPage() {
             `}} />
 
             {/* Hero */}
-            <section className="relative h-[200px] overflow-hidden sm:h-[240px] lg:h-[280px]">
+            <section className="relative h-[200px] overflow-hidden sm:h-[240px] lg:h-[280px] flex items-center">
                 <Image
                     src="/hero/legalbanner.png"
                     alt="Aurevia Healthcare Privacy Policy"
@@ -43,23 +44,20 @@ export default function PrivacyPolicyPage() {
                 <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center px-6 lg:px-8">
                     <div className="max-w-2xl text-left text-white animate-hero-content">
                         <p className="text-xs font-semibold uppercase tracking-[0.25em] text-teal-300">
-                            Legal & Privacy
+                            Legal &amp; Privacy
                         </p>
 
-                        <h1 className="mt-2 text-2xl font-bold leading-tight sm:text-3xl lg:text-4xl">
+                        <h1 className="mt-1 text-2xl font-bold leading-tight sm:text-3xl lg:text-4xl">
                             Privacy Policy
                         </h1>
 
-                        <p className="mt-2 max-w-xl text-xs leading-relaxed text-slate-200 sm:text-sm">
-                            How Aurevia Healthcare handles information submitted
-                            through our website.
-                        </p>
+                        <Breadcrumb items={[{ name: "Privacy Policy" }]} />
                     </div>
                 </div>
             </section>
 
             {/* Content */}
-            <section className="px-6 py-16 sm:py-20 lg:px-8">
+            <section className="px-6 py-12 sm:py-12 lg:px-8">
                 <div className="mx-auto max-w-4xl">
                     <motion.div
                         initial={{ opacity: 0, y: 25 }}

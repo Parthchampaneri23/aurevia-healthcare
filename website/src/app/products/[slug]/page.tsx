@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, FileText } from "lucide-react";
 import { notFound } from "next/navigation";
+import FAQSection from "@/app/components/common/FAQSection";
+import Breadcrumb from "@/app/components/common/Breadcrumb";
 
 type ProductSpecification = {
     label: string;
@@ -30,6 +32,25 @@ type ProductDetailsPageProps = {
 const API_URL =
     process.env.NEXT_PUBLIC_API_URL ||
     "https://aurevia-healthcare.onrender.com";
+
+const productDetailFaqs = [
+    {
+        question: "What quality control documentation and certificates are supplied with this product?",
+        answer: "Every production lot is dispatched with a comprehensive Batch Certificate of Analysis (COA), Method of Analysis (MOA), Material Safety Data Sheet (MSDS), and Certificate of Free Sale (CFS) where applicable. Accelerated and real-time stability data generated under ICH climatic zones are also available for dossier registrations.",
+    },
+    {
+        question: "What storage conditions, shelf-life, and packaging options apply to this product?",
+        answer: "Product storage recommendations follow pharmacopoeial guidelines (typically stored below 25°C / 30°C in controlled moisture conditions). Standard shelf life ranges from 24 to 36 months depending on active ingredient stability. Primary packaging options include Alu-Alu blister packs, PVC/PVDC blisters, HDPE containers, and sterile glass vials/ampoules.",
+    },
+    {
+        question: "Can Aurevia customize dosage strengths, active ingredients, or private label branding?",
+        answer: "Yes, we specialize in contract manufacturing and OEM customization. We can adjust active ingredient strengths, tablet coatings, flavoring profiles, primary packaging formats, and secondary outer carton branding to comply with specific target market regulatory requirements.",
+    },
+    {
+        question: "How do commercial buyers request volume pricing, sample batches, and lead times?",
+        answer: "Click the 'Request a Quote' button on this product page or contact our commercial export desk with your target volume, destination country, and packaging requirements. Our sales engineers will evaluate batch sizes and deliver a detailed commercial quote with production lead times.",
+    },
+];
 
 /* ----------------------------------
    Product Image URL Helper
@@ -173,48 +194,60 @@ export default async function ProductDetailsPage({
             />
 
             {/* Product Banner */}
-            <section className="relative h-[180px] overflow-hidden sm:h-[210px] lg:h-[240px]">
+            <section className="relative h-[240px] w-full overflow-hidden sm:h-[280px] lg:h-[320px]">
                 <Image
                     src="/products/productbanner.png"
                     alt={product.name}
                     fill
                     priority
-                    className="object-cover"
+                    className="object-cover object-center"
                     sizes="100vw"
                 />
 
-                <div className="absolute inset-0 bg-gradient-to-r from-[#08243a]/85 via-[#123B5D]/65 to-[#123B5D]/20" />
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-900/65 to-transparent" />
 
-                <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-center px-6 lg:px-8">
-                    <div className="mb-3">
-                        <Link
-                            href="/products"
-                            className="group inline-flex items-center gap-1.5 rounded-full border border-teal-500/30 bg-teal-950/60 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.1em] text-teal-300 backdrop-blur-sm transition-all duration-300 hover:border-[#123B5D]/40 hover:bg-[#123B5D] hover:text-white"
-                        >
-                            <ArrowLeft
-                                size={14}
-                                className="transition-transform duration-300 group-hover:-translate-x-0.5"
-                            />
+                {/* Banner Content */}
+                <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center px-6 lg:px-8">
+                    <div className="max-w-2xl text-left">
+                        <div className="mb-2.5 inline-flex items-center gap-2 rounded-full border border-teal-400/30 bg-teal-950/60 px-3.5 py-1 backdrop-blur-md">
+                            <span className="h-2 w-2 rounded-full bg-teal-400 animate-pulse" />
+                            <span className="text-[11px] font-bold uppercase tracking-[0.22em] text-teal-300">
+                                {product.category}
+                            </span>
+                        </div>
 
-                            Back to Products
-                        </Link>
-                    </div>
-
-                    <div className="max-w-2xl text-white">
-                        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-teal-300">
-                            {product.category}
-                        </p>
-
-                        <h1 className="mt-2 text-2xl font-bold leading-tight sm:text-3xl lg:text-4xl">
+                        <h1 className="text-3xl font-extrabold tracking-tight text-white drop-shadow-md sm:text-4xl lg:text-5xl">
                             {product.name}
                         </h1>
+
+                        {/* Breadcrumb on Banner */}
+                        <Breadcrumb
+                            items={[
+                                { name: "Products", href: "/products" },
+                                { name: product.name }
+                            ]}
+                        />
                     </div>
                 </div>
             </section>
 
             {/* Product Overview */}
-            <section className="animate-page-fade py-12 lg:py-12">
+            <section className="animate-page-fade py-8 lg:py-12">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                    <div className="mb-6">
+                        <Link
+                            href="/products"
+                            className="group inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-100 px-4 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-[#123B5D] hover:text-white"
+                        >
+                            <ArrowLeft
+                                size={14}
+                                className="transition-transform duration-300 group-hover:-translate-x-0.5"
+                            />
+                            Back to Products
+                        </Link>
+                    </div>
+
                     <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
 
                         {/* Product Image */}
@@ -381,6 +414,15 @@ export default async function ProductDetailsPage({
                     </div>
                 </div>
             </section>
+
+            {/* Product Specific FAQs */}
+            <FAQSection
+                eyebrow={`FAQS ABOUT ${product.name.toUpperCase()}`}
+                title={`Product FAQs - ${product.name}`}
+                subtitle="Common questions regarding storage, quality control documentation, private labeling, and commercial ordering for this formulation."
+                faqs={productDetailFaqs}
+                showContactCTA={false}
+            />
         </main>
     );
-}
+}

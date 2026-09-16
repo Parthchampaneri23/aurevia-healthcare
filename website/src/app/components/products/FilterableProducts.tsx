@@ -217,7 +217,7 @@ export default function FilterableProducts() {
 
             {/* Loading */}
             {loading && (
-                <div className="mt-16 py-16 text-center">
+                <div className="mt-16 py-12 text-center">
                     <div className="mx-auto h-10 w-10 animate-spin rounded-full border-4 border-slate-200 border-t-[#0F766E]" />
 
                     <p className="mt-4 text-sm text-slate-500">

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, CheckCircle2, Building2 } from "lucide-react";
 import industriesData from "@/app/components/industries/industryData";
+import Breadcrumb from "@/app/components/common/Breadcrumb";
 
 type IndustryDetailsPageProps = {
     params: Promise<{
@@ -58,51 +59,61 @@ export default async function IndustryDetailsPage({
             />
 
             {/* ==================== HERO BANNER ==================== */}
-            <section className="relative overflow-hidden">
-                <div className="relative h-[200px] sm:h-[240px] lg:h-[280px]">
-                    <Image
-                        src="/industries/industrybanner.png"
-                        alt={industry.title}
-                        fill
-                        priority
-                        unoptimized={true}
-                        className="object-cover"
-                        sizes="100vw"
-                    />
+            <section className="relative h-[240px] w-full overflow-hidden sm:h-[280px] lg:h-[320px]">
+                <Image
+                    src="/industries/industrybanner.png"
+                    alt={industry.title}
+                    fill
+                    priority
+                    unoptimized={true}
+                    className="object-cover object-center"
+                    sizes="100vw"
+                />
 
-                    {/* Dark overlay REMOVED */}
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-900/65 to-transparent" />
 
-                    <div className="absolute inset-0">
-                        <div className="mx-auto flex h-full max-w-7xl flex-col justify-center px-6 lg:px-8">
-                            <div className="mb-3">
-                                <Link
-                                    href="/industries"
-                                    className="group inline-flex items-center gap-1.5 rounded-full border border-teal-500/30 bg-teal-950/60 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.1em] text-teal-300 backdrop-blur-sm transition-all duration-300 hover:bg-[#123B5D] hover:text-white hover:border-[#123B5D]/40"
-                                >
-                                    <ArrowLeft
-                                        size={14}
-                                        className="transition-transform duration-300 group-hover:-translate-x-0.5"
-                                    />
-                                    Back to Industries
-                                </Link>
-                            </div>
-                            <div className="max-w-2xl">
-                                <span className="inline-block rounded-full border border-teal-500/30 bg-teal-950/50 px-3 py-1 text-xs font-bold uppercase tracking-[0.25em] text-teal-300">
-                                    {industry.eyebrow}
-                                </span>
-
-                                <h1 className="mt-2 text-2xl font-bold leading-tight text-white sm:text-3xl lg:text-4xl">
-                                    {industry.title}
-                                </h1>
-                            </div>
+                {/* Banner Content */}
+                <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center px-6 lg:px-8">
+                    <div className="max-w-2xl text-left">
+                        <div className="mb-2.5 inline-flex items-center gap-2 rounded-full border border-teal-400/30 bg-teal-950/60 px-3.5 py-1 backdrop-blur-md">
+                            <span className="h-2 w-2 rounded-full bg-teal-400 animate-pulse" />
+                            <span className="text-[11px] font-bold uppercase tracking-[0.22em] text-teal-300">
+                                {industry.eyebrow}
+                            </span>
                         </div>
+
+                        <h1 className="text-3xl font-extrabold tracking-tight text-white drop-shadow-md sm:text-4xl lg:text-5xl">
+                            {industry.title}
+                        </h1>
+
+                        {/* Breadcrumb on Banner */}
+                        <Breadcrumb
+                            items={[
+                                { name: "Industries", href: "/industries" },
+                                { name: industry.title }
+                            ]}
+                        />
                     </div>
                 </div>
             </section>
 
             {/* ==================== DETAIL CONTENT ==================== */}
-            <section className="animate-page-fade bg-slate-50 py-12 lg:py-12">
+            <section className="animate-page-fade bg-slate-50 py-8 lg:py-12">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                    <div className="mb-6">
+                        <Link
+                            href="/industries"
+                            className="group inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-[#123B5D] hover:text-white"
+                        >
+                            <ArrowLeft
+                                size={14}
+                                className="transition-transform duration-300 group-hover:-translate-x-0.5"
+                            />
+                            Back to Industries
+                        </Link>
+                    </div>
+
                     <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-16">
 
                         {/* ==================== LEFT CONTENT ==================== */}

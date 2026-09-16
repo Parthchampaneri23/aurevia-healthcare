@@ -1,6 +1,7 @@
 import FilterableProducts from "@/app/components/products/FilterableProducts";
 import Image from "next/image";
 import { Suspense } from "react";
+import Breadcrumb from "@/app/components/common/Breadcrumb";
 
 export default function ProductsPage() {
     return (
@@ -17,36 +18,35 @@ export default function ProductsPage() {
             `}} />
 
             {/* Products Banner */}
-            <section className="relative h-[200px] overflow-hidden sm:h-[240px] lg:h-[280px]">
+            <section className="relative h-[240px] w-full overflow-hidden sm:h-[280px] lg:h-[320px]">
                 <Image
                     src="/products/productbanner.png"
-                    alt="Aurevia Healthcare Products"
+                    alt="Products"
                     fill
                     priority
-                    className="object-cover"
+                    className="object-cover object-center"
                     sizes="100vw"
                 />
 
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-r from-[#08243a]/85 via-[#123B5D]/65 to-[#123B5D]/20" />
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-900/65 to-transparent" />
 
                 {/* Banner Content */}
                 <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center px-6 lg:px-8">
-                    <div className="max-w-2xl text-left text-white">
-                        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-teal-300">
-                            Our Products
-                        </p>
+                    <div className="max-w-2xl text-left">
+                        <div className="mb-2.5 inline-flex items-center gap-2 rounded-full border border-teal-400/30 bg-teal-950/60 px-3.5 py-1 backdrop-blur-md">
+                            <span className="h-2 w-2 rounded-full bg-teal-400 animate-pulse" />
+                            <span className="text-[11px] font-bold uppercase tracking-[0.22em] text-teal-300">
+                                Product Portfolio
+                            </span>
+                        </div>
 
-                        <h1 className="mt-2 text-2xl font-bold leading-tight sm:text-3xl lg:text-4xl">
-                            Pharmaceutical Solutions
+                        <h1 className="text-3xl font-extrabold tracking-tight text-white drop-shadow-md sm:text-4xl lg:text-5xl">
+                            Products
                         </h1>
 
-                        <p className="mt-2 max-w-xl text-xs leading-relaxed text-white/85 sm:text-sm">
-                            Explore our pharmaceutical and nutraceutical
-                            product portfolio developed with a focus on
-                            quality, consistency and reliable healthcare
-                            solutions.
-                        </p>
+                        {/* Breadcrumb on Banner */}
+                        <Breadcrumb items={[{ name: "Products" }]} />
                     </div>
                 </div>
             </section>
@@ -63,4 +63,4 @@ export default function ProductsPage() {
             </section>
         </main>
     );
-}
+}

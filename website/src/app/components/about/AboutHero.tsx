@@ -1,40 +1,38 @@
 import Image from "next/image";
+import Breadcrumb from "@/app/components/common/Breadcrumb";
 
 export default function AboutHero() {
     return (
-        <section className="relative h-[200px] w-full overflow-hidden sm:h-[240px] lg:h-[280px]">
+        <section className="relative h-[240px] w-full overflow-hidden sm:h-[280px] lg:h-[320px]">
             {/* Background Image */}
             <Image
                 src="/about/aboutbanner.png"
-                alt="About Aurevia Healthcare"
+                alt="About Us"
                 fill
                 priority
-                className="object-cover"
+                className="object-cover object-center"
                 sizes="100vw"
             />
 
-            {/* Overlay */}
-            <div className="absolute inset-0 bg-slate-950/55" />
+            {/* Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-900/65 to-transparent" />
 
             {/* Content */}
             <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center px-6 lg:px-8">
-                <div className="max-w-2xl text-left text-white">
-                    <p className="text-xs font-semibold uppercase tracking-[0.25em] text-white/80">
-                        About Aurevia
-                    </p>
-
-                    <h1 className="mt-2 text-2xl font-bold leading-tight sm:text-3xl lg:text-4xl">
-                        Building Trust Through
-                        <span className="block text-white/85">
-                            Pharmaceutical Excellence
+                <div className="max-w-2xl text-left">
+                    <div className="mb-2.5 inline-flex items-center gap-2 rounded-full border border-teal-400/30 bg-teal-950/60 px-3.5 py-1 backdrop-blur-md">
+                        <span className="h-2 w-2 rounded-full bg-teal-400 animate-pulse" />
+                        <span className="text-[11px] font-bold uppercase tracking-[0.22em] text-teal-300">
+                            Aurevia Healthcare
                         </span>
+                    </div>
+
+                    <h1 className="text-3xl font-extrabold tracking-tight text-white drop-shadow-md sm:text-4xl lg:text-5xl">
+                        About Us
                     </h1>
 
-                    <p className="mt-2 max-w-xl text-xs leading-relaxed text-white/80 sm:text-sm">
-                        Delivering quality-driven pharmaceutical manufacturing
-                        solutions through reliable processes, modern
-                        capabilities and long-term partnerships.
-                    </p>
+                    {/* Breadcrumb on Banner */}
+                    <Breadcrumb items={[{ name: "About Us" }]} />
                 </div>
             </div>
         </section>

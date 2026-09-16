@@ -7,11 +7,10 @@ import { useState } from "react";
 import products from "@/app/components/products/productData";
 
 const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
+    { name: "About Us", href: "/about" },
     { name: "Industries", href: "/industries" },
     { name: "Careers", href: "/careers" },
-    { name: "Contact", href: "/contact" },
+    { name: "Contact Us", href: "/contact" },
 ];
 
 const categoryOrder = [
@@ -87,22 +86,14 @@ export default function Navbar() {
                 </div>
 
                 {/* Desktop Navigation */}
-                <div className="hidden items-center gap-x-8 lg:flex">
+                <div className="hidden items-center gap-x-7 lg:flex">
 
-                    {/* Home */}
-                    <Link
-                        href="/"
-                        className="relative text-sm font-medium text-slate-700 transition-colors duration-200 hover:text-[#0F766E] after:absolute after:bottom-[-6px] after:left-0 after:h-[2px] after:w-0 after:bg-[#0F766E] after:transition-all after:duration-300 hover:after:w-full"
-                    >
-                        Home
-                    </Link>
-
-                    {/* About */}
+                    {/* About Us */}
                     <Link
                         href="/about"
-                        className="relative text-sm font-medium text-slate-700 transition-colors duration-200 hover:text-[#0F766E] after:absolute after:bottom-[-6px] after:left-0 after:h-[2px] after:w-0 after:bg-[#0F766E] after:transition-all after:duration-300 hover:after:w-full"
+                        className="relative text-base font-semibold text-slate-800 transition-colors duration-200 hover:text-[#0F766E] after:absolute after:bottom-[-6px] after:left-0 after:h-[2px] after:w-0 after:bg-[#0F766E] after:transition-all after:duration-300 hover:after:w-full"
                     >
-                        About
+                        About Us
                     </Link>
 
                     {/* Products Mega Menu */}
@@ -114,12 +105,12 @@ export default function Navbar() {
                         <Link
                             href="/products"
                             onClick={() => setProductsOpen(false)}
-                            className="relative flex items-center gap-1.5 py-9 text-sm font-medium text-slate-700 transition-colors duration-200 hover:text-[#0F766E]"
+                            className="relative flex items-center gap-1.5 py-9 text-base font-semibold text-slate-800 transition-colors duration-200 hover:text-[#0F766E]"
                         >
                             Products
 
                             <ChevronDown
-                                size={15}
+                                size={16}
                                 className={`transition-transform duration-200 ${productsOpen ? "rotate-180" : ""
                                     }`}
                             />
@@ -238,7 +229,7 @@ export default function Navbar() {
                     {/* Industries */}
                     <Link
                         href="/industries"
-                        className="relative text-sm font-medium text-slate-700 transition-colors duration-200 hover:text-[#0F766E] after:absolute after:bottom-[-6px] after:left-0 after:h-[2px] after:w-0 after:bg-[#0F766E] after:transition-all after:duration-300 hover:after:w-full"
+                        className="relative text-base font-semibold text-slate-800 transition-colors duration-200 hover:text-[#0F766E] after:absolute after:bottom-[-6px] after:left-0 after:h-[2px] after:w-0 after:bg-[#0F766E] after:transition-all after:duration-300 hover:after:w-full"
                     >
                         Industries
                     </Link>
@@ -246,17 +237,25 @@ export default function Navbar() {
                     {/* Careers */}
                     <Link
                         href="/careers"
-                        className="relative text-sm font-medium text-slate-700 transition-colors duration-200 hover:text-[#0F766E] after:absolute after:bottom-[-6px] after:left-0 after:h-[2px] after:w-0 after:bg-[#0F766E] after:transition-all after:duration-300 hover:after:w-full"
+                        className="relative text-base font-semibold text-slate-800 transition-colors duration-200 hover:text-[#0F766E] after:absolute after:bottom-[-6px] after:left-0 after:h-[2px] after:w-0 after:bg-[#0F766E] after:transition-all after:duration-300 hover:after:w-full"
                     >
                         Careers
                     </Link>
 
-                    {/* Contact */}
+                    {/* Contact Us */}
                     <Link
                         href="/contact"
-                        className="relative text-sm font-medium text-slate-700 transition-colors duration-200 hover:text-[#0F766E] after:absolute after:bottom-[-6px] after:left-0 after:h-[2px] after:w-0 after:bg-[#0F766E] after:transition-all after:duration-300 hover:after:w-full"
+                        className="relative text-base font-semibold text-slate-800 transition-colors duration-200 hover:text-[#0F766E] after:absolute after:bottom-[-6px] after:left-0 after:h-[2px] after:w-0 after:bg-[#0F766E] after:transition-all after:duration-300 hover:after:w-full"
                     >
-                        Contact
+                        Contact Us
+                    </Link>
+
+                    {/* Blog */}
+                    <Link
+                        href="/blog"
+                        className="relative text-base font-semibold text-slate-800 transition-colors duration-200 hover:text-[#0F766E] after:absolute after:bottom-[-6px] after:left-0 after:h-[2px] after:w-0 after:bg-[#0F766E] after:transition-all after:duration-300 hover:after:w-full"
+                    >
+                        Blog
                     </Link>
                 </div>
 
@@ -264,7 +263,7 @@ export default function Navbar() {
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
                     <Link
                         href="/contact#contact-form"
-                        className="rounded-lg bg-[#123B5D] px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.02] hover:bg-[#0F766E] hover:shadow-md active:scale-[0.98]"
+                        className="rounded-lg bg-[#123B5D] px-5 py-2.5 text-base font-semibold text-white transition-all duration-200 hover:scale-[1.02] hover:bg-[#0F766E] hover:shadow-md active:scale-[0.98]"
                     >
                         Request a Quote
                     </Link>
@@ -276,21 +275,13 @@ export default function Navbar() {
                 <div className="border-t border-slate-200 bg-white lg:hidden">
                     <div className="mx-auto flex max-h-[calc(100vh-96px)] max-w-7xl flex-col overflow-y-auto px-6 py-4">
 
-                        {/* Home + About */}
-                        <Link
-                            href="/"
-                            onClick={closeMenus}
-                            className="border-b border-slate-100 py-3 text-sm font-medium text-slate-700 hover:text-[#0F766E]"
-                        >
-                            Home
-                        </Link>
-
+                        {/* About Us */}
                         <Link
                             href="/about"
                             onClick={closeMenus}
-                            className="border-b border-slate-100 py-3 text-sm font-medium text-slate-700 hover:text-[#0F766E]"
+                            className="border-b border-slate-100 py-3 text-base font-semibold text-slate-800 hover:text-[#0F766E]"
                         >
-                            About
+                            About Us
                         </Link>
 
                         {/* Mobile Products */}
@@ -299,7 +290,7 @@ export default function Navbar() {
                             onClick={() =>
                                 setProductsOpen((prev) => !prev)
                             }
-                            className="flex w-full items-center justify-between border-b border-slate-100 py-3 text-left text-sm font-medium text-slate-700 hover:text-[#0F766E]"
+                            className="flex w-full items-center justify-between border-b border-slate-100 py-3 text-left text-base font-semibold text-slate-800 hover:text-[#0F766E]"
                         >
                             Products
 
@@ -348,7 +339,7 @@ export default function Navbar() {
                         <Link
                             href="/industries"
                             onClick={closeMenus}
-                            className="border-b border-slate-100 py-3 text-sm font-medium text-slate-700 hover:text-[#0F766E]"
+                            className="border-b border-slate-100 py-3 text-base font-semibold text-slate-800 hover:text-[#0F766E]"
                         >
                             Industries
                         </Link>
@@ -356,7 +347,7 @@ export default function Navbar() {
                         <Link
                             href="/careers"
                             onClick={closeMenus}
-                            className="border-b border-slate-100 py-3 text-sm font-medium text-slate-700 hover:text-[#0F766E]"
+                            className="border-b border-slate-100 py-3 text-base font-semibold text-slate-800 hover:text-[#0F766E]"
                         >
                             Careers
                         </Link>
@@ -364,9 +355,17 @@ export default function Navbar() {
                         <Link
                             href="/contact"
                             onClick={closeMenus}
-                            className="border-b border-slate-100 py-3 text-sm font-medium text-slate-700 hover:text-[#0F766E]"
+                            className="border-b border-slate-100 py-3 text-base font-semibold text-slate-800 hover:text-[#0F766E]"
                         >
-                            Contact
+                            Contact Us
+                        </Link>
+
+                        <Link
+                            href="/blog"
+                            onClick={closeMenus}
+                            className="border-b border-slate-100 py-3 text-base font-semibold text-slate-800 hover:text-[#0F766E]"
+                        >
+                            Blog
                         </Link>
 
                         {/* Mobile Quote */}

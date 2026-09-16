@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const slides = [
@@ -62,30 +61,20 @@ export default function Hero() {
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentSlide((prev) => (prev + 1) % slides.length);
-        }, 5000);
+        }, 3000);
 
         return () => clearInterval(interval);
     }, []);
-
-    const nextSlide = () => {
-        setCurrentSlide((prev) => (prev + 1) % slides.length);
-    };
-
-    const previousSlide = () => {
-        setCurrentSlide(
-            (prev) => (prev - 1 + slides.length) % slides.length
-        );
-    };
 
     return (
         <section className="relative w-full overflow-hidden bg-slate-100">
 
             {/* Slides */}
-            <div className="relative h-[200px] sm:h-[240px] lg:h-[280px]">
+            <div className="relative h-[480px] sm:h-[540px] md:h-[580px] lg:h-[640px]">
                 {slides.map((slide, index) => (
                     <div
                         key={slide.image}
-                        className={`absolute inset-0 transition-opacity duration-700 ${index === currentSlide
+                        className={`absolute inset-0 transition-opacity duration-300 ease-in-out ${index === currentSlide
                             ? "z-10 opacity-100"
                             : "z-0 opacity-0"
                             }`}
@@ -101,41 +90,41 @@ export default function Hero() {
                         />
 
                         {/* Dark Gradient Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/75 via-slate-900/45 to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-900/60 to-slate-900/20" />
 
                         {/* Content */}
                         <div className="absolute inset-0">
                             <div className="mx-auto flex h-full max-w-7xl items-center px-6 lg:px-8">
-                                <div className="max-w-xl text-white">
+                                <div className="max-w-2xl text-white">
 
                                     {/* Eyebrow */}
-                                    <p className="mb-1.5 text-[9px] font-semibold uppercase tracking-[0.22em] text-white/80 sm:text-xs">
+                                    <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-cyan-300 sm:text-sm">
                                         {slide.eyebrow}
                                     </p>
 
                                     {/* Heading */}
-                                    <h1 className="text-xl font-bold leading-tight sm:text-2xl lg:text-3xl">
+                                    <h1 className="text-2xl font-bold leading-tight sm:text-4xl lg:text-5xl lg:leading-tight">
                                         {slide.title}
                                     </h1>
 
                                     {/* Description */}
-                                    <p className="mt-1.5 max-w-lg text-[10px] leading-relaxed text-white/85 sm:text-xs sm:leading-relaxed">
+                                    <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-200 sm:mt-4 sm:text-base sm:leading-relaxed lg:text-lg">
                                         {slide.description}
                                     </p>
 
                                     {/* Buttons */}
-                                    <div className="mt-3.5 flex flex-wrap gap-2">
+                                    <div className="mt-6 flex flex-wrap gap-3 sm:mt-8 sm:gap-4">
                                         <Link
                                             href={slide.primaryLink}
-                                            className="inline-flex items-center rounded-lg bg-[#123B5D] px-3.5 py-1.5 text-[11px] font-semibold text-white shadow-md transition hover:bg-[#0d2d46] sm:px-4.5 sm:py-2 sm:text-xs"
+                                            className="inline-flex items-center rounded-lg bg-[#123B5D] px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition hover:bg-[#0d2d46] hover:shadow-xl sm:px-6 sm:py-3 sm:text-base"
                                         >
                                             {slide.primaryButton}
-                                            <span className="ml-1.5">→</span>
+                                            <span className="ml-2">→</span>
                                         </Link>
 
                                         <Link
                                             href={slide.secondaryLink}
-                                            className="inline-flex items-center rounded-lg border border-white/70 bg-white/10 px-3.5 py-1.5 text-[11px] font-semibold text-white backdrop-blur-sm transition hover:bg-white hover:text-[#123B5D] sm:px-4.5 sm:py-2 sm:text-xs"
+                                            className="inline-flex items-center rounded-lg border border-white/70 bg-white/10 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white hover:text-[#123B5D] sm:px-6 sm:py-3 sm:text-base"
                                         >
                                             {slide.secondaryButton}
                                         </Link>
@@ -148,37 +137,17 @@ export default function Hero() {
                 ))}
             </div>
 
-            {/* Previous Button */}
-            <button
-                type="button"
-                onClick={previousSlide}
-                aria-label="Previous slide"
-                className="absolute left-3 top-1/2 z-20 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-[#123B5D] shadow-md backdrop-blur-sm transition hover:bg-white sm:left-5 sm:h-8 sm:w-8"
-            >
-                <ChevronLeft size={16} />
-            </button>
-
-            {/* Next Button */}
-            <button
-                type="button"
-                onClick={nextSlide}
-                aria-label="Next slide"
-                className="absolute right-3 top-1/2 z-20 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-[#123B5D] shadow-md backdrop-blur-sm transition hover:bg-white sm:right-5 sm:h-8 sm:w-8"
-            >
-                <ChevronRight size={16} />
-            </button>
-
-            {/* Dots */}
-            <div className="absolute bottom-2.5 left-1/2 z-20 flex -translate-x-1/2 items-center gap-1.2">
+            {/* Pagination Dots */}
+            <div className="absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2">
                 {slides.map((_, index) => (
                     <button
                         key={index}
                         type="button"
                         onClick={() => setCurrentSlide(index)}
                         aria-label={`Go to slide ${index + 1}`}
-                        className={`h-1.5 rounded-full transition-all duration-300 ${index === currentSlide
-                            ? "w-5 bg-[#123B5D]"
-                            : "w-1.5 bg-white/80 hover:bg-white"
+                        className={`h-2 rounded-full transition-all duration-300 ${index === currentSlide
+                            ? "w-8 bg-white"
+                            : "w-2 bg-white/50 hover:bg-white/80"
                             }`}
                     />
                 ))}
