@@ -31,11 +31,11 @@ export default function BlogHero() {
 
           {/* Heading */}
           <h1 className="text-3xl font-extrabold tracking-tight text-white drop-shadow-md sm:text-4xl lg:text-5xl">
-            Blog &amp; Insights
+            Blogs &amp; Insights
           </h1>
 
           {/* Breadcrumb */}
-          <Breadcrumb items={[{ name: "Blog" }]} />
+          <Breadcrumb items={[{ name: "Blogs" }]} />
 
         </div>
       </div>

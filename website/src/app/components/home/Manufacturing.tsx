@@ -40,17 +40,18 @@ export default function Manufacturing() {
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
 
                 {/* Main Content */}
-                <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+                <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 lg:items-stretch">
 
                     {/* Image with Hover Zoom & Floating Badge */}
-                    <div className="group relative overflow-hidden rounded-3xl bg-slate-100 shadow-2xl transition-all duration-500 hover:shadow-cyan-900/10">
-                        <div className="overflow-hidden">
+                    <div className="group relative flex overflow-hidden rounded-3xl bg-slate-100 shadow-2xl transition-all duration-500 hover:shadow-cyan-900/10 min-h-[380px] sm:min-h-[440px] lg:min-h-full">
+                        <div className="overflow-hidden w-full h-full relative">
                             <Image
-                                src="/hero/manufacture%20intelligence.png"
+                                src="/hero/manufacture%20intelligence.png?v=2"
                                 alt="Aurevia Healthcare manufacturing facility"
                                 width={900}
                                 height={650}
-                                className="h-[400px] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 sm:h-[450px] lg:h-[520px]"
+                                unoptimized
+                                className="h-full w-full object-cover object-center sm:object-[center_25%] transition-transform duration-700 ease-out group-hover:scale-105"
                             />
                         </div>
 

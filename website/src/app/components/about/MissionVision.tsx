@@ -57,7 +57,7 @@ export default function MissionVision() {
                         return (
                             <div
                                 key={item.label}
-                                className={`group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-8 shadow-md transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl ${item.borderColor} sm:p-10`}
+                                className={`group relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-8 shadow-md transition-all duration-500 hover:-translate-y-2 hover:border-teal-400/60 hover:shadow-2xl hover:shadow-teal-900/10 ${item.borderColor} sm:p-10`}
                             >
                                 {/* Top accent bar */}
                                 <div className={`absolute top-0 left-0 h-[4px] w-0 ${item.accentColor} transition-all duration-500 group-hover:w-full`} />

@@ -4,6 +4,7 @@ import { ArrowLeft, FileText } from "lucide-react";
 import { notFound } from "next/navigation";
 import FAQSection from "@/app/components/common/FAQSection";
 import Breadcrumb from "@/app/components/common/Breadcrumb";
+import ProductDescriptionSection from "@/app/components/products/ProductDescriptionSection";
 
 type ProductSpecification = {
     label: string;
@@ -287,50 +288,11 @@ export default async function ProductDetailsPage({
             </section>
 
             {/* Description */}
-            <section className="border-t border-slate-100 bg-slate-50/50 py-12 lg:py-12">
-                <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                    <div className="max-w-4xl">
-                        <div className="mb-3 inline-flex items-center gap-2">
-                            <span className="h-1 w-5 rounded-full bg-[#0F766E]" />
-
-                            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#0F766E]">
-                                Product Overview
-                            </p>
-                        </div>
-
-                        <h2 className="text-2xl font-extrabold text-slate-900 sm:text-3xl">
-                            About {product.name}
-                        </h2>
-
-                        <div className="mt-6 space-y-6 text-base leading-relaxed text-slate-600">
-                            <p className="font-semibold text-[#123B5D]">
-                                {product.description}
-                            </p>
-
-                            <p>
-                                At Aurevia Healthcare, we ensure
-                                that every batch of {product.name}
-                                is produced using state-of-the-art
-                                manufacturing methodologies. Our
-                                dedicated quality assurance teams
-                                monitor crucial production
-                                parameters from raw ingredient
-                                testing to final packaging
-                                compliance.
-                            </p>
-
-                            <p>
-                                Built upon a foundation of
-                                scientific evaluation and
-                                formulation optimization, this
-                                product represents our commitment
-                                to consistent quality, reliability,
-                                and healthcare excellence.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <ProductDescriptionSection
+                productName={product.name}
+                description={product.description}
+                category={product.category}
+            />
 
             {/* Specifications */}
             <section className="border-t border-slate-100 py-12 lg:py-12">

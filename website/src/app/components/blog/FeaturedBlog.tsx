@@ -13,7 +13,7 @@ export default function FeaturedBlog({ blog }: FeaturedBlogProps) {
   return (
     <Link
       href={`/blog/${blog.slug}`}
-      className="group block overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-lg transition-all duration-300 hover:border-teal-300 hover:shadow-2xl cursor-pointer"
+      className="group block overflow-hidden rounded-3xl border border-slate-200/90 bg-white shadow-lg transition-all duration-300 hover:border-teal-400/60 hover:shadow-2xl hover:shadow-teal-900/10 cursor-pointer"
     >
       <div className="flex flex-col lg:flex-row">
         

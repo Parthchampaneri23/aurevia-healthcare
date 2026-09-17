@@ -299,12 +299,30 @@ export default function IndustriesPage() {
             overview: industry.overview || "",
             companies,
             supportPoints,
-            metaTitle: industry.seo?.metaTitle || "",
-            metaDescription: industry.seo?.metaDescription || "",
-            metaKeywords: industry.seo?.metaKeywords || "",
+            metaTitle:
+                industry.seo?.metaTitle ||
+                `${industry.title || "Industry"} Solutions | Aurevia Healthcare`,
+            metaDescription:
+                industry.seo?.metaDescription ||
+                (industry.description || industry.overview || `Leading ${industry.title || "healthcare industry"} manufacturing and supply solutions by Aurevia Healthcare.`).slice(0, 160),
+            metaKeywords:
+                industry.seo?.metaKeywords ||
+                [industry.title, industry.eyebrow, "Healthcare Industry", "Aurevia Healthcare", "Pharmaceutical Manufacturing"]
+                    .filter(Boolean)
+                    .join(", "),
             schema: industry.seo?.schema
                 ? JSON.stringify(industry.seo.schema, null, 2)
-                : "",
+                : JSON.stringify(
+                      {
+                          "@context": "https://schema.org/",
+                          "@type": "Organization",
+                          "name": "Aurevia Healthcare",
+                          "serviceType": industry.title || "",
+                          "description": industry.description || industry.overview || "",
+                      },
+                      null,
+                      2
+                  ),
             isActive: industry.isActive,
         });
 

@@ -63,8 +63,10 @@ export default function OurJourney() {
                         {journey.map((item, index) => (
                             <div
                                 key={item.number}
-                                className="group relative rounded-3xl border border-slate-100 bg-white p-6 shadow-md transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+                                className="group relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-6 shadow-md transition-all duration-500 hover:-translate-y-2 hover:border-teal-400/60 hover:shadow-2xl hover:shadow-teal-900/10"
                             >
+                                {/* Slide-in Top Accent Line */}
+                                <div className="absolute top-0 left-0 z-10 h-[3px] w-0 bg-gradient-to-r from-[#123B5D] to-[#0F766E] transition-all duration-500 group-hover:w-full" />
                                 {/* Connector Line (Desktop) */}
                                 {index < journey.length - 1 && (
                                     <div className="absolute left-[calc(50%+24px)] top-12 w-[calc(100%-48px)] hidden h-[2px] bg-slate-100 lg:block z-0 group-hover:bg-gradient-to-r group-hover:from-[#123B5D] group-hover:to-[#0F766E] transition-colors duration-500" />

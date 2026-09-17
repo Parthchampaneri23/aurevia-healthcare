@@ -87,7 +87,7 @@ export default function CareerAreas() {
                         return (
                             <div
                                 key={area.title}
-                                className="group relative overflow-hidden rounded-2xl bg-white p-6 shadow-sm border border-slate-100 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:shadow-slate-300/60 hover:border-slate-200 animate-card-fade-in"
+                                className="group relative overflow-hidden rounded-2xl bg-white p-6 shadow-sm border border-slate-200/80 transition-all duration-500 hover:-translate-y-2 hover:border-teal-400/60 hover:shadow-xl hover:shadow-teal-900/10 animate-card-fade-in"
                                 style={{ animationDelay: `${index * 80}ms` }}
                             >
                                 {/* Slide-in top border color */}

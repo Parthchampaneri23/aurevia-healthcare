@@ -4,8 +4,7 @@ import Stats from "@/app/components/home/Stats";
 import WhyChooseUs from "@/app/components/home/WhyChooseUs";
 import ProductCategories from "@/app/components/home/ProductCategories";
 import Manufacturing from "@/app/components/home/Manufacturing";
-import ResearchDevelopment from "@/app/components/home/ResearchDevelopment";
-import QualityCompliance from "@/app/components/home/QualityCompliance";
+import IndustrySegments from "@/app/components/industries/IndustrySegments";
 import HomeBlogSection from "@/app/components/home/HomeBlogSection";
 import FAQSection from "@/app/components/common/FAQSection";
 import ContactCTA from "@/app/components/home/ContactCTA";
@@ -42,14 +41,14 @@ export default function Home() {
       <WhyChooseUs />
       <ProductCategories />
       <Manufacturing />
-      <ResearchDevelopment />
-      <QualityCompliance />
+      <IndustrySegments />
       <HomeBlogSection />
       <FAQSection
         eyebrow="FREQUENTLY ASKED QUESTIONS"
         title="Frequently Asked Questions"
         subtitle="Learn more about Aurevia Healthcare's manufacturing standards, product portfolio, and partnership opportunities."
         faqs={homeFaqs}
+        showContactCTA={false}
       />
       <ContactCTA />
     </main>

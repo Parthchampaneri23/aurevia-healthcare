@@ -70,20 +70,20 @@ export default function PartnershipModels() {
                     </div>
 
                     {/* Image Container next to description */}
-                    <div className="lg:col-span-5">
-                        <div className="group relative h-[220px] sm:h-[240px] overflow-hidden rounded-3xl bg-gradient-to-br from-slate-50 via-white to-teal-50/30 border border-slate-200/60 shadow-md transition-all duration-500 hover:shadow-lg">
+                    <div className="lg:col-span-5 flex justify-center lg:justify-end">
+                        <div className="group relative h-[160px] sm:h-[180px] w-full max-w-[360px] overflow-hidden rounded-2xl bg-gradient-to-br from-slate-50 via-white to-teal-50/30 border border-slate-200/60 shadow-md transition-all duration-500 hover:shadow-lg">
                             {/* Decorative background grid pattern */}
                             <div className="absolute inset-0 bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:2rem_2rem] opacity-40 pointer-events-none" />
 
                             {/* Glassmorphic Inner Frame */}
-                            <div className="absolute inset-4 overflow-hidden rounded-2xl border border-white/80 bg-white/40 p-3 shadow-inner backdrop-blur-md transition-all duration-500 group-hover:bg-white/50">
+                            <div className="absolute inset-3 overflow-hidden rounded-xl border border-white/80 bg-white/40 p-2 shadow-inner backdrop-blur-md transition-all duration-500 group-hover:bg-white/50">
                                 <div className="relative h-full w-full">
                                     <Image
                                         src="/industries/partnership.png"
                                         alt="Aurevia Healthcare partnership"
                                         fill
                                         className="object-contain transition-all duration-700 ease-out group-hover:scale-[1.03]"
-                                        sizes="(max-width: 1024px) 100vw, 33vw"
+                                        sizes="(max-width: 1024px) 100vw, 25vw"
                                     />
                                 </div>
                             </div>
@@ -99,7 +99,7 @@ export default function PartnershipModels() {
                         return (
                             <div
                                 key={model.title}
-                                className="group/model flex flex-col justify-between relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg animate-model-item"
+                                className="group/model flex flex-col justify-between relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-teal-400/60 hover:shadow-xl hover:shadow-teal-900/10 animate-model-item"
                                 style={{ animationDelay: `${index * 100}ms` }}
                             >
                                 {/* Premium top border accent */}

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { CheckCircle } from "lucide-react";
 
 const jobs = [
     "Production Executive",
@@ -274,38 +275,133 @@ export default function JobApplication() {
                 <div className="grid gap-12 lg:grid-cols-12 lg:items-start">
 
                     {/* Left side */}
-                    <div className="flex flex-col justify-center lg:col-span-5">
+                    <div className="flex flex-col justify-between lg:col-span-5 h-full">
+                        <div>
+                            <div className="mb-3 inline-flex items-center gap-2">
+                                <span className="h-1 w-6 rounded-full bg-teal-600" />
+                                <p className="text-xs font-bold uppercase tracking-[0.25em] text-teal-600">
+                                    JOIN OUR TEAM
+                                </p>
+                            </div>
 
-                        <div className="mb-3 inline-flex items-center gap-2">
-                            <span className="h-1 w-6 rounded-full bg-teal-600" />
+                            <h2
+                                id="application-title"
+                                className="bg-gradient-to-r from-slate-900 via-slate-800 to-[#123B5D] bg-clip-text text-3xl font-extrabold text-transparent sm:text-4xl"
+                            >
+                                Apply for an Opportunity
+                            </h2>
 
-                            <p className="text-xs font-bold uppercase tracking-[0.25em] text-teal-600">
-                                JOIN OUR TEAM
+                            <p className="mt-3 text-base leading-relaxed text-slate-600">
+                                Interested in joining Aurevia Healthcare?
+                                Submit your details and resume to apply
+                                for one of our current opportunities.
                             </p>
-                        </div>
 
-                        <h2
-                            id="application-title"
-                            className="bg-gradient-to-r from-slate-900 via-slate-800 to-[#123B5D] bg-clip-text text-3xl font-extrabold text-transparent sm:text-4xl"
-                        >
-                            Apply for an Opportunity
-                        </h2>
+                            {/* Image Container Placed Above Points */}
+                            <div className="group relative my-6 overflow-hidden rounded-3xl bg-slate-100 shadow-xl transition-all duration-500 hover:shadow-2xl hover:shadow-[#123B5D]/10">
+                                <div className="overflow-hidden relative w-full">
+                                    <Image
+                                        src="/career/careerteam.png?v=2"
+                                        alt="Aurevia Healthcare Team"
+                                        width={800}
+                                        height={600}
+                                        unoptimized
+                                        className="h-[250px] sm:h-[280px] lg:h-[300px] w-full object-cover object-center sm:object-[center_20%] transition-all duration-700 ease-out group-hover:scale-105"
+                                    />
+                                </div>
 
-                        <p className="mt-4 text-sm leading-7 text-slate-600">
-                            Interested in joining Aurevia Healthcare?
-                            Submit your details and resume to apply
-                            for one of our current opportunities.
-                        </p>
+                                {/* Floating Badge */}
+                                <div className="absolute bottom-4 left-4 rounded-xl border border-white/20 bg-white/90 px-4 py-2 shadow-lg backdrop-blur-md">
+                                    <p className="text-xs font-extrabold text-[#123B5D] uppercase tracking-wider">
+                                        AUREVIA CAREERS
+                                    </p>
+                                    <p className="text-[11px] font-medium text-slate-600">
+                                        Build your future in healthcare
+                                    </p>
+                                </div>
+                            </div>
 
-                        <div className="group relative mt-8 overflow-hidden rounded-3xl bg-slate-100 shadow-xl transition-all duration-500 hover:shadow-2xl hover:shadow-[#123B5D]/10">
-                            <div className="overflow-hidden">
-                                <Image
-                                    src="/career/careerteam.png"
-                                    alt="Aurevia Healthcare Team"
-                                    width={600}
-                                    height={400}
-                                    className="h-[250px] w-full object-cover transition-all duration-700 ease-out group-hover:scale-105 sm:h-[300px] lg:h-[350px]"
-                                />
+                            {/* 4 Benefit Highlights Below Image */}
+                            <div className="space-y-3">
+                                <div className="flex items-center gap-3 rounded-xl border border-slate-200/80 bg-white px-4 py-3 shadow-sm transition-all duration-300 hover:border-teal-200 hover:shadow-md">
+                                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-teal-50 text-[#0F766E]">
+                                        <CheckCircle size={18} />
+                                    </div>
+                                    <span className="text-xs font-semibold text-slate-700">
+                                        Direct & Confidential HR Application Review
+                                    </span>
+                                </div>
+
+                                <div className="flex items-center gap-3 rounded-xl border border-slate-200/80 bg-white px-4 py-3 shadow-sm transition-all duration-300 hover:border-blue-200 hover:shadow-md">
+                                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-[#123B5D]">
+                                        <CheckCircle size={18} />
+                                    </div>
+                                    <span className="text-xs font-semibold text-slate-700">
+                                        Growth-Oriented WHO-GMP Work Environment
+                                    </span>
+                                </div>
+
+                                <div className="flex items-center gap-3 rounded-xl border border-slate-200/80 bg-white px-4 py-3 shadow-sm transition-all duration-300 hover:border-teal-200 hover:shadow-md">
+                                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-teal-50 text-[#0F766E]">
+                                        <CheckCircle size={18} />
+                                    </div>
+                                    <span className="text-xs font-semibold text-slate-700">
+                                        Transparent & Fast-Track Selection Process
+                                    </span>
+                                </div>
+
+                                <div className="flex items-center gap-3 rounded-xl border border-slate-200/80 bg-white px-4 py-3 shadow-sm transition-all duration-300 hover:border-blue-200 hover:shadow-md">
+                                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-[#123B5D]">
+                                        <CheckCircle size={18} />
+                                    </div>
+                                    <span className="text-xs font-semibold text-slate-700">
+                                        Collaborative & Inclusive Team Culture
+                                    </span>
+                                </div>
+
+                                <div className="flex items-center gap-3 rounded-xl border border-slate-200/80 bg-white px-4 py-3 shadow-sm transition-all duration-300 hover:border-teal-200 hover:shadow-md">
+                                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-teal-50 text-[#0F766E]">
+                                        <CheckCircle size={18} />
+                                    </div>
+                                    <span className="text-xs font-semibold text-slate-700">
+                                        Structured Onboarding & Skill Advancement
+                                    </span>
+                                </div>
+
+                                <div className="flex items-center gap-3 rounded-xl border border-slate-200/80 bg-white px-4 py-3 shadow-sm transition-all duration-300 hover:border-blue-200 hover:shadow-md">
+                                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-[#123B5D]">
+                                        <CheckCircle size={18} />
+                                    </div>
+                                    <span className="text-xs font-semibold text-slate-700">
+                                        Competitive Remuneration & Performance Incentives
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* Company Logo & Trust Banner */}
+                            <div className="mt-4 flex items-center justify-between rounded-2xl border border-slate-200 bg-white p-4 shadow-md">
+                                <div className="flex items-center gap-3">
+                                    <div className="flex h-10 w-12 shrink-0 items-center justify-center rounded-xl bg-slate-50 border border-slate-100 p-1">
+                                        <Image
+                                            src="/hero/logo.png"
+                                            alt="Aurevia Healthcare"
+                                            width={48}
+                                            height={36}
+                                            className="h-8 w-auto object-contain"
+                                        />
+                                    </div>
+                                    <div>
+                                        <p className="text-xs font-bold text-slate-900 tracking-wide">
+                                            Aurevia Healthcare Careers
+                                        </p>
+                                        <p className="text-[11px] text-slate-500">
+                                            Empowering healthcare professionals
+                                        </p>
+                                    </div>
+                                </div>
+                                <span className="rounded-full bg-teal-50 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-[#0F766E] border border-teal-200">
+                                    Verified
+                                </span>
                             </div>
                         </div>
                     </div>

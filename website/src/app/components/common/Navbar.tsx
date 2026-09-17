@@ -23,12 +23,12 @@ const categoryOrder = [
 ];
 
 const categoryLinks: Record<string, string> = {
-    Tablets: "/products?category=tablets",
-    Capsules: "/products?category=capsules",
-    Syrups: "/products?category=syrups",
-    Injectables: "/products?category=injectables",
-    "Ointments & Creams": "/products?category=ointments-creams",
-    Nutraceuticals: "/products?category=nutraceuticals",
+    Tablets: "/products?category=tablets#explore",
+    Capsules: "/products?category=capsules#explore",
+    Syrups: "/products?category=syrups#explore",
+    Injectables: "/products?category=injectables#explore",
+    "Ointments & Creams": "/products?category=ointments-creams#explore",
+    Nutraceuticals: "/products?category=nutraceuticals#explore",
 };
 
 export default function Navbar() {
@@ -45,6 +45,20 @@ export default function Navbar() {
 
     const closeMenus = () => {
         setIsOpen(false);
+        setProductsOpen(false);
+        if (typeof document !== "undefined") {
+            document.body.style.overflow = "";
+        }
+    };
+
+    const toggleMobileMenu = () => {
+        setIsOpen((prev) => {
+            const nextState = !prev;
+            if (typeof document !== "undefined") {
+                document.body.style.overflow = nextState ? "hidden" : "";
+            }
+            return nextState;
+        });
         setProductsOpen(false);
     };
 
@@ -74,10 +88,7 @@ export default function Navbar() {
                 <div className="flex lg:hidden">
                     <button
                         type="button"
-                        onClick={() => {
-                            setIsOpen((prev) => !prev);
-                            setProductsOpen(false);
-                        }}
+                        onClick={toggleMobileMenu}
                         className="rounded-md p-2 text-[#123B5D] transition hover:bg-slate-100"
                         aria-label={isOpen ? "Close menu" : "Open menu"}
                     >
@@ -250,12 +261,12 @@ export default function Navbar() {
                         Contact Us
                     </Link>
 
-                    {/* Blog */}
+                    {/* Blogs */}
                     <Link
                         href="/blog"
                         className="relative text-base font-semibold text-slate-800 transition-colors duration-200 hover:text-[#0F766E] after:absolute after:bottom-[-6px] after:left-0 after:h-[2px] after:w-0 after:bg-[#0F766E] after:transition-all after:duration-300 hover:after:w-full"
                     >
-                        Blog
+                        Blogs
                     </Link>
                 </div>
 
@@ -365,7 +376,7 @@ export default function Navbar() {
                             onClick={closeMenus}
                             className="border-b border-slate-100 py-3 text-base font-semibold text-slate-800 hover:text-[#0F766E]"
                         >
-                            Blog
+                            Blogs
                         </Link>
 
                         {/* Mobile Quote */}

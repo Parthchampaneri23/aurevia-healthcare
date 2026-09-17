@@ -16,6 +16,9 @@ const API_URL =
     process.env.NEXT_PUBLIC_API_URL ||
     "https://aurevia-healthcare.onrender.com";
 
+import Image from "next/image";
+import { CheckCircle } from "lucide-react";
+
 export default function ContactForm() {
     const [formData, setFormData] = useState({
         firstName: "",
@@ -118,17 +121,6 @@ export default function ContactForm() {
             setSubmitting(true);
             setSubmitError("");
             setSubmitted(false);
-
-            /*
-             * Backend Enquiry model expects:
-             *
-             * name
-             * email
-             * phone
-             * company
-             * subject
-             * message
-             */
 
             const fullName =
                 `${formData.firstName.trim()} ${formData.lastName.trim()}`.trim();
@@ -240,325 +232,422 @@ ${formData.message}
                 }}
             />
 
-            <div className="mx-auto max-w-5xl px-6 lg:px-8">
-                {/* Heading */}
-                <div className="text-center">
-                    <p className="text-xs font-bold uppercase tracking-[0.25em] text-teal-600">
-                        PRODUCT & BUSINESS ENQUIRY
-                    </p>
-
-                    <h2 className="mt-3 bg-gradient-to-r from-slate-900 via-slate-800 to-[#123B5D] bg-clip-text text-3xl font-bold text-transparent sm:text-4xl">
-                        Send Us an Enquiry
-                    </h2>
-
-                    <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-600">
-                        Tell us about your requirements and our team will get
-                        back to you.
-                    </p>
-                </div>
-
-                {/* Form */}
-                <form
-                    onSubmit={handleSubmit}
-                    noValidate
-                    className="animate-form-fade-in mt-10 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"
-                >
-                    <div className="grid gap-5 sm:grid-cols-2">
-                        {/* First Name */}
+            <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                <div className="grid gap-12 lg:grid-cols-12 lg:items-start">
+                    {/* Left Column: Visuals, Highlights & Trust Badge */}
+                    <div className="flex flex-col justify-between lg:col-span-5 h-full">
                         <div>
-                            <label className="text-sm font-medium text-slate-700">
-                                First Name *
-                            </label>
-
-                            <input
-                                type="text"
-                                name="firstName"
-                                value={formData.firstName}
-                                onChange={handleChange}
-                                className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-colors duration-200 ${errors.firstName
-                                        ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
-                                        : "border-slate-300 focus:border-teal-600"
-                                    }`}
-                            />
-
-                            {errors.firstName && (
-                                <p className="mt-1 text-xs text-red-500">
-                                    {errors.firstName}
+                            <div className="mb-3 inline-flex items-center gap-2">
+                                <span className="h-1 w-6 rounded-full bg-teal-600" />
+                                <p className="text-xs font-bold uppercase tracking-[0.25em] text-teal-600">
+                                    PRODUCT & BUSINESS ENQUIRY
                                 </p>
-                            )}
-                        </div>
+                            </div>
 
-                        {/* Last Name */}
-                        <div>
-                            <label className="text-sm font-medium text-slate-700">
-                                Last Name *
-                            </label>
+                            <h2 className="bg-gradient-to-r from-slate-900 via-slate-800 to-[#123B5D] bg-clip-text text-3xl font-extrabold text-transparent sm:text-4xl">
+                                Send Us an Enquiry
+                            </h2>
 
-                            <input
-                                type="text"
-                                name="lastName"
-                                value={formData.lastName}
-                                onChange={handleChange}
-                                className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-colors duration-200 ${errors.lastName
-                                        ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
-                                        : "border-slate-300 focus:border-teal-600"
-                                    }`}
-                            />
+                            <p className="mt-3 text-base leading-relaxed text-slate-600">
+                                Connect directly with our global business team for custom pharmaceutical formulations, contract manufacturing, or distribution inquiries.
+                            </p>
 
-                            {errors.lastName && (
-                                <p className="mt-1 text-xs text-red-500">
-                                    {errors.lastName}
-                                </p>
-                            )}
-                        </div>
+                            {/* Side Image */}
+                            <div className="group relative my-6 overflow-hidden rounded-3xl bg-slate-100 shadow-xl transition-all duration-500 hover:shadow-2xl hover:shadow-[#123B5D]/10">
+                                <div className="overflow-hidden relative w-full">
+                                    <Image
+                                        src="/contact/contactoffice.png?v=2"
+                                        alt="Aurevia Healthcare Inquiry"
+                                        width={800}
+                                        height={600}
+                                        unoptimized
+                                        className="h-[240px] sm:h-[260px] lg:h-[280px] w-full object-cover object-center transition-all duration-700 ease-out group-hover:scale-105"
+                                    />
+                                </div>
 
-                        {/* Company */}
-                        <div>
-                            <label className="text-sm font-medium text-slate-700">
-                                Company Name *
-                            </label>
+                                {/* Floating Badge */}
+                                <div className="absolute bottom-4 left-4 rounded-xl border border-white/20 bg-white/90 px-4 py-2 shadow-lg backdrop-blur-md">
+                                    <p className="text-xs font-extrabold text-[#123B5D] uppercase tracking-wider">
+                                        GLOBAL PARTNERSHIPS
+                                    </p>
+                                    <p className="text-[11px] font-medium text-slate-600">
+                                        Prompt response within 24 business hours
+                                    </p>
+                                </div>
+                            </div>
 
-                            <input
-                                type="text"
-                                name="companyName"
-                                value={formData.companyName}
-                                onChange={handleChange}
-                                className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-colors duration-200 ${errors.companyName
-                                        ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
-                                        : "border-slate-300 focus:border-teal-600"
-                                    }`}
-                            />
+                            {/* Key Highlights */}
+                            <div className="space-y-3">
+                                <div className="flex items-center gap-3 rounded-xl border border-slate-200/80 bg-white px-4 py-3 shadow-sm transition-all duration-300 hover:border-teal-200 hover:shadow-md">
+                                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-teal-50 text-[#0F766E]">
+                                        <CheckCircle size={18} />
+                                    </div>
+                                    <span className="text-xs font-semibold text-slate-700">
+                                        Dedicated Business Development Executive
+                                    </span>
+                                </div>
 
-                            {errors.companyName && (
-                                <p className="mt-1 text-xs text-red-500">
-                                    {errors.companyName}
-                                </p>
-                            )}
-                        </div>
+                                <div className="flex items-center gap-3 rounded-xl border border-slate-200/80 bg-white px-4 py-3 shadow-sm transition-all duration-300 hover:border-blue-200 hover:shadow-md">
+                                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-[#123B5D]">
+                                        <CheckCircle size={18} />
+                                    </div>
+                                    <span className="text-xs font-semibold text-slate-700">
+                                        Custom Formulation & Dossier Support
+                                    </span>
+                                </div>
 
-                        {/* Email */}
-                        <div>
-                            <label className="text-sm font-medium text-slate-700">
-                                Business Email *
-                            </label>
+                                <div className="flex items-center gap-3 rounded-xl border border-slate-200/80 bg-white px-4 py-3 shadow-sm transition-all duration-300 hover:border-teal-200 hover:shadow-md">
+                                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-teal-50 text-[#0F766E]">
+                                        <CheckCircle size={18} />
+                                    </div>
+                                    <span className="text-xs font-semibold text-slate-700">
+                                        WHO-GMP Certified Manufacturing Facilities
+                                    </span>
+                                </div>
 
-                            <input
-                                type="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-colors duration-200 ${errors.email
-                                        ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
-                                        : "border-slate-300 focus:border-teal-600"
-                                    }`}
-                            />
+                                <div className="flex items-center gap-3 rounded-xl border border-slate-200/80 bg-white px-4 py-3 shadow-sm transition-all duration-300 hover:border-blue-200 hover:shadow-md">
+                                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-[#123B5D]">
+                                        <CheckCircle size={18} />
+                                    </div>
+                                    <span className="text-xs font-semibold text-slate-700">
+                                        Confidential & Direct NDA Communications
+                                    </span>
+                                </div>
+                            </div>
 
-                            {errors.email && (
-                                <p className="mt-1 text-xs text-red-500">
-                                    {errors.email}
-                                </p>
-                            )}
-                        </div>
-
-                        {/* Phone */}
-                        <div>
-                            <label className="text-sm font-medium text-slate-700">
-                                Phone Number *
-                            </label>
-
-                            <input
-                                type="tel"
-                                name="phone"
-                                value={formData.phone}
-                                onChange={handleChange}
-                                className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-colors duration-200 ${errors.phone
-                                        ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
-                                        : "border-slate-300 focus:border-teal-600"
-                                    }`}
-                            />
-
-                            {errors.phone && (
-                                <p className="mt-1 text-xs text-red-500">
-                                    {errors.phone}
-                                </p>
-                            )}
-                        </div>
-
-                        {/* Country */}
-                        <div>
-                            <label className="text-sm font-medium text-slate-700">
-                                Country *
-                            </label>
-
-                            <input
-                                type="text"
-                                name="country"
-                                value={formData.country}
-                                onChange={handleChange}
-                                placeholder="e.g. India"
-                                className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-colors duration-200 ${errors.country
-                                        ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
-                                        : "border-slate-300 focus:border-teal-600"
-                                    }`}
-                            />
-
-                            {errors.country && (
-                                <p className="mt-1 text-xs text-red-500">
-                                    {errors.country}
-                                </p>
-                            )}
+                            {/* Company Logo Trust Card */}
+                            <div className="mt-4 flex items-center justify-between rounded-2xl border border-slate-200 bg-white p-4 shadow-md">
+                                <div className="flex items-center gap-3">
+                                    <div className="flex h-10 w-12 shrink-0 items-center justify-center rounded-xl bg-slate-50 border border-slate-100 p-1">
+                                        <Image
+                                            src="/hero/logo.png"
+                                            alt="Aurevia Healthcare"
+                                            width={48}
+                                            height={36}
+                                            className="h-8 w-auto object-contain"
+                                        />
+                                    </div>
+                                    <div>
+                                        <p className="text-xs font-bold text-slate-900 tracking-wide">
+                                            Aurevia Healthcare Limited
+                                        </p>
+                                        <p className="text-[11px] text-slate-500">
+                                            Excellence in Healthcare & Life Sciences
+                                        </p>
+                                    </div>
+                                </div>
+                                <span className="rounded-full bg-teal-50 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-[#0F766E] border border-teal-200">
+                                    Verified
+                                </span>
+                            </div>
                         </div>
                     </div>
 
-                    {/* Product */}
-                    <div className="mt-6">
-                        <label className="text-sm font-semibold text-slate-800">
-                            Product Required *
-                        </label>
-
-                        <p className="mt-1 text-xs text-slate-500">
-                            Select the product that matches your requirement.
-                        </p>
-
-                        <select
-                            name="product"
-                            value={formData.product}
-                            onChange={handleChange}
-                            className={`mt-3 w-full cursor-pointer rounded-lg border bg-white px-4 py-3 text-sm font-medium text-black outline-none transition-colors duration-200 ${errors.product
-                                    ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
-                                    : "border-slate-300 focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
-                                }`}
+                    {/* Right Column: Interactive Form */}
+                    <div className="lg:col-span-7">
+                        <form
+                            onSubmit={handleSubmit}
+                            noValidate
+                            className="animate-form-fade-in rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"
                         >
-                            <option value="">
-                                Select a product...
-                            </option>
+                            <div className="grid gap-5 sm:grid-cols-2">
+                                {/* First Name */}
+                                <div>
+                                    <label className="text-sm font-medium text-slate-700">
+                                        First Name *
+                                    </label>
 
-                            {categories.map((category) => {
-                                const categoryProducts = allProducts.filter(
-                                    (p) => p.category === category
-                                );
+                                    <input
+                                        type="text"
+                                        name="firstName"
+                                        value={formData.firstName}
+                                        onChange={handleChange}
+                                        className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-colors duration-200 ${errors.firstName
+                                            ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
+                                            : "border-slate-300 focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
+                                            }`}
+                                    />
 
-                                return (
-                                    <optgroup
-                                        key={category}
-                                        label={category}
-                                    >
-                                        {categoryProducts.map((product) => (
-                                            <option
-                                                key={product.slug}
-                                                value={product.name}
+                                    {errors.firstName && (
+                                        <p className="mt-1 text-xs text-red-500">
+                                            {errors.firstName}
+                                        </p>
+                                    )}
+                                </div>
+
+                                {/* Last Name */}
+                                <div>
+                                    <label className="text-sm font-medium text-slate-700">
+                                        Last Name *
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="lastName"
+                                        value={formData.lastName}
+                                        onChange={handleChange}
+                                        className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-colors duration-200 ${errors.lastName
+                                            ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
+                                            : "border-slate-300 focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
+                                            }`}
+                                    />
+
+                                    {errors.lastName && (
+                                        <p className="mt-1 text-xs text-red-500">
+                                            {errors.lastName}
+                                        </p>
+                                    )}
+                                </div>
+
+                                {/* Company */}
+                                <div>
+                                    <label className="text-sm font-medium text-slate-700">
+                                        Company Name *
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="companyName"
+                                        value={formData.companyName}
+                                        onChange={handleChange}
+                                        className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-colors duration-200 ${errors.companyName
+                                            ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
+                                            : "border-slate-300 focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
+                                            }`}
+                                    />
+
+                                    {errors.companyName && (
+                                        <p className="mt-1 text-xs text-red-500">
+                                            {errors.companyName}
+                                        </p>
+                                    )}
+                                </div>
+
+                                {/* Email */}
+                                <div>
+                                    <label className="text-sm font-medium text-slate-700">
+                                        Business Email *
+                                    </label>
+
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-colors duration-200 ${errors.email
+                                            ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
+                                            : "border-slate-300 focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
+                                            }`}
+                                    />
+
+                                    {errors.email && (
+                                        <p className="mt-1 text-xs text-red-500">
+                                            {errors.email}
+                                        </p>
+                                    )}
+                                </div>
+
+                                {/* Phone */}
+                                <div>
+                                    <label className="text-sm font-medium text-slate-700">
+                                        Phone Number *
+                                    </label>
+
+                                    <input
+                                        type="tel"
+                                        name="phone"
+                                        value={formData.phone}
+                                        onChange={handleChange}
+                                        className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-colors duration-200 ${errors.phone
+                                            ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
+                                            : "border-slate-300 focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
+                                            }`}
+                                    />
+
+                                    {errors.phone && (
+                                        <p className="mt-1 text-xs text-red-500">
+                                            {errors.phone}
+                                        </p>
+                                    )}
+                                </div>
+
+                                {/* Country */}
+                                <div>
+                                    <label className="text-sm font-medium text-slate-700">
+                                        Country *
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="country"
+                                        value={formData.country}
+                                        onChange={handleChange}
+                                        placeholder="e.g. India"
+                                        className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-colors duration-200 ${errors.country
+                                            ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
+                                            : "border-slate-300 focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
+                                            }`}
+                                    />
+
+                                    {errors.country && (
+                                        <p className="mt-1 text-xs text-red-500">
+                                            {errors.country}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* Product Required */}
+                            <div className="mt-5">
+                                <label className="text-sm font-semibold text-slate-800">
+                                    Product Required *
+                                </label>
+
+                                <p className="mt-0.5 text-xs text-slate-500">
+                                    Select the product that matches your requirement.
+                                </p>
+
+                                <select
+                                    name="product"
+                                    value={formData.product}
+                                    onChange={handleChange}
+                                    className={`mt-2 w-full cursor-pointer rounded-lg border bg-white px-4 py-3 text-sm font-medium text-black outline-none transition-colors duration-200 ${errors.product
+                                        ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
+                                        : "border-slate-300 focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
+                                        }`}
+                                >
+                                    <option value="">
+                                        Select a product...
+                                    </option>
+
+                                    {categories.map((category) => {
+                                        const categoryProducts = allProducts.filter(
+                                            (p) => p.category === category
+                                        );
+
+                                        return (
+                                            <optgroup
+                                                key={category}
+                                                label={category}
                                             >
-                                                {product.name}
-                                            </option>
-                                        ))}
-                                    </optgroup>
-                                );
-                            })}
-                        </select>
+                                                {categoryProducts.map((product) => (
+                                                    <option
+                                                        key={product.slug}
+                                                        value={product.name}
+                                                    >
+                                                        {product.name}
+                                                    </option>
+                                                ))}
+                                            </optgroup>
+                                        );
+                                    })}
+                                </select>
 
-                        {errors.product && (
-                            <p className="mt-1 text-xs text-red-500">
-                                {errors.product}
-                            </p>
-                        )}
-                    </div>
+                                {errors.product && (
+                                    <p className="mt-1 text-xs text-red-500">
+                                        {errors.product}
+                                    </p>
+                                )}
+                            </div>
 
-                    {/* Quantity + Subject */}
-                    <div className="mt-6 grid gap-5 sm:grid-cols-2">
-                        <div>
-                            <label className="text-sm font-medium text-slate-700">
-                                Estimated Quantity *
-                            </label>
+                            {/* Quantity + Subject */}
+                            <div className="mt-5 grid gap-5 sm:grid-cols-2">
+                                <div>
+                                    <label className="text-sm font-medium text-slate-700">
+                                        Estimated Quantity *
+                                    </label>
 
-                            <input
-                                type="text"
-                                name="quantity"
-                                value={formData.quantity}
-                                onChange={handleChange}
-                                placeholder="e.g. 10,000 units"
-                                className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-colors duration-200 ${errors.quantity
+                                    <input
+                                        type="text"
+                                        name="quantity"
+                                        value={formData.quantity}
+                                        onChange={handleChange}
+                                        placeholder="e.g. 10,000 units"
+                                        className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-colors duration-200 ${errors.quantity
+                                            ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
+                                            : "border-slate-300 focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
+                                            }`}
+                                    />
+
+                                    {errors.quantity && (
+                                        <p className="mt-1 text-xs text-red-500">
+                                            {errors.quantity}
+                                        </p>
+                                    )}
+                                </div>
+
+                                <div>
+                                    <label className="text-sm font-medium text-slate-700">
+                                        Subject *
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="subject"
+                                        value={formData.subject}
+                                        onChange={handleChange}
+                                        placeholder="Briefly describe your enquiry"
+                                        className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-colors duration-200 ${errors.subject
+                                            ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
+                                            : "border-slate-300 focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
+                                            }`}
+                                    />
+
+                                    {errors.subject && (
+                                        <p className="mt-1 text-xs text-red-500">
+                                            {errors.subject}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* Message */}
+                            <div className="mt-5">
+                                <label className="text-sm font-medium text-slate-700">
+                                    Message *
+                                </label>
+
+                                <textarea
+                                    rows={5}
+                                    name="message"
+                                    value={formData.message}
+                                    onChange={handleChange}
+                                    placeholder="Tell us about your product, quantity, packaging or manufacturing requirements..."
+                                    className={`mt-2 w-full resize-none rounded-lg border px-4 py-3 text-sm text-black outline-none transition-colors duration-200 ${errors.message
                                         ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
-                                        : "border-slate-300 focus:border-teal-600"
-                                    }`}
-                            />
+                                        : "border-slate-300 focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
+                                        }`}
+                                />
 
-                            {errors.quantity && (
-                                <p className="mt-1 text-xs text-red-500">
-                                    {errors.quantity}
-                                </p>
+                                {errors.message && (
+                                    <p className="mt-1 text-xs text-red-500">
+                                        {errors.message}
+                                    </p>
+                                )}
+                            </div>
+
+                            {/* Backend Error */}
+                            {submitError && (
+                                <div className="mt-5 rounded-lg border border-red-200 bg-red-50 px-4 py-3">
+                                    <p className="text-sm font-medium text-red-700">
+                                        {submitError}
+                                    </p>
+                                </div>
                             )}
-                        </div>
 
-                        <div>
-                            <label className="text-sm font-medium text-slate-700">
-                                Subject *
-                            </label>
-
-                            <input
-                                type="text"
-                                name="subject"
-                                value={formData.subject}
-                                onChange={handleChange}
-                                placeholder="Briefly describe your enquiry"
-                                className={`mt-2 w-full rounded-lg border px-4 py-3 text-sm text-black outline-none transition-colors duration-200 ${errors.subject
-                                        ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
-                                        : "border-slate-300 focus:border-teal-600"
-                                    }`}
-                            />
-
-                            {errors.subject && (
-                                <p className="mt-1 text-xs text-red-500">
-                                    {errors.subject}
-                                </p>
-                            )}
-                        </div>
+                            {/* Submit */}
+                            <button
+                                type="submit"
+                                disabled={submitting}
+                                className="mt-7 rounded-lg bg-[#123B5D] px-7 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#0d2d46] hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60 active:scale-95"
+                            >
+                                {submitting
+                                    ? "Submitting..."
+                                    : "Submit Enquiry"}
+                            </button>
+                        </form>
                     </div>
-
-                    {/* Message */}
-                    <div className="mt-5">
-                        <label className="text-sm font-medium text-slate-700">
-                            Message *
-                        </label>
-
-                        <textarea
-                            rows={6}
-                            name="message"
-                            value={formData.message}
-                            onChange={handleChange}
-                            placeholder="Tell us about your product, quantity, packaging or manufacturing requirements..."
-                            className={`mt-2 w-full resize-none rounded-lg border px-4 py-3 text-sm text-black outline-none transition-colors duration-200 ${errors.message
-                                    ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200"
-                                    : "border-slate-300 focus:border-teal-600"
-                                }`}
-                        />
-
-                        {errors.message && (
-                            <p className="mt-1 text-xs text-red-500">
-                                {errors.message}
-                            </p>
-                        )}
-                    </div>
-
-                    {/* Backend Error */}
-                    {submitError && (
-                        <div className="mt-5 rounded-lg border border-red-200 bg-red-50 px-4 py-3">
-                            <p className="text-sm font-medium text-red-700">
-                                {submitError}
-                            </p>
-                        </div>
-                    )}
-
-                    {/* Submit */}
-                    <button
-                        type="submit"
-                        disabled={submitting}
-                        className="mt-7 rounded-lg bg-[#123B5D] px-7 py-3 text-sm font-semibold text-white transition hover:bg-[#0d2d46] disabled:cursor-not-allowed disabled:opacity-60"
-                    >
-                        {submitting
-                            ? "Submitting..."
-                            : "Submit Enquiry"}
-                    </button>
-                </form>
+                </div>
             </div>
 
             {/* Success Modal */}
@@ -581,17 +670,17 @@ ${formData.message}
                                 />
                             </svg>
                         </div>
-                        
+
                         {/* Title */}
                         <h3 className="text-xl font-bold text-slate-900 mb-2">
                             Enquiry Submitted!
                         </h3>
-                        
+
                         {/* Message */}
                         <p className="text-sm text-slate-600 mb-6">
                             Thank you for reaching out. Your enquiry has been submitted successfully. Our team will get back to you shortly.
                         </p>
-                        
+
                         {/* Action Button */}
                         <button
                             type="button"

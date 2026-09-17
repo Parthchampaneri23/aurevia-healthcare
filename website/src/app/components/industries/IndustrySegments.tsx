@@ -108,7 +108,7 @@ export default function IndustrySegments() {
                             <Link
                                 key={industry.title}
                                 href={industry.href}
-                                className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl animate-card-fade-in"
+                                className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-teal-400/60 hover:shadow-xl hover:shadow-teal-900/10 animate-card-fade-in"
                                 style={{ animationDelay: `${index * 80}ms` }}
                             >
                                 {/* Premium top border accent */}

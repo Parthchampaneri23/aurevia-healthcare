@@ -46,8 +46,8 @@ export default function ContactInfo() {
                     opacity: 0;
                 }
             `}} />
-            <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-2 lg:items-center lg:px-8">
-                <div>
+            <div className="mx-auto grid max-w-7xl gap-10 lg:gap-16 px-6 lg:grid-cols-2 lg:items-center lg:px-8">
+                <div className="flex flex-col justify-center">
                     <p className="text-xs font-bold uppercase tracking-[0.25em] text-teal-600">
                         GET IN TOUCH
                     </p>
@@ -76,10 +76,12 @@ export default function ContactInfo() {
                             return (
                                 <Component
                                     key={item.title}
-                                    className="group flex gap-4 p-4 rounded-xl border border-slate-100 bg-slate-50 transition-all duration-500 hover:-translate-y-1 hover:shadow-lg hover:bg-white hover:border-slate-200 animate-card-fade-in"
+                                    className="group relative overflow-hidden flex gap-4 p-4 rounded-xl border border-slate-200/80 bg-slate-50 transition-all duration-500 hover:-translate-y-1 hover:border-teal-400/60 hover:shadow-xl hover:shadow-teal-900/10 hover:bg-white animate-card-fade-in"
                                     style={{ animationDelay: `${index * 80}ms` }}
                                     {...linkProps}
                                 >
+                                    {/* Slide-in Top Accent Line */}
+                                    <div className="absolute top-0 left-0 h-[3px] w-0 bg-gradient-to-r from-[#123B5D] to-[#0F766E] transition-all duration-500 group-hover:w-full" />
                                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#123B5D]/10 text-[#123B5D] transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 group-hover:bg-[#123B5D] group-hover:text-white">
                                         <Icon size={19} />
                                     </div>
@@ -99,14 +101,15 @@ export default function ContactInfo() {
                     </div>
                 </div>
 
-                <div className="group relative h-[320px] overflow-hidden rounded-3xl bg-slate-100 shadow-xl transition-all duration-500 hover:shadow-2xl hover:shadow-[#123B5D]/10 sm:h-[380px]">
-                    <div className="h-full w-full overflow-hidden">
+                <div className="group relative overflow-hidden rounded-2xl bg-slate-100 shadow-lg transition-all duration-500 hover:shadow-xl hover:shadow-[#123B5D]/10 max-h-[300px] sm:max-h-[340px] lg:max-h-[360px] max-w-[500px] mx-auto w-full aspect-[4/3]">
+                    <div className="overflow-hidden w-full h-full relative">
                         <Image
-                            src="/contact/contactoffice.png"
-                            alt="Aurevia Healthcare"
-                            fill
-                            className="object-cover transition-all duration-700 ease-out group-hover:scale-105"
-                            sizes="(max-width: 1024px) 100vw, 50vw"
+                            src="/contact/contactoffice.png?v=2"
+                            alt="Aurevia Healthcare Office"
+                            width={800}
+                            height={600}
+                            unoptimized
+                            className="h-full w-full object-cover object-center transition-all duration-700 ease-out group-hover:scale-105"
                         />
                     </div>
                 </div>

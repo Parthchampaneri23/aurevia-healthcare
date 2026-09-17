@@ -35,7 +35,7 @@ export default function FAQ() {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
 
     return (
-        <section className="bg-slate-50 py-12 lg:py-12">
+        <section className="bg-white py-12 lg:py-12">
             <style dangerouslySetInnerHTML={{
                 __html: `
                 @keyframes faqSlideUp {

@@ -87,7 +87,7 @@ export default function DosageCapabilities() {
                         <Link
                             key={item.name}
                             href={item.href}
-                            className="group relative overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg animate-capability-card"
+                            className="group relative overflow-hidden rounded-xl border border-slate-200/80 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-teal-400/60 hover:shadow-xl hover:shadow-teal-900/10 animate-capability-card"
                             style={{ animationDelay: `${index * 60}ms` }}
                         >
                             {/* Premium top border accent */}

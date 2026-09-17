@@ -55,14 +55,11 @@ export default function FilterableProducts() {
 
                 const data = await response.json();
 
-                console.log("Products API response:", data);
-
                 if (!data.success || !Array.isArray(data.products)) {
                     throw new Error("Invalid product data received");
                 }
 
                 setProducts(data.products);
-                setFilteredProducts(data.products);
             } catch (error) {
                 console.error("Product fetch error:", error);
                 setError(
@@ -80,54 +77,49 @@ export default function FilterableProducts() {
     useEffect(() => {
         const categoryParam = searchParams.get("category");
 
-        if (!categoryParam) {
-            setSelectedCategory("All");
-            return;
+        let targetCategory = "All";
+
+        if (categoryParam) {
+            const lowerParam = categoryParam.toLowerCase();
+
+            if (categoryMap[lowerParam]) {
+                targetCategory = categoryMap[lowerParam];
+            } else {
+                const matchedCategory = Object.values(categoryMap).find(
+                    (category) => category.toLowerCase() === lowerParam
+                );
+
+                targetCategory = matchedCategory || "All";
+            }
         }
 
-        const lowerParam = categoryParam.toLowerCase();
+        setSelectedCategory(targetCategory);
 
-        if (categoryMap[lowerParam]) {
-            setSelectedCategory(categoryMap[lowerParam]);
-        } else {
-            const matchedCategory = Object.values(categoryMap).find(
-                (category) => category.toLowerCase() === lowerParam
-            );
-
-            setSelectedCategory(matchedCategory || "All");
-        }
-
-        setTimeout(() => {
-            containerRef.current?.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
+        if (categoryParam) {
+            requestAnimationFrame(() => {
+                containerRef.current?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                });
             });
-        }, 150);
+        }
     }, [searchParams]);
 
     // Filter products
     useEffect(() => {
         if (loading) return;
 
-        setAnimateGrid(false);
-
-        const timer = setTimeout(() => {
-            if (selectedCategory === "All") {
-                setFilteredProducts(products);
-            } else {
-                setFilteredProducts(
-                    products.filter(
-                        (product) =>
-                            product.category === selectedCategory &&
-                            product.isActive !== false
-                    )
-                );
-            }
-
-            setAnimateGrid(true);
-        }, 100);
-
-        return () => clearTimeout(timer);
+        if (selectedCategory === "All") {
+            setFilteredProducts(products);
+        } else {
+            setFilteredProducts(
+                products.filter(
+                    (product) =>
+                        product.category === selectedCategory &&
+                        product.isActive !== false
+                )
+            );
+        }
     }, [selectedCategory, products, loading]);
 
     // Category button
@@ -247,8 +239,7 @@ export default function FilterableProducts() {
             {!loading && !error && (
                 <>
                     <div
-                        className={`mt-12 grid gap-8 transition-opacity duration-300 sm:grid-cols-2 lg:grid-cols-3 ${animateGrid ? "opacity-100" : "opacity-0"
-                            }`}
+                        className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
                     >
                         {filteredProducts.map((product, index) => (
                             <div

@@ -48,8 +48,8 @@ export default function WhyJoinUs() {
                 }
             `}} />
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-                    <div>
+                <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 lg:items-stretch">
+                    <div className="flex flex-col justify-center">
                         <div className="inline-flex items-center gap-2 mb-3">
                             <span className="h-1 w-6 rounded-full bg-teal-600" />
                             <p className="text-xs font-bold uppercase tracking-[0.25em] text-teal-600">
@@ -61,7 +61,7 @@ export default function WhyJoinUs() {
                             Grow With a Purpose
                         </h2>
 
-                        <p className="mt-4 text-sm leading-7 text-slate-600">
+                        <p className="mt-4 text-base leading-relaxed text-slate-600">
                             At Aurevia Healthcare, we believe strong teams build
                             stronger healthcare solutions. We aim to create a
                             professional environment where people can develop
@@ -71,14 +71,15 @@ export default function WhyJoinUs() {
                         </p>
                     </div>
 
-                    <div className="group relative overflow-hidden rounded-3xl bg-slate-100 shadow-xl transition-all duration-500 hover:shadow-2xl hover:shadow-[#123B5D]/10">
-                        <div className="overflow-hidden">
+                    <div className="group relative flex overflow-hidden rounded-3xl bg-slate-100 shadow-xl transition-all duration-500 hover:shadow-2xl hover:shadow-[#123B5D]/10 min-h-[300px] sm:min-h-[360px] lg:min-h-full">
+                        <div className="overflow-hidden w-full h-full relative">
                             <Image
-                                src="/career/careerwork.png"
+                                src="/career/careerwork.png?v=2"
                                 alt="Working at Aurevia Healthcare"
-                                width={600}
-                                height={400}
-                                className="h-[250px] w-full object-cover transition-all duration-700 ease-out group-hover:scale-105 sm:h-[300px]"
+                                width={800}
+                                height={600}
+                                unoptimized
+                                className="h-full w-full object-cover object-center sm:object-[center_25%] transition-all duration-700 ease-out group-hover:scale-105"
                             />
                         </div>
                     </div>
@@ -91,7 +92,7 @@ export default function WhyJoinUs() {
                         return (
                             <div
                                 key={reason.title}
-                                className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 p-6 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:shadow-slate-300/60 hover:bg-white animate-card-fade-in"
+                                className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-50 p-6 transition-all duration-500 hover:-translate-y-2 hover:border-teal-400/60 hover:shadow-xl hover:shadow-teal-900/10 hover:bg-white animate-card-fade-in"
                                 style={{ animationDelay: `${index * 80}ms` }}
                             >
                                 {/* Slide-in top border color */}

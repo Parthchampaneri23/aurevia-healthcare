@@ -27,7 +27,7 @@ export default function BlogCard({ blog }: BlogCardProps) {
   return (
     <Link
       href={`/blog/${blog.slug}`}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-teal-200 hover:shadow-xl cursor-pointer"
+      className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-teal-400/60 hover:shadow-xl hover:shadow-teal-900/10 cursor-pointer"
     >
       {/* Image Container / Placeholder Header */}
       <div className="relative aspect-[16/9] w-full overflow-hidden bg-slate-900">

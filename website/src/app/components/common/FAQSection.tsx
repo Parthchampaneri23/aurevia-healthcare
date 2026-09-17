@@ -33,9 +33,7 @@ export default function FAQSection({
     };
 
     return (
-        <section className={`relative py-12 sm:py-12 lg:py-28 overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-50/80 ${className}`}>
-            {/* Background Decorative Element */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-teal-500/5 rounded-full blur-3xl pointer-events-none" />
+        <section className={`relative py-12 lg:py-16 overflow-hidden bg-white ${className}`}>
 
             <div className="relative mx-auto max-w-5xl px-6 lg:px-8">
 

@@ -6,43 +6,49 @@ const categories = [
         name: "Tablets",
         description:
             "Quality-focused tablet formulations designed for consistent pharmaceutical solutions.",
-        image: "/hero/tablets.jpg",
-        href: "/products?category=tablets",
+        image: "/hero/tablets.jpg?v=2",
+        href: "/products?category=tablets#explore",
+        objectPosition: "object-[center_25%]",
     },
     {
         name: "Capsules",
         description:
             "Reliable capsule formulations manufactured with a focus on quality and consistency.",
-        image: "/hero/capsules.jpg",
-        href: "/products?category=capsules",
+        image: "/hero/capsules.jpg?v=2",
+        href: "/products?category=capsules#explore",
+        objectPosition: "object-[center_25%]",
     },
     {
         name: "Syrups",
         description:
             "Patient-friendly liquid formulations developed for dependable healthcare applications.",
-        image: "/hero/syrups.jpg",
-        href: "/products?category=syrups",
+        image: "/hero/syrups.jpg?v=2",
+        href: "/products?category=syrups#explore",
+        objectPosition: "object-[center_10%]",
     },
     {
         name: "Injectables",
         description:
             "Pharmaceutical injectable solutions supported by controlled manufacturing processes.",
-        image: "/hero/Injectables.jpg",
-        href: "/products?category=injectables",
+        image: "/hero/Injectables.jpg?v=2",
+        href: "/products?category=injectables#explore",
+        objectPosition: "object-[center_25%]",
     },
     {
         name: "Ointments & Creams",
         description:
             "Topical pharmaceutical formulations developed for a range of healthcare needs.",
-        image: "/hero/Ointments & Creams.jpg",
-        href: "/products?category=ointments-creams",
+        image: "/hero/Ointments & Creams.jpg?v=2",
+        href: "/products?category=ointments-creams#explore",
+        objectPosition: "object-[center_25%]",
     },
     {
         name: "Nutraceuticals",
         description:
             "Nutritional healthcare solutions designed to support everyday wellness and health.",
-        image: "/hero/Nutraceuticals.jpg",
-        href: "/products?category=nutraceuticals",
+        image: "/hero/Nutraceuticals.jpg?v=2",
+        href: "/products?category=nutraceuticals#explore",
+        objectPosition: "object-[center_25%]",
     },
 ];
 
@@ -79,7 +85,7 @@ export default function ProductCategories() {
                         <Link
                             key={category.name}
                             href={category.href}
-                            className="group relative flex flex-col overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-md transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-slate-300/60"
+                            className="group relative flex flex-col overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-md transition-all duration-500 hover:-translate-y-2 hover:border-teal-400/60 hover:shadow-2xl hover:shadow-teal-900/10"
                         >
                             {/* Slide-in Accent Bar */}
                             <div className="absolute top-0 left-0 z-10 h-[4px] w-0 bg-gradient-to-r from-[#0F766E] to-[#123B5D] transition-all duration-500 group-hover:w-full" />
@@ -90,7 +96,8 @@ export default function ProductCategories() {
                                     src={category.image}
                                     alt={category.name}
                                     fill
-                                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                                    unoptimized
+                                    className={`object-cover ${category.objectPosition} transition-transform duration-700 ease-out group-hover:scale-103`}
                                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                                 />
 

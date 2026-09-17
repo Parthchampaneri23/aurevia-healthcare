@@ -250,6 +250,25 @@ export default function ProductsPage() {
     // OPEN EDIT MODAL
     // ======================================================
 
+    const buildProductLongDescription = (prod: Product) => {
+        const base =
+            prod.description ||
+            prod.shortDescription ||
+            `High-quality ${prod.name || "pharmaceutical formulation"} manufactured under WHO-GMP compliance for reliable patient care.`;
+
+        if (
+            base.includes("Formulation & Manufacturing Quality Standards") &&
+            base.includes("Supply Chain & Export Distribution")
+        ) {
+            return base;
+        }
+
+        const name = prod.name || "this product";
+        const category = prod.category || "Pharmaceutical";
+
+        return `${base}\n\nManufactured by Aurevia Healthcare, ${name} is engineered to meet global healthcare standards, combining precise active pharmaceutical ingredient dosing with high stability and bioavailability for targeted clinical outcomes in the ${category} segment.\n\nFormulation & Manufacturing Quality Standards:\nEvery manufacturing process for ${name} takes place in certified cleanroom facilities, adhering strictly to automated quality audits, ambient control parameters, and comprehensive batch testing. To discover how our formulation expertise supports diverse healthcare providers, explore our multi-sector healthcare industries.\n\nComprehensive Quality Assurance & Dossier Compliance:\nOur analytical laboratories confirm stability, disintegration, dissolution rates, and active content uniformity across all production lots. Buyers requiring regulatory dossiers, Certificates of Analysis (COA), or specialized packaging options can review our full range of available dosage forms in our pharmaceutical product catalogue.\n\nSupply Chain & Export Distribution:\nWith specialized export packaging and validated cold-chain or climate-controlled logistic solutions, ${name} is prepared for domestic and international distribution. For custom contract manufacturing inquiries or commercial supply terms, please get in touch with our team.`;
+    };
+
     const openEditModal = (product: Product) => {
         setEditingProduct(product);
 
@@ -259,9 +278,11 @@ export default function ProductsPage() {
             category: product.category || "",
             shortDescription:
                 product.shortDescription || "",
-            description: product.description || "",
+            description: buildProductLongDescription(product),
             applications:
-                product.applications?.join("\n") || "",
+                product.applications?.length
+                    ? product.applications.join("\n")
+                    : "Oral Healthcare\nPain & Fever Relief\nPharmaceutical Formulations",
             specifications:
                 product.specifications
                     ?.map(
@@ -269,12 +290,34 @@ export default function ProductsPage() {
                             `${item.label}: ${item.value}`
                     )
                     .join("\n") || "",
-            metaTitle: product.seo?.metaTitle || "",
-            metaDescription: product.seo?.metaDescription || "",
-            metaKeywords: product.seo?.metaKeywords || "",
+            metaTitle:
+                product.seo?.metaTitle ||
+                `${product.name || "Product"} | Aurevia Healthcare`,
+            metaDescription:
+                product.seo?.metaDescription ||
+                (product.shortDescription || product.description || `High-quality ${product.name || "pharmaceutical product"} by Aurevia Healthcare.`).slice(0, 160),
+            metaKeywords:
+                product.seo?.metaKeywords ||
+                [product.name, product.category, "Aurevia Healthcare", "Pharmaceutical"]
+                    .filter(Boolean)
+                    .join(", "),
             schema: product.seo?.schema
                 ? JSON.stringify(product.seo.schema, null, 2)
-                : "",
+                : JSON.stringify(
+                      {
+                          "@context": "https://schema.org/",
+                          "@type": "Product",
+                          "name": product.name || "",
+                          "description": product.shortDescription || product.description || "",
+                          "category": product.category || "",
+                          "brand": {
+                              "@type": "Brand",
+                              "name": "Aurevia Healthcare",
+                          },
+                      },
+                      null,
+                      2
+                  ),
             isActive: product.isActive,
         });
 
@@ -1129,15 +1172,15 @@ export default function ProductsPage() {
                                     />
                                 </div>
 
-                                {/* Description */}
+                                {/* Long Description */}
                                 <div className="sm:col-span-2">
                                     <label className="text-sm font-semibold text-slate-900">
-                                        Description *
+                                        Long Description *
                                     </label>
 
                                     <textarea
                                         required
-                                        rows={5}
+                                        rows={8}
                                         value={form.description}
                                         onChange={(event) =>
                                             setForm(
@@ -1149,7 +1192,7 @@ export default function ProductsPage() {
                                                 })
                                             )
                                         }
-                                        placeholder="Detailed product description..."
+                                        placeholder="Detailed long product description..."
                                         className={textareaClass}
                                     />
                                 </div>
@@ -1164,14 +1207,11 @@ export default function ProductsPage() {
                                         rows={5}
                                         value={form.applications}
                                         onChange={(event) =>
-                                            setForm(
-                                                (current) => ({
-                                                    ...current,
-                                                    applications:
-                                                        event.target
-                                                            .value,
-                                                })
-                                            )
+                                            setForm((current) => ({
+                                                ...current,
+                                                applications:
+                                                    event.target.value,
+                                            }))
                                         }
                                         placeholder={
                                             "Pain relief\nFever reduction\nInflammation"

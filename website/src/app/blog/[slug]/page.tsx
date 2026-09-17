@@ -132,14 +132,14 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
 
               {/* Standard Banner Heading */}
               <h1 className="text-3xl font-extrabold tracking-tight text-white drop-shadow-md sm:text-4xl lg:text-5xl">
-                Blog &amp; Insights
+                Blogs &amp; Insights
               </h1>
 
               {/* Breadcrumb Navigation */}
               <Breadcrumb
                 items={[
-                  { name: "Blog", href: "/blog" },
-                  { name: blog.title }
+                  { name: "Blogs & Insights", href: "/blog" },
+                  { name: blog.title },
                 ]}
               />
 

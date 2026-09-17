@@ -51,14 +51,14 @@ export default function ProductCard({
     return (
         <Link
             href={`/products/${product.slug}`}
-            className="group relative flex flex-col overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-md transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-slate-300/60"
+            className="group relative flex flex-col overflow-hidden rounded-3xl border border-slate-300/90 bg-white shadow-md transition-all duration-500 hover:-translate-y-2 hover:border-[#0F766E] hover:shadow-2xl hover:shadow-teal-900/15"
         >
             {/* Accent Bar */}
             <div className="absolute left-0 top-0 z-10 h-[4px] w-0 bg-gradient-to-r from-[#0F766E] to-[#123B5D] transition-all duration-500 group-hover:w-full" />
 
             {/* Image */}
-            <div className="relative flex h-60 items-center justify-center overflow-hidden border-b border-slate-100 bg-slate-50 p-5">
-                <div className="relative h-full w-full rounded-2xl border border-slate-200/80 bg-white p-3 shadow-sm transition-all duration-300 group-hover:border-[#0F766E]/40 group-hover:shadow-md">
+            <div className="relative flex h-60 items-center justify-center overflow-hidden border-b border-slate-200/80 bg-slate-50/80 p-5">
+                <div className="relative h-full w-full rounded-2xl border-2 border-slate-300 bg-white p-3 shadow-sm transition-all duration-300 group-hover:border-[#0F766E]/70 group-hover:shadow-md">
                     {imageUrl ? (
                         <Image
                             src={imageUrl}

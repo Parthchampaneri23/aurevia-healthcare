@@ -82,7 +82,7 @@ export default function QualityCertifications() {
                             onClick={() =>
                                 setSelectedCertificate(certificate.image)
                             }
-                            className="group relative overflow-hidden rounded-3xl border border-slate-100 bg-white text-left shadow-md transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl cursor-pointer"
+                            className="group relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white text-left shadow-md transition-all duration-500 hover:-translate-y-2 hover:border-teal-400/60 hover:shadow-2xl hover:shadow-teal-900/10 cursor-pointer"
                         >
                             {/* Top Accent Line */}
                             <div className="absolute top-0 left-0 h-[4px] w-0 bg-[#0F766E] transition-all duration-500 group-hover:w-full z-10" />

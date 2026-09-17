@@ -179,7 +179,7 @@ export default function JobOpportunities() {
                         <article
                             key={job.title}
                             onClick={() => setSelectedJob(job)}
-                            className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:shadow-slate-300/60 hover:border-slate-300 animate-card-fade-in cursor-pointer"
+                            className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:border-teal-400/60 hover:shadow-xl hover:shadow-teal-900/10 animate-card-fade-in cursor-pointer"
                             style={{ animationDelay: `${index * 80}ms` }}
                         >
                             {/* Slide-in top border color */}
@@ -226,40 +226,41 @@ export default function JobOpportunities() {
             {/* Job Details Modal */}
             {selectedJob && (
                 <div 
-                    className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300"
+                    className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-slate-950/70 backdrop-blur-md transition-opacity duration-300 overflow-y-auto"
                     onClick={() => setSelectedJob(null)}
                 >
                     <div 
-                        className="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl border border-slate-100 flex flex-col animate-modal-fade-in pt-6"
+                        className="relative my-auto w-full max-w-2xl max-h-[82vh] rounded-3xl bg-white shadow-2xl border border-slate-100 flex flex-col overflow-hidden animate-scale-in"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        {/* Header */}
-                        <div className="sticky top-0 bg-white border-b border-slate-100 px-6 py-5 flex items-start justify-between z-10">
+                        {/* Attractive Gradient Header */}
+                        <div className="bg-gradient-to-r from-slate-900 via-[#123B5D] to-[#0F766E] px-6 sm:px-8 py-6 text-white flex items-start justify-between shrink-0 shadow-md">
                             <div>
-                                <h3 className="text-2xl font-bold text-slate-900 leading-tight">
+                                <span className="inline-block rounded-full bg-teal-400/20 px-3 py-1 text-xs font-bold uppercase tracking-wider text-teal-200 border border-teal-400/30">
+                                    {selectedJob.department}
+                                </span>
+                                <h3 className="mt-2 text-2xl font-extrabold text-white leading-tight drop-shadow-sm">
                                     {selectedJob.title}
                                 </h3>
-                                <p className="mt-1 text-sm font-semibold text-teal-600">
-                                    {selectedJob.department}
-                                </p>
                             </div>
                             <button
                                 onClick={() => setSelectedJob(null)}
-                                className="text-slate-400 hover:text-slate-600 p-2 rounded-lg hover:bg-slate-100 transition-colors"
+                                className="text-white/70 hover:text-white p-2 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-md transition-all"
+                                title="Close modal"
                             >
                                 <X size={20} />
                             </button>
                         </div>
 
-                        {/* Content */}
-                        <div className="px-6 py-6 space-y-6 overflow-y-auto">
-                            {/* Meta Info */}
-                            <div className="flex flex-wrap gap-4 text-sm text-slate-500 pb-4 border-b border-slate-100">
-                                <span className="flex items-center gap-1.5">
-                                    <Briefcase size={16} className="text-teal-600" />
-                                    {selectedJob.experience}
+                        {/* Content Scrollable Body */}
+                        <div className="p-6 sm:p-8 space-y-6 overflow-y-auto">
+                            {/* Meta Info Pills */}
+                            <div className="flex flex-wrap gap-3 pb-4 border-b border-slate-100 text-xs font-semibold">
+                                <span className="flex items-center gap-2 rounded-xl bg-teal-50 px-3.5 py-2 text-[#0F766E] border border-teal-100">
+                                    <Briefcase size={16} />
+                                    Experience: {selectedJob.experience}
                                 </span>
-                                <span className="flex items-center gap-1.5">
+                                <span className="flex items-center gap-2 rounded-xl bg-slate-100 px-3.5 py-2 text-slate-700 border border-slate-200">
                                     <MapPin size={16} className="text-teal-600" />
                                     {selectedJob.location}
                                 </span>
@@ -267,19 +268,23 @@ export default function JobOpportunities() {
 
                             {/* Job Description */}
                             <div>
-                                <h4 className="text-base font-bold text-slate-900">Job Overview</h4>
-                                <p className="mt-2 text-sm leading-6 text-slate-600">
+                                <h4 className="text-sm font-bold uppercase tracking-wider text-slate-900">
+                                    Job Overview
+                                </h4>
+                                <p className="mt-2 text-sm leading-relaxed text-slate-600">
                                     {selectedJob.description}
                                 </p>
                             </div>
 
                             {/* Responsibilities */}
                             <div>
-                                <h4 className="text-base font-bold text-slate-900">Key Responsibilities</h4>
-                                <ul className="mt-3 space-y-2">
+                                <h4 className="text-sm font-bold uppercase tracking-wider text-slate-900">
+                                    Key Responsibilities
+                                </h4>
+                                <ul className="mt-3 space-y-2.5">
                                     {selectedJob.details.responsibilities.map((resp, i) => (
-                                        <li key={i} className="flex items-start gap-2 text-sm leading-6 text-slate-600">
-                                            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-teal-600" />
+                                        <li key={i} className="flex items-start gap-3 text-sm leading-relaxed text-slate-600">
+                                            <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-[#0F766E]" />
                                             <span>{resp}</span>
                                         </li>
                                     ))}
@@ -288,11 +293,13 @@ export default function JobOpportunities() {
 
                             {/* Requirements */}
                             <div>
-                                <h4 className="text-base font-bold text-slate-900">Requirements & Qualifications</h4>
-                                <ul className="mt-3 space-y-2">
+                                <h4 className="text-sm font-bold uppercase tracking-wider text-slate-900">
+                                    Requirements & Qualifications
+                                </h4>
+                                <ul className="mt-3 space-y-2.5">
                                     {selectedJob.details.requirements.map((req, i) => (
-                                        <li key={i} className="flex items-start gap-2 text-sm leading-6 text-slate-600">
-                                            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-teal-600" />
+                                        <li key={i} className="flex items-start gap-3 text-sm leading-relaxed text-slate-600">
+                                            <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-[#123B5D]" />
                                             <span>{req}</span>
                                         </li>
                                     ))}
@@ -300,18 +307,17 @@ export default function JobOpportunities() {
                             </div>
                         </div>
 
-                        {/* Footer / Apply Now */}
-                        <div className="sticky bottom-0 bg-slate-50 border-t border-slate-100 px-6 py-4 flex justify-end gap-3 z-10">
+                        {/* Sticky Action Footer */}
+                        <div className="bg-slate-50 border-t border-slate-100 px-6 sm:px-8 py-4 flex items-center justify-end gap-3 shrink-0">
                             <button
                                 onClick={() => setSelectedJob(null)}
-                                className="px-5 py-2.5 rounded-lg border border-slate-300 text-sm font-semibold text-slate-700 bg-white hover:bg-slate-50 transition-colors"
+                                className="px-5 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-700 bg-white hover:bg-slate-100 transition-colors"
                             >
                                 Close
                             </button>
                             <button
                                 onClick={() => {
                                     setSelectedJob(null);
-                                    // Small delay to allow modal closing animation/state change to process
                                     setTimeout(() => {
                                         const element = document.getElementById("application-title");
                                         if (element) {
@@ -319,7 +325,7 @@ export default function JobOpportunities() {
                                         }
                                     }, 150);
                                 }}
-                                className="px-6 py-2.5 rounded-lg bg-[#123B5D] hover:bg-[#0d2d46] text-sm font-semibold text-white transition-all shadow-sm active:scale-95"
+                                className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#123B5D] to-[#0F766E] hover:from-[#0d2d46] hover:to-[#095751] text-sm font-bold text-white shadow-md shadow-teal-900/10 transition-all active:scale-95"
                             >
                                 Apply Now
                             </button>

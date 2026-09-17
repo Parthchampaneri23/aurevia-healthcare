@@ -3,7 +3,7 @@ import { ArrowRight, Mail } from "lucide-react";
 
 export default function ContactCTA() {
     return (
-        <section className="bg-white py-12 lg:py-12">
+        <section className="bg-white pt-8 pb-12 lg:pt-8 lg:pb-16">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#123B5D] to-[#0F766E] px-6 py-10 sm:px-10 lg:px-14 lg:py-12">
 
