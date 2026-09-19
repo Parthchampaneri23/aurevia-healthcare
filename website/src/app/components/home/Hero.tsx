@@ -57,21 +57,39 @@ const slides = [
 
 export default function Hero() {
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [heroSlides, setHeroSlides] = useState(slides);
 
     useEffect(() => {
+        try {
+            const stored = localStorage.getItem("aurevia_website_management_data");
+            if (stored) {
+                const parsed = JSON.parse(stored);
+                if (parsed?.homeData?.heroSlides?.length > 0) {
+                    setHeroSlides(parsed.homeData.heroSlides);
+                } else if (parsed?.homeHeroSlides?.length > 0) {
+                    setHeroSlides(parsed.homeHeroSlides);
+                }
+            }
+        } catch {
+            // fallback
+        }
+    }, []);
+
+    useEffect(() => {
+        if (heroSlides.length === 0) return;
         const interval = setInterval(() => {
-            setCurrentSlide((prev) => (prev + 1) % slides.length);
-        }, 3000);
+            setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+        }, 3500);
 
         return () => clearInterval(interval);
-    }, []);
+    }, [heroSlides.length]);
 
     return (
         <section className="relative w-full overflow-hidden bg-slate-100">
 
             {/* Slides */}
             <div className="relative h-[480px] sm:h-[540px] md:h-[580px] lg:h-[640px]">
-                {slides.map((slide, index) => (
+                {heroSlides.map((slide, index) => (
                     <div
                         key={slide.image}
                         className={`absolute inset-0 transition-opacity duration-300 ease-in-out ${index === currentSlide

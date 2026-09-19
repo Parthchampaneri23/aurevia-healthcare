@@ -14,6 +14,7 @@ import {
     User,
     X,
 } from "lucide-react";
+import AdminShell from "@/components/AdminShell";
 
 type ApplicationStatus =
     | "new"
@@ -399,7 +400,7 @@ export default function CareersPage() {
     ---------------------------------- */
 
     return (
-        <main className="min-h-screen bg-slate-50 p-6 lg:p-8">
+        <AdminShell>
             {/* Header */}
             <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
                 <div>
@@ -1101,6 +1102,6 @@ export default function CareersPage() {
                         </p>
                     </div>
                 )}
-        </main>
+        </AdminShell>
     );
 }

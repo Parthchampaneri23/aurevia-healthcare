@@ -135,8 +135,8 @@ export default function Navbar() {
                         {/* Mega Menu */}
                         <div
                             className={`absolute left-1/2 top-full z-50 w-[1000px] -translate-x-1/2 pt-2 transition-all duration-200 ${productsOpen
-                                    ? "visible translate-y-0 opacity-100"
-                                    : "invisible -translate-y-2 opacity-0"
+                                ? "visible translate-y-0 opacity-100"
+                                : "invisible -translate-y-2 opacity-0"
                                 }`}
                         >
                             <div className="overflow-hidden border-t-2 border-[#123B5D] bg-white shadow-[0_20px_50px_rgba(15,23,42,0.14)]">

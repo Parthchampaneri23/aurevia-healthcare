@@ -15,7 +15,10 @@ import {
   ShieldCheck,
   LogOut,
   ExternalLink,
+  FileText,
+  BookOpen,
 } from "lucide-react";
+import AdminShell from "@/components/AdminShell";
 
 const API_URL =
   process.env.NEXT_PUBLIC_API_URL ||
@@ -269,69 +272,8 @@ export default function Dashboard() {
   };
 
   return (
-    <main className="min-h-screen bg-[#f6f8fb]">
-      {/* TOP HEADER */}
-      <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 backdrop-blur">
-        <div className="flex h-[76px] items-center justify-between px-5 sm:px-8 lg:px-10">
-          <div className="flex items-center gap-4">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-100 bg-white shadow-sm">
-              <img
-                src="/logo.png"
-                alt="Aurevia Healthcare"
-                className="max-h-9 max-w-[38px] object-contain"
-              />
-            </div>
-
-            <div className="hidden sm:block">
-              <p className="text-[15px] font-bold tracking-tight text-[#123B5D]">
-                Aurevia Healthcare
-              </p>
-
-              <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-slate-400">
-                Admin Portal
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <Link
-              href="https://aurevia-healthcare-one.vercel.app"
-              target="_blank"
-              className="hidden items-center gap-2 rounded-lg border border-slate-200 bg-white px-3.5 py-2 text-xs font-semibold text-slate-600 transition hover:border-teal-200 hover:bg-teal-50 hover:text-teal-700 sm:inline-flex"
-            >
-              <ExternalLink size={14} />
-              View Website
-            </Link>
-
-            <div className="hidden h-8 w-px bg-slate-200 sm:block" />
-
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#123B5D] text-xs font-bold text-white">
-              A
-            </div>
-
-            <div className="hidden md:block">
-              <p className="text-xs font-bold text-slate-800">
-                Administrator
-              </p>
-
-              <p className="text-[11px] text-slate-400">
-                Admin Account
-              </p>
-            </div>
-
-            <button
-              type="button"
-              onClick={handleLogout}
-              title="Logout"
-              className="ml-1 flex h-9 w-9 items-center justify-center rounded-lg text-slate-400 transition hover:bg-red-50 hover:text-red-600"
-            >
-              <LogOut size={17} />
-            </button>
-          </div>
-        </div>
-      </header>
-
-      <div className="mx-auto max-w-[1600px] px-5 py-7 sm:px-8 lg:px-10 lg:py-9">
+    <AdminShell>
+      <div className="space-y-6">
         {/* PAGE HEADING */}
         <div className="mb-8 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
@@ -598,6 +540,32 @@ export default function Dashboard() {
 
               <div className="mt-5 space-y-2.5">
                 <Link
+                  href="/blogs"
+                  className="group flex items-center justify-between rounded-xl border border-[#0F766E]/20 bg-[#0F766E]/5 p-3.5 transition hover:border-[#0F766E] hover:bg-[#0F766E]/10"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#0F766E] text-white">
+                      <FileText size={17} />
+                    </div>
+
+                    <div>
+                      <p className="text-sm font-bold text-slate-800">
+                        Blogs & Articles
+                      </p>
+
+                      <p className="text-[11px] text-slate-500">
+                        Manage website insights
+                      </p>
+                    </div>
+                  </div>
+
+                  <ArrowUpRight
+                    size={15}
+                    className="text-[#0F766E] transition group-hover:translate-x-0.5"
+                  />
+                </Link>
+
+                <Link
                   href="/products"
                   className="group flex items-center justify-between rounded-xl border border-slate-100 p-3.5 transition hover:border-teal-200 hover:bg-teal-50/50"
                 >
@@ -753,6 +721,6 @@ export default function Dashboard() {
           </p>
         </footer>
       </div>
-    </main>
+    </AdminShell>
   );
 }

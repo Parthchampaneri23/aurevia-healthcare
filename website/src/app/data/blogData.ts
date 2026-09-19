@@ -347,23 +347,95 @@ export const blogs: BlogPost[] = [
   }
 ];
 
+export const initialBlogs: BlogPost[] = [
+  {
+    id: "blog-1",
+    title: "Understanding Modern Pharmaceutical Manufacturing Processes",
+    slug: "understanding-modern-pharmaceutical-manufacturing-processes",
+    category: "Pharmaceutical Manufacturing",
+    image: "/blogs/blog-pharmaceutical-manufacturing.jpg",
+    excerpt: "Explore the technological advancements, automated dosage systems, and stringent quality protocols driving modern pharmaceutical manufacturing excellence.",
+    author: {
+      name: "Dr. Rajesh Sharma",
+      role: "Head of Technical Operations & QA",
+    },
+    date: "September 16, 2026",
+    readTime: "6 min read",
+    tags: ["Manufacturing", "Pharma Tech", "WHO-GMP", "Quality Assurance"],
+    featured: true,
+    published: true,
+    seo: {
+      metaTitle: "Understanding Modern Pharmaceutical Manufacturing Processes | Aurevia Healthcare",
+      metaDescription: "In-depth insights into modern pharmaceutical manufacturing workflows, continuous processing, cleanroom engineering, and quality controls.",
+      keywords: ["pharmaceutical manufacturing", "pharma tech", "cGMP manufacturing", "tablet production", "cleanroom technology"],
+    },
+    content: `
+<h2>Introduction</h2>
+<p>Pharmaceutical manufacturing has evolved dramatically over the last decade, transitioning from batch-centric, labor-intensive operations to highly automated, continuous processing systems. As global regulatory expectations tighten and therapeutic demand increases, commercial drug manufacturers must balance high volume throughput with uncompromising quality assurance.</p>
+
+<p>Modern pharmaceutical production encompasses advanced cleanroom HVAC engineering, automated dosage containment, precise analytical testing, and rigorous process validation. At Aurevia Healthcare, modern manufacturing is founded upon standard operating precision, environmental sterility, and continuous batch monitoring.</p>
+`
+  }
+];
+
+export const getDynamicBlogs = (): BlogPost[] => {
+  if (typeof window === "undefined") return blogs;
+  try {
+    const saved = localStorage.getItem("aurevia_admin_blogs_data");
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed.map((item: any) => ({
+          id: item.id,
+          title: item.title,
+          slug: item.slug,
+          category: item.category,
+          image: item.image,
+          excerpt: item.excerpt,
+          content: item.content,
+          author: {
+            name: item.authorName || item.author?.name || "Aurevia Editorial Team",
+            role: item.authorRole || item.author?.role || "Healthcare Insights",
+          },
+          date: item.date || "September 19, 2026",
+          readTime: item.readTime || "5 min read",
+          tags: item.tags || ["Pharmaceutical"],
+          featured: item.featured || false,
+          published: item.published !== false,
+          seo: {
+            metaTitle: item.seo?.metaTitle || `${item.title} | Aurevia Healthcare`,
+            metaDescription: item.seo?.metaDescription || item.excerpt,
+            keywords: item.seo?.metaKeywords ? item.seo.metaKeywords.split(",") : item.tags || [],
+            canonicalUrl: item.seo?.canonicalUrl,
+          },
+        }));
+      }
+    }
+  } catch {}
+  return blogs;
+};
+
 export const getFeaturedBlog = (): BlogPost => {
-  return blogs.find((b) => b.featured && b.published) || blogs[0];
+  const currentBlogs = getDynamicBlogs();
+  return currentBlogs.find((b) => b.featured && b.published) || currentBlogs[0];
 };
 
 export const getLatestBlogs = (count: number = 3): BlogPost[] => {
-  return blogs.filter((b) => b.published).slice(0, count);
+  const currentBlogs = getDynamicBlogs();
+  return currentBlogs.filter((b) => b.published).slice(0, count);
 };
 
 export const getBlogBySlug = (slug: string): BlogPost | undefined => {
-  return blogs.find((b) => b.slug === slug);
+  const currentBlogs = getDynamicBlogs();
+  return currentBlogs.find((b) => b.slug === slug);
 };
 
 export const getRelatedBlogs = (currentSlug: string, count: number = 3): BlogPost[] => {
+  const currentBlogs = getDynamicBlogs();
   const current = getBlogBySlug(currentSlug);
-  if (!current) return blogs.slice(0, count);
+  if (!current) return currentBlogs.slice(0, count);
   
-  const sameCategory = blogs.filter(
+  const sameCategory = currentBlogs.filter(
     (b) => b.slug !== currentSlug && b.category === current.category && b.published
   );
   
@@ -371,7 +443,7 @@ export const getRelatedBlogs = (currentSlug: string, count: number = 3): BlogPos
     return sameCategory.slice(0, count);
   }
   
-  const remaining = blogs.filter(
+  const remaining = currentBlogs.filter(
     (b) => b.slug !== currentSlug && b.category !== current.category && b.published
   );
   

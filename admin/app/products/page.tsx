@@ -12,6 +12,7 @@ import {
     Upload,
     Loader2,
 } from "lucide-react";
+import AdminShell from "@/components/AdminShell";
 
 type Specification = {
     label: string;
@@ -22,6 +23,7 @@ type ProductSEO = {
     metaTitle: string;
     metaDescription: string;
     metaKeywords: string;
+    canonicalUrl?: string;
     schema: Record<string, unknown>;
 };
 
@@ -54,6 +56,7 @@ const emptyForm = {
     metaTitle: "",
     metaDescription: "",
     metaKeywords: "",
+    canonicalUrl: "",
     schema: "",
     isActive: true,
 };
@@ -301,6 +304,7 @@ export default function ProductsPage() {
                 [product.name, product.category, "Aurevia Healthcare", "Pharmaceutical"]
                     .filter(Boolean)
                     .join(", "),
+            canonicalUrl: product.seo?.canonicalUrl || `https://aureviahealthcare.com/products/${product.slug || ""}`,
             schema: product.seo?.schema
                 ? JSON.stringify(product.seo.schema, null, 2)
                 : JSON.stringify(
@@ -443,6 +447,7 @@ export default function ProductsPage() {
                     metaTitle: form.metaTitle.trim(),
                     metaDescription: form.metaDescription.trim(),
                     metaKeywords: form.metaKeywords.trim(),
+                    canonicalUrl: form.canonicalUrl.trim(),
                     schema,
                 },
                 isActive: form.isActive,
@@ -602,7 +607,7 @@ export default function ProductsPage() {
         "mt-2 w-full resize-none rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-900 outline-none placeholder:text-slate-400 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/10";
 
     return (
-        <main className="min-h-screen bg-slate-50 p-6 lg:p-8">
+        <AdminShell>
             {/* HEADER */}
             <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
                 <div>
@@ -1353,6 +1358,33 @@ export default function ProductsPage() {
                                              </p>
                                          </div>
 
+                                         {/* Canonical URL */}
+                                         <div className="mt-5">
+                                             <div className="flex items-center justify-between">
+                                                 <label className="text-sm font-semibold text-slate-900">
+                                                     Canonical URL
+                                                 </label>
+                                                 <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-slate-600">
+                                                     SEO Link
+                                                 </span>
+                                             </div>
+                                             <input
+                                                 type="text"
+                                                 value={form.canonicalUrl || ""}
+                                                 onChange={(event) =>
+                                                     setForm((current) => ({
+                                                         ...current,
+                                                         canonicalUrl: event.target.value,
+                                                     }))
+                                                 }
+                                                 placeholder="e.g. https://aureviahealthcare.com/products/paracetamol-500mg"
+                                                 className={inputClass}
+                                             />
+                                             <p className="mt-1 text-[11px] text-slate-500">
+                                                 Specify the preferred canonical URL for search engines.
+                                             </p>
+                                         </div>
+
                                          {/* Schema Markup */}
                                          <div className="mt-5">
                                              <div className="flex items-center justify-between">
@@ -1428,6 +1460,6 @@ export default function ProductsPage() {
                     </div>
                 </div>
             )}
-        </main>
+        </AdminShell>
     );
 }

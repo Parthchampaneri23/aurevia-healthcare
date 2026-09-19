@@ -33,12 +33,23 @@ html {
 }
 
 /* Ensure images, svgs, and videos never exceed container width */
-img, video, svg, iframe {
+img,
+video,
+svg,
+iframe {
   max-width: 100%;
 }
 
 /* Ensure long text doesn't cause overflow */
-p, h1, h2, h3, h4, h5, h6, span, a {
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+a {
   overflow-wrap: break-word;
   word-break: break-word;
 }

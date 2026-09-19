@@ -6,7 +6,8 @@ import FeaturedBlog from "@/app/components/blog/FeaturedBlog";
 import CategoryFilter from "@/app/components/blog/CategoryFilter";
 import BlogCard from "@/app/components/blog/BlogCard";
 import BlogCTA from "@/app/components/blog/BlogCTA";
-import { blogs, getFeaturedBlog } from "@/app/data/blogData";
+import { getDynamicBlogs, getFeaturedBlog, BlogPost } from "@/app/data/blogData";
+import { useEffect } from "react";
 
 const categories = [
   "All",
@@ -18,16 +19,21 @@ const categories = [
 
 export default function BlogListingPage() {
   const [activeCategory, setActiveCategory] = useState("All");
-  const featuredBlog = getFeaturedBlog();
+  const [allBlogs, setAllBlogs] = useState<BlogPost[]>([]);
+
+  useEffect(() => {
+    setAllBlogs(getDynamicBlogs());
+  }, []);
+
+  const featuredBlog = allBlogs.find((b) => b.featured && b.published) || allBlogs[0] || getFeaturedBlog();
 
   // Filtered blogs for grid
   const getDisplayedGridBlogs = () => {
+    if (!featuredBlog) return [];
     if (activeCategory === "All") {
-      // In "All", exclude the featured blog so it's not repeated
-      return blogs.filter((b) => b.id !== featuredBlog.id && b.published);
+      return allBlogs.filter((b) => b.id !== featuredBlog.id && b.published);
     }
-    // For specific category, return all matching blogs in that category except featured if category is different
-    return blogs.filter((b) => b.category === activeCategory && b.published);
+    return allBlogs.filter((b) => b.category === activeCategory && b.published);
   };
 
   const gridBlogs = getDisplayedGridBlogs();

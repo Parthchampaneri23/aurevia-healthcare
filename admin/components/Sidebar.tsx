@@ -5,14 +5,16 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
     LayoutDashboard,
+    Globe,
     Package,
     Factory,
+    FileText,
     MessageSquare,
     BriefcaseBusiness,
-    Settings,
     LogOut,
     X,
     ChevronRight,
+    Layout,
 } from "lucide-react";
 
 type SidebarProps = {
@@ -23,11 +25,16 @@ type SidebarProps = {
 const menuItems = [
     {
         label: "Dashboard",
-        href: "/dashboard",
+        href: "/",
         icon: LayoutDashboard,
     },
     {
-        label: "Products",
+        label: "Website Management",
+        href: "/website-management",
+        icon: Globe,
+    },
+    {
+        label: "Product Management",
         href: "/products",
         icon: Package,
     },
@@ -37,12 +44,17 @@ const menuItems = [
         icon: Factory,
     },
     {
-        label: "Enquiries",
+        label: "Blogs & Articles",
+        href: "/blogs",
+        icon: FileText,
+    },
+    {
+        label: "Contact & Enquiries",
         href: "/enquiries",
         icon: MessageSquare,
     },
     {
-        label: "Careers",
+        label: "Career Applications",
         href: "/careers",
         icon: BriefcaseBusiness,
     },
@@ -98,7 +110,7 @@ export default function Sidebar({
                         {/* Logo */}
                         <div className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm">
                             <Image
-                                src="/hero/logo.png"
+                                src="/logo.png"
                                 alt="Aurevia Healthcare"
                                 width={48}
                                 height={48}
@@ -147,8 +159,9 @@ export default function Sidebar({
                             const Icon = item.icon;
 
                             const isActive =
-                                pathname === item.href ||
-                                pathname.startsWith(`${item.href}/`);
+                                item.href === "/"
+                                    ? pathname === "/"
+                                    : pathname === item.href || pathname.startsWith(`${item.href}/`);
 
                             return (
                                 <Link
@@ -196,53 +209,6 @@ export default function Sidebar({
                             );
                         })}
                     </div>
-
-                    {/* ----------------------------------
-                        SYSTEM
-                    ---------------------------------- */}
-                    <div className="my-7 border-t border-slate-100" />
-
-                    <p className="mb-3 px-3 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
-                        System
-                    </p>
-
-                    <Link
-                        href="/settings"
-                        onClick={onClose}
-                        className={`group flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-semibold transition-all duration-200 ${pathname === "/settings" ||
-                                pathname.startsWith("/settings/")
-                                ? "bg-[#123B5D] text-white shadow-md shadow-[#123B5D]/15"
-                                : "text-slate-600 hover:bg-slate-50 hover:text-[#123B5D]"
-                            }`}
-                    >
-                        <div
-                            className={`flex h-8 w-8 items-center justify-center rounded-lg ${pathname === "/settings" ||
-                                    pathname.startsWith("/settings/")
-                                    ? "bg-white/10"
-                                    : "bg-slate-50 group-hover:bg-teal-50"
-                                }`}
-                        >
-                            <Settings
-                                size={18}
-                                className={
-                                    pathname === "/settings" ||
-                                        pathname.startsWith("/settings/")
-                                        ? "text-teal-200"
-                                        : "text-slate-400 group-hover:text-[#0F766E]"
-                                }
-                            />
-                        </div>
-
-                        <span className="flex-1">Settings</span>
-
-                        {(pathname === "/settings" ||
-                            pathname.startsWith("/settings/")) && (
-                                <ChevronRight
-                                    size={15}
-                                    className="text-white/60"
-                                />
-                            )}
-                    </Link>
                 </nav>
 
                 {/* ----------------------------------

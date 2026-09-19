@@ -15,6 +15,7 @@ import {
     Clock3,
     AlertCircle,
 } from "lucide-react";
+import AdminShell from "@/components/AdminShell";
 
 type EnquiryStatus = "new" | "contacted" | "resolved";
 
@@ -357,7 +358,7 @@ export default function EnquiriesPage() {
     ]);
 
     return (
-        <main className="min-h-screen bg-slate-50 p-6 lg:p-8">
+        <AdminShell>
             {/* Header */}
             <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
                 <div>
@@ -1022,6 +1023,6 @@ export default function EnquiriesPage() {
                     </p>
                 </div>
             )}
-        </main>
+        </AdminShell>
     );
 }
