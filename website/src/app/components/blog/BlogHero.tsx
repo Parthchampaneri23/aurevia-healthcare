@@ -20,7 +20,7 @@ export default function BlogHero() {
       {/* Content */}
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6 lg:px-8">
         <div className="max-w-2xl text-left">
-          
+
           {/* Eyebrow Label */}
           <div className="mb-2.5 inline-flex items-center gap-2 rounded-full border border-teal-400/30 bg-teal-950/60 px-3.5 py-1 backdrop-blur-md">
             <span className="h-2 w-2 rounded-full bg-teal-400 animate-pulse" />

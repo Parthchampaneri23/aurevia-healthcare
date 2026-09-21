@@ -169,7 +169,7 @@ export default function Footer() {
 
               {/* Phone */}
               <a
-                href="tel:+910000000000"
+                href="tel:+918677456564"
                 className="flex items-center gap-3 text-sm text-slate-400 transition hover:text-white"
               >
                 <FaPhone

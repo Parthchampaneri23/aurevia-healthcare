@@ -62,64 +62,78 @@ export default function ProductCategories() {
 
                 {/* Section Heading */}
                 <div className="mx-auto max-w-3xl text-center">
-                    <div className="inline-flex items-center gap-2 mb-3 justify-center">
-                        <span className="h-1 w-6 rounded-full bg-[#0F766E]" />
-                        <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#0F766E]">
-                            Our Products
+                    <div className="inline-flex items-center gap-3 mb-2.5 justify-center">
+                        <span className="h-0.5 w-6 rounded-full bg-[#0F766E]" aria-hidden="true" />
+                        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#0F766E]">
+                            OUR PRODUCTS
                         </p>
-                        <span className="h-1 w-6 rounded-full bg-[#0F766E]" />
+                        <span className="h-0.5 w-6 rounded-full bg-[#0F766E]" aria-hidden="true" />
                     </div>
 
-                    <h2 className="text-3xl font-extrabold text-slate-900 sm:text-4xl bg-gradient-to-r from-slate-900 to-[#123B5D] bg-clip-text text-transparent">
-                        Pharmaceutical Solutions
+                    <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-[#123B5D] leading-tight">
+                        Pharmaceutical <span className="bg-gradient-to-r from-[#123B5D] to-[#0F766E] bg-clip-text text-transparent">Solutions</span>
                     </h2>
 
-                    <p className="mt-5 text-base leading-relaxed text-slate-600 max-w-2xl mx-auto">
+                    <p className="mt-4 text-base md:text-[17px] font-normal leading-relaxed text-slate-600 max-w-2xl mx-auto">
                         Explore our range of pharmaceutical dosage forms and healthcare solutions developed with a focus on quality, consistency and reliability.
                     </p>
                 </div>
 
                 {/* Category Cards */}
-                <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {categories.map((category) => (
                         <Link
                             key={category.name}
                             href={category.href}
-                            className="group relative flex flex-col overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-md transition-all duration-500 hover:-translate-y-2 hover:border-teal-400/60 hover:shadow-2xl hover:shadow-teal-900/10"
+                            className="group relative flex flex-col overflow-hidden rounded-3xl border-2 border-slate-300/90 bg-white shadow-md backdrop-blur-sm transition-all duration-500 hover:-translate-y-2.5 hover:border-[#0F766E] hover:shadow-2xl hover:shadow-teal-950/20"
                         >
-                            {/* Slide-in Accent Bar */}
-                            <div className="absolute top-0 left-0 z-10 h-[4px] w-0 bg-gradient-to-r from-[#0F766E] to-[#123B5D] transition-all duration-500 group-hover:w-full" />
+                            {/* Slide-in Top Accent Line */}
+                            <div className="absolute top-0 left-0 z-20 h-[4px] w-0 bg-gradient-to-r from-[#123B5D] via-[#0F766E] to-[#123B5D] transition-all duration-500 group-hover:w-full" />
 
-                            {/* Image */}
-                            <div className="relative h-60 overflow-hidden">
+                            {/* Image Container with Zoom & Badge */}
+                            <div className="relative h-60 overflow-hidden bg-slate-900">
                                 <Image
                                     src={category.image}
                                     alt={category.name}
                                     fill
                                     unoptimized
-                                    className={`object-cover ${category.objectPosition} transition-transform duration-700 ease-out group-hover:scale-103`}
+                                    className={`object-cover ${category.objectPosition} opacity-90 transition-all duration-700 ease-out group-hover:scale-110 group-hover:opacity-100`}
                                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                                 />
 
-                                {/* Image Overlay */}
-                                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-slate-900/10 to-transparent transition-opacity duration-500 group-hover:opacity-80" />
+                                {/* Dark Gradient Overlay for High Contrast Text Visibility */}
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/20 to-transparent transition-opacity duration-500 group-hover:opacity-60" />
+
+                                {/* Category Badge Floating Top Left */}
+                                <div className="absolute top-4 left-4 z-10">
+                                    <span className="inline-flex items-center rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-[#123B5D] shadow-sm backdrop-blur-md transition-colors duration-300 group-hover:bg-[#0F766E] group-hover:text-white">
+                                        {category.name}
+                                    </span>
+                                </div>
                             </div>
 
-                            {/* Content */}
-                            <div className="flex flex-1 flex-col p-6 sm:p-8">
-                                <h3 className="text-xl font-bold text-slate-900 transition-colors duration-300 group-hover:text-[#0F766E]">
+                            {/* Content Section */}
+                            <div className="flex flex-1 flex-col p-6 sm:p-7 bg-white transition-colors duration-500 group-hover:bg-slate-50/50">
+                                <h3 className="text-lg font-semibold text-slate-900 transition-colors duration-300 group-hover:text-[#0F766E]">
                                     {category.name}
                                 </h3>
 
-                                <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-500">
+                                <p className="mt-2.5 flex-1 text-[15px] font-normal leading-relaxed text-slate-600">
                                     {category.description}
                                 </p>
 
-                                <div className="mt-6 inline-flex items-center text-sm font-bold text-[#123B5D] transition-colors duration-300 group-hover:text-[#0F766E]">
-                                    View Products
-                                    <span className="ml-2 transition-transform duration-300 group-hover:translate-x-1.5">
-                                        →
+                                {/* Action Bar */}
+                                <div className="mt-6 flex items-center justify-between border-t border-slate-100 pt-3.5">
+                                    <span className="text-xs font-medium text-[#0F766E]">
+                                        Explore Range
                                     </span>
+
+                                    <div className="flex items-center gap-2 text-sm font-semibold text-[#123B5D] transition-colors duration-300 group-hover:text-[#0F766E]">
+                                        <span>View Products</span>
+                                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-600 transition-all duration-300 group-hover:bg-[#0F766E] group-hover:text-white group-hover:translate-x-1">
+                                            →
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </Link>
@@ -130,7 +144,7 @@ export default function ProductCategories() {
                 <div className="mt-12 text-center">
                     <Link
                         href="/products#explore"
-                        className="group/btn inline-flex items-center gap-2 rounded-xl bg-[#123B5D] px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-900/10 transition-all duration-300 hover:bg-[#0d2d46] hover:shadow-xl hover:shadow-blue-900/20 hover:translate-x-0.5 active:scale-95"
+                        className="group/btn inline-flex items-center gap-2 rounded-xl bg-[#123B5D] px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-900/10 transition-all duration-300 hover:bg-[#0F766E] hover:shadow-xl hover:shadow-teal-900/20 hover:translate-x-0.5 active:scale-95"
                     >
                         View All Products
                         <span className="transition-transform duration-300 group-hover/btn:translate-x-1">→</span>

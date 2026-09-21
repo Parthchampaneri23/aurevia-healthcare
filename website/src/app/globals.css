@@ -29,7 +29,7 @@ body {
 
 html {
   overflow-x: hidden;
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 
 /* Ensure images, svgs, and videos never exceed container width */
@@ -52,4 +52,21 @@ span,
 a {
   overflow-wrap: break-word;
   word-break: break-word;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 25s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused !important;
 }

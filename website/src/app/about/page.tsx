@@ -5,6 +5,7 @@ import CoreValues from "@/app/components/about/CoreValues";
 import OurJourney from "@/app/components/about/OurJourney";
 import ResearchDevelopment from "@/app/components/about/ResearchDevelopment";
 import QualityCertifications from "@/app/components/about/QualityCertifications";
+import TestimonialsSection from "@/app/components/about/TestimonialsSection";
 import FAQSection from "@/app/components/common/FAQSection";
 
 const aboutFaqs = [
@@ -40,6 +41,7 @@ export default function AboutPage() {
             <OurJourney />
             <ResearchDevelopment />
             <QualityCertifications />
+            <TestimonialsSection />
             <FAQSection
                 eyebrow="ABOUT AUREVIA HEALTHCARE"
                 title="About Us FAQs"

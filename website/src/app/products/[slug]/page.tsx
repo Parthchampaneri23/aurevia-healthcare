@@ -321,8 +321,8 @@ export default async function ProductDetailsPage({
                                                     index
                                                 }
                                                 className={`transition-colors duration-200 hover:bg-slate-50/80 ${index % 2 === 0
-                                                        ? "bg-slate-50/50"
-                                                        : "bg-white"
+                                                    ? "bg-slate-50/50"
+                                                    : "bg-white"
                                                     }`}
                                             >
                                                 <th className="w-1/3 border-b border-slate-100 px-6 py-4 text-sm font-bold text-[#123B5D]">
@@ -387,4 +387,4 @@ export default async function ProductDetailsPage({
             />
         </main>
     );
-}
+}

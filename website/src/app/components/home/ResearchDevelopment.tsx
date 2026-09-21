@@ -70,7 +70,7 @@ export default function ResearchDevelopment() {
                         return (
                             <div
                                 key={area.title}
-                                className={`group relative overflow-hidden rounded-3xl border border-slate-100 bg-slate-50/50 p-8 text-center transition-all duration-500 hover:-translate-y-2 hover:bg-white hover:shadow-xl ${area.color}`}
+                                className={`group relative overflow-hidden rounded-3xl border border-slate-300/80 bg-slate-50/50 p-8 text-center transition-all duration-500 hover:-translate-y-2 hover:border-[#0F766E] hover:bg-white hover:shadow-xl ${area.color}`}
                             >
                                 {/* Slide-in top border color */}
                                 <div className="absolute top-0 left-0 h-[4px] w-0 bg-gradient-to-r from-[#123B5D] to-[#0F766E] transition-all duration-500 group-hover:w-full" />

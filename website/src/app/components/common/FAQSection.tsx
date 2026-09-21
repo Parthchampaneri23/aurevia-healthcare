@@ -33,7 +33,7 @@ export default function FAQSection({
     };
 
     return (
-        <section className={`relative py-12 lg:py-16 overflow-hidden bg-white ${className}`}>
+        <section className={`relative py-12 lg:py-12 overflow-hidden bg-white ${className}`}>
 
             <div className="relative mx-auto max-w-5xl px-6 lg:px-8">
 

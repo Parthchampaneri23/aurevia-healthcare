@@ -6,6 +6,7 @@ import ProductCategories from "@/app/components/home/ProductCategories";
 import Manufacturing from "@/app/components/home/Manufacturing";
 import IndustrySegments from "@/app/components/industries/IndustrySegments";
 import HomeBlogSection from "@/app/components/home/HomeBlogSection";
+import ClientSlider from "@/app/components/home/ClientSlider";
 import FAQSection from "@/app/components/common/FAQSection";
 import ContactCTA from "@/app/components/home/ContactCTA";
 
@@ -43,6 +44,7 @@ export default function Home() {
       <Manufacturing />
       <IndustrySegments />
       <HomeBlogSection />
+      <ClientSlider />
       <FAQSection
         eyebrow="FREQUENTLY ASKED QUESTIONS"
         title="Frequently Asked Questions"

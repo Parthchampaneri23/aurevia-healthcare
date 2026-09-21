@@ -14,34 +14,38 @@ export default function HomeBlogSection() {
 
         {/* Section Header */}
         <div className="mx-auto max-w-3xl text-center">
-          <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#0F766E]">
-            INSIGHTS &amp; KNOWLEDGE
-          </p>
+          <div className="inline-flex items-center gap-3 mb-2.5 justify-center">
+            <span className="h-0.5 w-6 rounded-full bg-[#0F766E]" aria-hidden="true" />
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#0F766E]">
+              INSIGHTS &amp; KNOWLEDGE
+            </p>
+            <span className="h-0.5 w-6 rounded-full bg-[#0F766E]" aria-hidden="true" />
+          </div>
 
-          <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-            Latest From Aurevia
+          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-[#123B5D] leading-tight">
+            Latest From <span className="bg-gradient-to-r from-[#123B5D] to-[#0F766E] bg-clip-text text-transparent">Aurevia</span>
           </h2>
 
-          <p className="mt-4 text-base text-slate-600 sm:text-lg">
+          <p className="mt-4 text-base md:text-[17px] font-normal leading-relaxed text-slate-600 max-w-2xl mx-auto">
             Explore our latest insights on pharmaceutical manufacturing, quality, research, and industry practices.
           </p>
         </div>
 
         {/* 3 Blog Cards Grid */}
-        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {latestBlogs.map((blog) => (
             <BlogCard key={blog.id} blog={blog} />
           ))}
         </div>
 
         {/* View All Insights Button */}
-        <div className="mt-14 text-center">
+        <div className="mt-12 text-center">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 rounded-xl bg-[#123B5D] px-8 py-3.5 text-sm font-bold text-white transition-all duration-200 hover:bg-[#0F766E] hover:shadow-md hover:scale-[1.02] active:scale-[0.98]"
+            className="group/btn inline-flex items-center gap-2 rounded-xl bg-[#123B5D] px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-900/10 transition-all duration-300 hover:bg-[#0F766E] hover:shadow-xl hover:shadow-teal-900/20 hover:translate-x-0.5 active:scale-95"
           >
             View All Insights
-            <ArrowRight size={16} />
+            <ArrowRight size={16} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
           </Link>
         </div>
 

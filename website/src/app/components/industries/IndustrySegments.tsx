@@ -83,20 +83,21 @@ export default function IndustrySegments() {
                 }
             `}} />
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                <div className="mx-auto max-w-2xl text-center">
-                    <p className="text-xs font-bold uppercase tracking-[0.25em] text-teal-600">
-                        BUSINESS SECTORS
-                    </p>
+                <div className="mx-auto max-w-3xl text-center">
+                    <div className="inline-flex items-center gap-3 mb-2.5 justify-center">
+                        <span className="h-0.5 w-6 rounded-full bg-[#0F766E]" aria-hidden="true" />
+                        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#0F766E]">
+                            BUSINESS SECTORS
+                        </p>
+                        <span className="h-0.5 w-6 rounded-full bg-[#0F766E]" aria-hidden="true" />
+                    </div>
 
-                    <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-                        Supporting the Healthcare Ecosystem
+                    <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-[#123B5D] leading-tight">
+                        Supporting the Healthcare <span className="bg-gradient-to-r from-[#123B5D] to-[#0F766E] bg-clip-text text-transparent">Ecosystem</span>
                     </h2>
 
-                    <p className="mt-4 text-sm leading-6 text-slate-600 sm:text-base">
-                        Aurevia works with businesses across the healthcare
-                        supply chain, helping connect dependable pharmaceutical
-                        products with the markets and organizations that need
-                        them.
+                    <p className="mt-4 text-base md:text-[17px] font-normal leading-relaxed text-slate-600 max-w-2xl mx-auto">
+                        Aurevia works with businesses across the healthcare supply chain, helping connect dependable pharmaceutical products with the markets and organizations that need them.
                     </p>
                 </div>
 
@@ -108,43 +109,53 @@ export default function IndustrySegments() {
                             <Link
                                 key={industry.title}
                                 href={industry.href}
-                                className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-teal-400/60 hover:shadow-xl hover:shadow-teal-900/10 animate-card-fade-in"
+                                className="group relative flex flex-col overflow-hidden rounded-3xl border-2 border-slate-300/90 bg-white shadow-md transition-all duration-500 hover:-translate-y-2.5 hover:border-[#0F766E] hover:shadow-2xl hover:shadow-teal-950/20 animate-card-fade-in"
                                 style={{ animationDelay: `${index * 80}ms` }}
                             >
-                                {/* Premium top border accent */}
-                                <div className="absolute top-0 left-0 z-10 h-[3px] w-0 bg-[#0F766E] transition-all duration-300 group-hover:w-full" />
+                                {/* Slide-in Top Accent Line */}
+                                <div className="absolute top-0 left-0 z-20 h-[4px] w-0 bg-gradient-to-r from-[#123B5D] via-[#0F766E] to-[#123B5D] transition-all duration-500 group-hover:w-full" />
 
-                                <div className="relative h-48 overflow-hidden bg-slate-50">
+                                {/* Image Section with Dark Overlay & Zoom */}
+                                <div className="relative h-52 overflow-hidden bg-slate-900">
                                     <Image
                                         src={industry.image}
                                         alt={industry.title}
                                         fill
-                                        className="object-cover transition-all duration-500 group-hover:scale-105"
+                                        className="object-cover opacity-90 transition-all duration-700 ease-out group-hover:scale-110 group-hover:opacity-100"
                                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                                     />
 
-                                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent pointer-events-none" />
+                                    {/* Gradient overlay for text contrast */}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-900/20 to-transparent transition-opacity duration-500 group-hover:opacity-50" />
 
-                                    <div className="absolute bottom-4 left-4 flex h-10 w-10 items-center justify-center rounded-xl bg-white/95 text-[#123B5D] shadow-md transition-all duration-300 group-hover:bg-[#123B5D] group-hover:text-white">
-                                        <Icon size={20} strokeWidth={1.8} />
+                                    {/* Icon Badge Floating Bottom Left */}
+                                    <div className="absolute bottom-4 left-4 z-10 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/95 text-[#123B5D] shadow-lg backdrop-blur-md transition-all duration-500 group-hover:bg-[#0F766E] group-hover:text-white group-hover:scale-110 group-hover:rotate-3">
+                                        <Icon size={22} strokeWidth={1.8} />
                                     </div>
                                 </div>
 
-                                <div className="p-6">
-                                    <h3 className="text-lg font-bold text-slate-900 transition-colors duration-300 group-hover:text-[#123B5D]">
+                                {/* Content Section */}
+                                <div className="flex flex-1 flex-col p-6 sm:p-7 bg-white transition-colors duration-500 group-hover:bg-slate-50/50">
+                                    <h3 className="text-lg font-semibold text-slate-900 transition-colors duration-300 group-hover:text-[#0F766E]">
                                         {industry.title}
                                     </h3>
 
-                                    <p className="mt-3 text-sm leading-6 text-slate-600">
+                                    <p className="mt-2.5 flex-1 text-[15px] font-normal leading-relaxed text-slate-600">
                                         {industry.description}
                                     </p>
 
-                                    <div className="mt-5 inline-flex items-center text-sm font-semibold text-[#123B5D]">
-                                        Discuss Your Requirement
-                                        <ArrowRight
-                                            size={16}
-                                            className="ml-2 transition-transform group-hover:translate-x-1"
-                                        />
+                                    {/* Bottom Action Indicator */}
+                                    <div className="mt-6 flex items-center justify-between border-t border-slate-100 pt-3.5">
+                                        <span className="text-xs font-medium text-[#0F766E]">
+                                            Sector Focus
+                                        </span>
+
+                                        <div className="flex items-center gap-2 text-sm font-semibold text-[#123B5D] transition-colors duration-300 group-hover:text-[#0F766E]">
+                                            <span>Discuss Requirement</span>
+                                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-600 transition-all duration-300 group-hover:bg-[#0F766E] group-hover:text-white group-hover:translate-x-1">
+                                                <ArrowRight size={15} />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </Link>
