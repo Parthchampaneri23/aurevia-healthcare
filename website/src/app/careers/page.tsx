@@ -1,9 +1,19 @@
+import { Metadata } from "next";
 import CareerHero from "@/app/components/careers/CareerHero";
 import WhyJoinUs from "@/app/components/careers/WhyJoinUs";
 import CareerAreas from "@/app/components/careers/CareerAreas";
 import JobOpportunities from "@/app/components/careers/JobOpportunities";
 import JobApplication from "@/app/components/careers/JobApplication";
 import CareerCTA from "@/app/components/careers/CareerCTA";
+
+export const metadata: Metadata = {
+    title: "Careers | Build Your Career at Aurevia Healthcare",
+    description: "Explore career opportunities, workplace values, and job openings in pharmaceutical manufacturing, quality assurance, research, and operations at Aurevia Healthcare.",
+    openGraph: {
+        title: "Careers | Aurevia Healthcare",
+        description: "Join Aurevia Healthcare to build a rewarding career in pharmaceutical manufacturing, quality control, R&D, and corporate operations.",
+    },
+};
 
 export default function CareersPage() {
     return (

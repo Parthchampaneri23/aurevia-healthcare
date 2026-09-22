@@ -3,28 +3,29 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { ArrowRight } from "lucide-react";
 
 const slides = [
     {
         image: "/hero/slide1.png",
         alt: "Aurevia Healthcare pharmaceutical manufacturing",
-        eyebrow: "AUREVIA HEALTHCARE",
-        title: "Pharmaceutical Manufacturing Built for Healthcare Businesses",
+        eyebrow: "B2B PHARMACEUTICAL MANUFACTURING",
+        title: "Advancing Healthcare Through Reliable Pharmaceutical Manufacturing",
         description:
-            "Reliable pharmaceutical solutions for healthcare companies, distributors and brand owners.",
+            "High-capacity dosage formulation, contract manufacturing, and dependable supply solutions tailored for healthcare brands, distributors, and institutions.",
         primaryButton: "Explore Products",
         primaryLink: "/products#explore",
-        secondaryButton: "About Aurevia",
-        secondaryLink: "/about",
+        secondaryButton: "Partner With Aurevia",
+        secondaryLink: "/contact#contact-form",
     },
     {
         image: "/hero/slide2.png",
         alt: "Aurevia Healthcare manufacturing facility",
         eyebrow: "MANUFACTURING EXCELLENCE",
-        title: "Consistent Production. Controlled Processes.",
+        title: "Controlled Production Processes & Consistent Quality",
         description:
-            "Efficient manufacturing focused on consistency, precision and dependable quality..",
-        primaryButton: "Explore Industries",
+            "Operating under strict cGMP protocols with automated dosage packaging, positive pressure cleanrooms, and comprehensive batch control.",
+        primaryButton: "Explore Business Sectors",
         primaryLink: "/industries#industry-segments",
         secondaryButton: "Explore Products",
         secondaryLink: "/products#explore",
@@ -32,23 +33,23 @@ const slides = [
     {
         image: "/hero/slide3.png",
         alt: "Aurevia Healthcare quality control",
-        eyebrow: "QUALITY & RELIABILITY",
-        title: "Quality Built Into Every Batch",
+        eyebrow: "QUALITY & COMPLIANCE",
+        title: "Quality Built Into Every Pharmaceutical Batch",
         description:
-            "Strict quality practices ensure consistent and reliable pharmaceutical products..",
-        primaryButton: "Quality & Certifications",
+            "Rigorous raw material qualification, in-house analytical laboratories (HPLC, GC, UV-Vis), and complete stability testing protocols.",
+        primaryButton: "Quality Standards",
         primaryLink: "/about#quality-certifications",
-        secondaryButton: "Learn More",
+        secondaryButton: "About Aurevia",
         secondaryLink: "/about",
     },
     {
         image: "/hero/slide4.png",
         alt: "Aurevia Healthcare pharmaceutical partnership",
-        eyebrow: "YOUR PHARMACEUTICAL PARTNER",
-        title: "Your Partner in Pharmaceutical Manufacturing",
+        eyebrow: "STRATEGIC B2B PARTNERSHIPS",
+        title: "End-to-End Private Labeling & Third-Party Manufacturing",
         description:
-            "Flexible solutions designed to support growing healthcare businesses..",
-        primaryButton: "Get a Quote",
+            "Partner with Aurevia for customized formulation development, CTD/ACTD regulatory support, and seamless international supply logistics.",
+        primaryButton: "Request Manufacturing Quote",
         primaryLink: "/contact#contact-form",
         secondaryButton: "Contact Us",
         secondaryLink: "/contact#contact-form",
@@ -79,70 +80,73 @@ export default function Hero() {
         if (heroSlides.length === 0) return;
         const interval = setInterval(() => {
             setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-        }, 3500);
+        }, 4000);
 
         return () => clearInterval(interval);
     }, [heroSlides.length]);
 
     return (
-        <section className="relative w-full overflow-hidden bg-slate-100">
+        <section aria-label="Hero Banner" className="relative w-full overflow-hidden bg-slate-950">
 
-            {/* Slides */}
-            <div className="relative h-[480px] sm:h-[540px] md:h-[580px] lg:h-[640px]">
+            {/* Slides Container */}
+            <div className="relative h-[620px] xs:h-[580px] sm:h-[560px] md:h-[600px] lg:h-[660px]">
                 {heroSlides.map((slide, index) => (
                     <div
-                        key={slide.image}
-                        className={`absolute inset-0 transition-opacity duration-300 ease-in-out ${index === currentSlide
+                        key={slide.image + index}
+                        className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${index === currentSlide
                             ? "z-10 opacity-100"
-                            : "z-0 opacity-0"
+                            : "z-0 opacity-0 pointer-events-none"
                             }`}
                     >
                         {/* Background Image */}
                         <Image
                             src={slide.image}
-                            alt={slide.alt}
+                            alt={slide.alt || "Aurevia Healthcare"}
                             fill
                             priority={index === 0}
-                            className="object-cover"
+                            className="object-cover object-center"
                             sizes="100vw"
                         />
 
-                        {/* Dark Gradient Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-900/60 to-slate-900/20" />
+                        {/* Professional Dark Gradient Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/75 to-slate-900/40" />
 
-                        {/* Content */}
-                        <div className="absolute inset-0">
-                            <div className="mx-auto flex h-full max-w-7xl items-center px-6 lg:px-8">
+                        {/* Content Container */}
+                        <div className="absolute inset-0 flex items-center">
+                            <div className="mx-auto w-full max-w-7xl px-5 pt-4 pb-16 sm:px-6 sm:py-0 lg:px-8">
                                 <div className="max-w-2xl text-white">
 
-                                    {/* Eyebrow */}
-                                    <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-cyan-300 sm:text-sm">
-                                        {slide.eyebrow}
-                                    </p>
+                                    {/* Eyebrow Pill */}
+                                    <div className="mb-3 sm:mb-4 inline-flex items-center gap-2 rounded-full border border-teal-400/30 bg-teal-950/60 px-3 py-1 backdrop-blur-md">
+                                        <span className="h-2 w-2 rounded-full bg-teal-400 animate-pulse" aria-hidden="true" />
+                                        <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em] text-teal-300">
+                                            {slide.eyebrow}
+                                        </span>
+                                    </div>
 
                                     {/* Heading */}
-                                    <h1 className="text-2xl font-bold leading-tight sm:text-4xl lg:text-5xl lg:leading-tight">
+                                    <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white drop-shadow-md lg:leading-[1.15]">
                                         {slide.title}
                                     </h1>
 
                                     {/* Description */}
-                                    <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-200 sm:mt-4 sm:text-base sm:leading-relaxed lg:text-lg">
+                                    <p className="mt-2.5 sm:mt-4 max-w-xl text-xs sm:text-lg font-normal leading-relaxed text-slate-200">
                                         {slide.description}
                                     </p>
 
-                                    {/* Buttons */}
-                                    <div className="mt-6 flex flex-wrap gap-3 sm:mt-8 sm:gap-4">
+                                    {/* CTA Buttons */}
+                                    <div className="mt-5 sm:mt-8 flex flex-col sm:flex-row sm:flex-wrap gap-2.5 sm:gap-4">
                                         <Link
                                             href={slide.primaryLink}
-                                            className="inline-flex items-center rounded-lg bg-[#123B5D] px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition hover:bg-[#0d2d46] hover:shadow-xl sm:px-6 sm:py-3 sm:text-base"
+                                            className="group inline-flex items-center justify-center gap-2 rounded-xl bg-[#0F766E] px-5 py-2.5 sm:px-6 sm:py-3.5 text-xs sm:text-base font-semibold text-white shadow-lg shadow-teal-950/30 transition-all duration-300 hover:bg-[#123B5D] hover:shadow-xl active:scale-95"
                                         >
-                                            {slide.primaryButton}
-                                            <span className="ml-2">→</span>
+                                            <span>{slide.primaryButton}</span>
+                                            <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
                                         </Link>
 
                                         <Link
                                             href={slide.secondaryLink}
-                                            className="inline-flex items-center rounded-lg border border-white/70 bg-white/10 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white hover:text-[#123B5D] sm:px-6 sm:py-3 sm:text-base"
+                                            className="inline-flex items-center justify-center rounded-xl border border-white/30 bg-white/10 px-5 py-2.5 sm:px-6 sm:py-3.5 text-xs sm:text-base font-semibold text-white backdrop-blur-md transition-all duration-300 hover:bg-white hover:text-[#123B5D] active:scale-95"
                                         >
                                             {slide.secondaryButton}
                                         </Link>
@@ -156,16 +160,16 @@ export default function Hero() {
             </div>
 
             {/* Pagination Dots */}
-            <div className="absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2">
-                {slides.map((_, index) => (
+            <div className="absolute bottom-3 sm:bottom-6 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2 sm:gap-2.5">
+                {heroSlides.map((_, index) => (
                     <button
                         key={index}
                         type="button"
                         onClick={() => setCurrentSlide(index)}
                         aria-label={`Go to slide ${index + 1}`}
-                        className={`h-2 rounded-full transition-all duration-300 ${index === currentSlide
-                            ? "w-8 bg-white"
-                            : "w-2 bg-white/50 hover:bg-white/80"
+                        className={`h-2 sm:h-2.5 rounded-full transition-all duration-300 ${index === currentSlide
+                            ? "w-7 sm:w-8 bg-teal-400"
+                            : "w-2 sm:w-2.5 bg-white/40 hover:bg-white/70"
                             }`}
                     />
                 ))}
@@ -173,3 +177,4 @@ export default function Hero() {
         </section>
     );
 }
+

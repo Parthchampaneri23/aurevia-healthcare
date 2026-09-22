@@ -1,28 +1,14 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, FileText } from "lucide-react";
+import { ArrowLeft, FileText, CheckCircle2, ShieldCheck, Factory, Award } from "lucide-react";
 import { notFound } from "next/navigation";
 import FAQSection from "@/app/components/common/FAQSection";
 import Breadcrumb from "@/app/components/common/Breadcrumb";
 import ProductDescriptionSection from "@/app/components/products/ProductDescriptionSection";
-
-type ProductSpecification = {
-    label: string;
-    value: string;
-};
-
-type Product = {
-    _id: string;
-    slug: string;
-    name: string;
-    category: string;
-    image: string;
-    shortDescription: string;
-    description: string;
-    applications?: string[];
-    specifications: ProductSpecification[];
-    isActive: boolean;
-};
+import RelatedProducts from "@/app/components/products/RelatedProducts";
+import localProducts from "@/app/components/products/productData";
+import type { Product } from "@/app/components/products/productTypes";
 
 type ProductDetailsPageProps = {
     params: Promise<{
@@ -33,6 +19,15 @@ type ProductDetailsPageProps = {
 const API_URL =
     process.env.NEXT_PUBLIC_API_URL ||
     "https://aurevia-healthcare.onrender.com";
+
+const categorySlugMap: Record<string, string> = {
+    Tablets: "tablets",
+    Capsules: "capsules",
+    Syrups: "syrups",
+    Injectables: "injectables",
+    "Ointments & Creams": "ointments-creams",
+    Nutraceuticals: "nutraceuticals",
+};
 
 const productDetailFaqs = [
     {
@@ -49,14 +44,80 @@ const productDetailFaqs = [
     },
     {
         question: "How do commercial buyers request volume pricing, sample batches, and lead times?",
-        answer: "Click the 'Request a Quote' button on this product page or contact our commercial export desk with your target volume, destination country, and packaging requirements. Our sales engineers will evaluate batch sizes and deliver a detailed commercial quote with production lead times.",
+        answer: "Click the 'Request Product Information' button on this page or contact our commercial export desk with your target volume, destination country, and packaging requirements. Our technical sales engineers will evaluate batch sizes and deliver a detailed commercial quote with production lead times.",
     },
 ];
 
 /* ----------------------------------
-   Product Image URL Helper
+   Fetch Product Data (API with Fallback)
 ---------------------------------- */
+async function getProductData(slug: string): Promise<Product | null> {
+    try {
+        const response = await fetch(`${API_URL}/api/products/${slug}`, {
+            cache: "no-store",
+        });
 
+        if (response.ok) {
+            const data = await response.json();
+            if (data.success && data.product) {
+                return data.product;
+            }
+        }
+    } catch {
+        // network or backend offline, fallback below
+    }
+
+    const found = (localProducts as unknown as Product[]).find(
+        (p) => p.slug === slug || p._id === slug
+    );
+
+    return found || null;
+}
+
+async function getAllProductsData(): Promise<Product[]> {
+    try {
+        const response = await fetch(`${API_URL}/api/products`, {
+            cache: "no-store",
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            if (data.success && Array.isArray(data.products) && data.products.length > 0) {
+                return data.products;
+            }
+        }
+    } catch {
+        // fallback
+    }
+
+    return localProducts as unknown as Product[];
+}
+
+/* ----------------------------------
+   Dynamic Metadata
+---------------------------------- */
+export async function generateMetadata({
+    params,
+}: ProductDetailsPageProps): Promise<Metadata> {
+    const { slug } = await params;
+    const product = await getProductData(slug);
+
+    if (!product) {
+        return {
+            title: "Product Not Found | Aurevia Healthcare",
+            description: "The requested pharmaceutical product could not be found.",
+        };
+    }
+
+    return {
+        title: `${product.name} | Aurevia Healthcare B2B Product Detail`,
+        description: product.shortDescription || product.description,
+    };
+}
+
+/* ----------------------------------
+   Image URL Helper
+---------------------------------- */
 function getProductImageUrl(image?: string) {
     if (!image) {
         return "/products/productbanner.png";
@@ -64,41 +125,20 @@ function getProductImageUrl(image?: string) {
 
     const cleanImage = image.trim();
 
-    // Already a complete URL
-    if (
-        cleanImage.startsWith("http://") ||
-        cleanImage.startsWith("https://")
-    ) {
+    if (cleanImage.startsWith("http://") || cleanImage.startsWith("https://")) {
         return cleanImage;
     }
 
-    // Remove leading slash
     const normalizedImage = cleanImage.replace(/^\/+/, "");
 
-    /*
-     * Backend database examples:
-     *
-     * /products/tablet1.jpg
-     * products/tablet1.jpg
-     */
     if (normalizedImage.startsWith("products/")) {
         return `${API_URL}/${normalizedImage}`;
     }
 
-    /*
-     * Backend database example:
-     *
-     * uploads/products/tablet1.jpg
-     */
     if (normalizedImage.startsWith("uploads/products/")) {
         return `${API_URL}/${normalizedImage}`;
     }
 
-    /*
-     * Fallback:
-     *
-     * tablet1.jpg
-     */
     return `${API_URL}/products/${normalizedImage}`;
 }
 
@@ -106,278 +146,229 @@ export default async function ProductDetailsPage({
     params,
 }: ProductDetailsPageProps) {
     const { slug } = await params;
+    const product = await getProductData(slug);
 
-    let product: Product;
-
-    try {
-        const response = await fetch(
-            `${API_URL}/api/products/${slug}`,
-            {
-                cache: "no-store",
-            }
-        );
-
-        if (!response.ok) {
-            console.error(
-                `Failed to fetch product ${slug}: ${response.status}`
-            );
-
-            notFound();
-        }
-
-        const data = await response.json();
-
-        console.log("Product details API response:", data);
-
-        if (!data.success || !data.product) {
-            console.error(
-                "Invalid product response:",
-                data
-            );
-
-            notFound();
-        }
-
-        product = data.product;
-    } catch (error) {
-        console.error(
-            "Failed to fetch product:",
-            error
-        );
-
+    if (!product) {
         notFound();
     }
 
-    const productImageUrl = getProductImageUrl(
-        product.image
-    );
+    const allProducts = await getAllProductsData();
+    const productImageUrl = getProductImageUrl(product.image);
+
+    const categorySlug = categorySlugMap[product.category] || "tablets";
 
     return (
-        <main className="overflow-hidden bg-white">
-            <style
-                dangerouslySetInnerHTML={{
-                    __html: `
-                        @keyframes pageFadeIn {
-                            from {
-                                opacity: 0;
-                            }
-
-                            to {
-                                opacity: 1;
-                            }
-                        }
-
-                        @keyframes detailSlideUp {
-                            from {
-                                opacity: 0;
-                                transform: translateY(24px);
-                            }
-
-                            to {
-                                opacity: 1;
-                                transform: translateY(0);
-                            }
-                        }
-
-                        .animate-page-fade {
-                            animation: pageFadeIn 0.6s
-                                cubic-bezier(0.16, 1, 0.3, 1)
-                                forwards;
-                        }
-
-                        .animate-detail-slide {
-                            animation: detailSlideUp 0.8s
-                                cubic-bezier(0.16, 1, 0.3, 1)
-                                forwards;
-                        }
-                    `,
-                }}
-            />
-
-            {/* Product Banner */}
-            <section className="relative h-[240px] w-full overflow-hidden sm:h-[280px] lg:h-[320px]">
+        <main className="min-h-screen bg-white">
+            {/* 1. Compact Banner */}
+            <section aria-label="Product Banner" className="relative w-full overflow-hidden bg-slate-950 min-h-[220px] sm:min-h-[260px] flex items-center py-8">
                 <Image
                     src="/products/productbanner.png"
                     alt={product.name}
                     fill
                     priority
-                    className="object-cover object-center"
+                    className="object-cover object-center sm:object-[center_35%]"
                     sizes="100vw"
                 />
 
-                {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-900/65 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#071E33]/92 via-[#071E33]/80 to-[#123B5D]/45" />
 
-                {/* Banner Content */}
-                <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center px-6 lg:px-8">
-                    <div className="max-w-2xl text-left">
+                <div className="relative z-10 mx-auto w-full max-w-7xl px-6 lg:px-8">
+                    <div className="max-w-3xl text-left text-white">
                         <div className="mb-2.5 inline-flex items-center gap-2 rounded-full border border-teal-400/30 bg-teal-950/60 px-3.5 py-1 backdrop-blur-md">
                             <span className="h-2 w-2 rounded-full bg-teal-400 animate-pulse" />
-                            <span className="text-[11px] font-bold uppercase tracking-[0.22em] text-teal-300">
+                            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-teal-300">
                                 {product.category}
                             </span>
                         </div>
 
-                        <h1 className="text-3xl font-extrabold tracking-tight text-white drop-shadow-md sm:text-4xl lg:text-5xl">
+                        <h1 className="text-2xl font-extrabold tracking-tight text-white drop-shadow-md sm:text-3xl lg:text-4xl">
                             {product.name}
                         </h1>
 
-                        {/* Breadcrumb on Banner */}
-                        <Breadcrumb
-                            items={[
-                                { name: "Products", href: "/products" },
-                                { name: product.name }
-                            ]}
-                        />
+                        <div className="mt-3">
+                            <Breadcrumb
+                                items={[
+                                    { name: "Products", href: "/products" },
+                                    { name: product.category, href: `/products?category=${categorySlug}` },
+                                    { name: product.name }
+                                ]}
+                            />
+                        </div>
                     </div>
                 </div>
             </section>
 
-            {/* Product Overview */}
-            <section className="animate-page-fade py-8 lg:py-12">
+            {/* 2. Main Product Hero Section (2-Column B2B Layout) */}
+            <section className="py-10 sm:py-12 border-b border-slate-100">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
+
+                    {/* Back Link */}
                     <div className="mb-6">
                         <Link
-                            href="/products"
-                            className="group inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-100 px-4 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-[#123B5D] hover:text-white"
+                            href={`/products?category=${categorySlug}`}
+                            className="group inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-4 py-1.5 text-xs font-bold text-slate-700 transition hover:bg-[#123B5D] hover:text-white"
                         >
                             <ArrowLeft
                                 size={14}
                                 className="transition-transform duration-300 group-hover:-translate-x-0.5"
                             />
-                            Back to Products
+                            <span>Back to {product.category}</span>
                         </Link>
                     </div>
 
-                    <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+                    <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
 
-                        {/* Product Image */}
-                        <div className="relative flex h-[380px] items-center justify-center overflow-hidden rounded-3xl border border-slate-100/60 bg-slate-50 p-8 shadow-md transition-all duration-500 hover:shadow-xl sm:h-[480px]">
-                            <div className="relative h-full w-full rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                        {/* LEFT: Product Image Container */}
+                        <div className="relative flex h-[340px] sm:h-[440px] items-center justify-center overflow-hidden rounded-3xl border border-slate-200/90 bg-slate-50/70 p-6 shadow-sm transition-all duration-500 hover:shadow-lg">
+                            <div className="relative h-full w-full rounded-2xl border border-slate-200 bg-white p-4 shadow-2xs flex items-center justify-center">
                                 <Image
                                     src={productImageUrl}
                                     alt={product.name}
                                     fill
                                     priority
-                                    className="object-contain p-2 transition-transform duration-700 hover:scale-103"
+                                    className="object-contain p-3 transition-transform duration-700 ease-out hover:scale-105"
                                     sizes="(max-width: 1024px) 100vw, 50vw"
                                 />
                             </div>
+
+                            {/* Floating Category Pill */}
+                            <div className="absolute top-4 left-4 z-10">
+                                <span className="inline-flex items-center rounded-full bg-white/95 px-3 py-1 text-xs font-bold text-[#0F766E] border border-teal-200 shadow-2xs backdrop-blur-md">
+                                    {product.category}
+                                </span>
+                            </div>
                         </div>
 
-                        {/* Product Information */}
-                        <div className="animate-detail-slide">
-                            <div className="mb-3 inline-flex items-center gap-2">
-                                <span className="h-1 w-5 rounded-full bg-[#0F766E]" />
+                        {/* RIGHT: Product Information Panel */}
+                        <div className="flex flex-col justify-center">
 
+                            <div className="inline-flex items-center gap-2 mb-3">
+                                <span className="h-1.5 w-6 rounded-full bg-[#0F766E]" />
                                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#0F766E]">
-                                    {product.category}
+                                    FORMULATION INFORMATION
                                 </p>
                             </div>
 
-                            <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
+                            <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl leading-tight">
                                 {product.name}
                             </h1>
 
-                            <p className="mt-6 text-base leading-relaxed text-slate-600">
-                                {product.shortDescription}
+                            <p className="mt-4 text-base sm:text-lg leading-relaxed text-slate-600">
+                                {product.shortDescription || product.description}
                             </p>
+
+                            {/* Key Metadata Chips Grid */}
+                            <div className="mt-6 grid grid-cols-2 gap-3">
+                                <div className="rounded-xl border border-slate-200/80 bg-slate-50/60 p-3">
+                                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Dosage Form</span>
+                                    <p className="text-sm font-bold text-[#123B5D] mt-0.5">{product.category}</p>
+                                </div>
+
+                                <div className="rounded-xl border border-slate-200/80 bg-slate-50/60 p-3">
+                                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Quality Standard</span>
+                                    <p className="text-sm font-bold text-[#0F766E] mt-0.5">cGMP Certified</p>
+                                </div>
+                            </div>
+
+                            {/* B2B Enquiry Button */}
+                            <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+                                <Link
+                                    href={`/contact?product=${encodeURIComponent(
+                                        product.name
+                                    )}#contact-form`}
+                                    className="group inline-flex items-center justify-center gap-2 rounded-xl bg-[#0F766E] px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-teal-950/20 transition-all duration-300 hover:bg-[#123B5D] hover:shadow-xl active:scale-95"
+                                >
+                                    <span>Request Product Information</span>
+                                    <FileText size={17} className="transition-transform duration-300 group-hover:scale-110" />
+                                </Link>
+
+                                <Link
+                                    href="/contact#contact-form"
+                                    className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-6 py-3.5 text-sm font-bold text-slate-800 transition-all duration-300 hover:border-[#0F766E] hover:text-[#0F766E] active:scale-95"
+                                >
+                                    Contact Aurevia
+                                </Link>
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* Description */}
+            {/* 3. Product Description & Formulation Details */}
             <ProductDescriptionSection
                 productName={product.name}
                 description={product.description}
                 category={product.category}
             />
 
-            {/* Specifications */}
-            <section className="border-t border-slate-100 py-12 lg:py-12">
-                <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                    <div className="max-w-4xl">
-                        <div className="mb-3 inline-flex items-center gap-2">
-                            <span className="h-1 w-5 rounded-full bg-[#0F766E]" />
-
-                            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#0F766E]">
-                                Product Information
-                            </p>
-                        </div>
-
-                        <h2 className="text-2xl font-extrabold text-slate-900 sm:text-3xl">
-                            Technical Specifications
-                        </h2>
-
-                        <div className="mt-8 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-                            <table className="w-full border-collapse text-left">
-                                <tbody>
-                                    {product.specifications?.map(
-                                        (specification, index) => (
-                                            <tr
-                                                key={
-                                                    specification.label +
-                                                    index
-                                                }
-                                                className={`transition-colors duration-200 hover:bg-slate-50/80 ${index % 2 === 0
-                                                    ? "bg-slate-50/50"
-                                                    : "bg-white"
-                                                    }`}
-                                            >
-                                                <th className="w-1/3 border-b border-slate-100 px-6 py-4 text-sm font-bold text-[#123B5D]">
-                                                    {
-                                                        specification.label
-                                                    }
-                                                </th>
-
-                                                <td className="border-b border-slate-100 px-6 py-4 text-sm text-slate-600">
-                                                    {
-                                                        specification.value
-                                                    }
-                                                </td>
-                                            </tr>
-                                        )
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
-
-                        {/* Quote CTA */}
-                        <div className="mt-12 flex flex-col items-start justify-between gap-6 rounded-3xl bg-gradient-to-r from-[#123B5D] to-[#0F766E] p-8 shadow-lg shadow-blue-900/10 sm:flex-row sm:items-center">
-                            <div>
-                                <h3 className="text-xl font-bold text-white">
-                                    Interested in this product?
-                                </h3>
-
-                                <p className="mt-2 max-w-xl text-sm leading-relaxed text-teal-100/90">
-                                    Contact Aurevia Healthcare
-                                    for product customization,
-                                    contract manufacturing
-                                    opportunities, or wholesale
-                                    purchase enquiries.
+            {/* 4. Specifications Table */}
+            {product.specifications && product.specifications.length > 0 && (
+                <section aria-label="Technical Specifications" className="border-t border-slate-100 py-12 sm:py-12">
+                    <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                        <div className="max-w-4xl">
+                            <div className="mb-3 inline-flex items-center gap-2">
+                                <span className="h-1.5 w-6 rounded-full bg-[#0F766E]" />
+                                <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#0F766E]">
+                                    SPECIFICATIONS
                                 </p>
                             </div>
 
-                            <Link
-                                href={`/contact?product=${encodeURIComponent(
-                                    product.name
-                                )}#contact-form`}
-                                className="inline-flex shrink-0 items-center rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-[#123B5D] shadow-md transition-all duration-300 hover:scale-102 hover:bg-slate-50 active:scale-98"
-                            >
-                                Request a Quote
+                            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                                Technical Specifications &amp; Composition
+                            </h2>
 
-                                <FileText
-                                    size={16}
-                                    className="ml-2 text-[#123B5D]"
-                                />
-                            </Link>
+                            <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+                                <table className="w-full border-collapse text-left">
+                                    <tbody>
+                                        {product.specifications.map(
+                                            (specification, index) => (
+                                                <tr
+                                                    key={specification.label + index}
+                                                    className={`transition-colors duration-200 hover:bg-slate-50/80 ${index % 2 === 0
+                                                        ? "bg-slate-50/50"
+                                                        : "bg-white"
+                                                        }`}
+                                                >
+                                                    <th className="w-1/3 border-b border-slate-100 px-6 py-4 text-xs sm:text-sm font-bold text-[#123B5D]">
+                                                        {specification.label}
+                                                    </th>
+
+                                                    <td className="border-b border-slate-100 px-6 py-4 text-xs sm:text-sm text-slate-600 font-medium">
+                                                        {specification.value}
+                                                    </td>
+                                                </tr>
+                                            )
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            {/* Manufacturing Quality Context Card */}
+                            <div className="mt-8 rounded-2xl border border-teal-100 bg-teal-50/60 p-5 sm:p-6">
+                                <div className="flex items-start gap-3">
+                                    <Factory className="h-6 w-6 text-[#0F766E] shrink-0 mt-0.5" />
+                                    <div>
+                                        <h3 className="text-sm font-bold text-[#123B5D]">Controlled cGMP Batch Manufacturing</h3>
+                                        <p className="mt-1 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                                            Manufactured in compliance with automated batch monitoring, positive pressure cleanrooms, and comprehensive analytical laboratory testing to ensure dosage integrity.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            )}
 
-            {/* Product Specific FAQs */}
+            {/* 5. Related Products */}
+            <RelatedProducts
+                currentSlug={product.slug}
+                category={product.category}
+                allProducts={allProducts}
+            />
+
+            {/* 6. Product Specific FAQs */}
             <FAQSection
                 eyebrow={`FAQS ABOUT ${product.name.toUpperCase()}`}
                 title={`Product FAQs - ${product.name}`}

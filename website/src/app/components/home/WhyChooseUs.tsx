@@ -3,7 +3,6 @@ import {
   Building2,
   Users2,
   Award,
-  Sparkles,
   CheckCircle2,
   ArrowUpRight,
 } from "lucide-react";
@@ -13,48 +12,48 @@ const features = [
   {
     icon: ShieldCheck,
     title: "Quality Excellence",
-    subtitle: "WHO-GMP & cGMP Standards",
+    subtitle: "cGMP Standards & Batch Controls",
     description:
-      "State-of-the-art manufacturing facilities adhering to stringent WHO-GMP, ISO 9001:2015, and international quality protocols.",
-    badge: "100% Quality Assurance",
+      "Operational infrastructure following strict WHO-GMP, ISO 9001:2015, and cGMP compliance protocols.",
+    badge: "100% Quality Focus",
     gradient: "from-teal-500/10 to-teal-500/0",
     iconBg: "bg-teal-50 text-[#0F766E] group-hover:bg-[#0F766E] group-hover:text-white",
   },
   {
     icon: Building2,
     title: "Modern Infrastructure",
-    subtitle: "High-Capacity Production",
+    subtitle: "High-Capacity Processing",
     description:
-      "Advanced automated machinery for high-volume solid, liquid, topical, and injectable pharmaceutical manufacturing.",
-    badge: "Advanced Plant Tech",
+      "Automated high-speed production lines for tablets, capsules, syrups, topicals, and sterile injectables.",
+    badge: "Automated Plant Machinery",
     gradient: "from-blue-500/10 to-blue-500/0",
     iconBg: "bg-blue-50 text-[#123B5D] group-hover:bg-[#123B5D] group-hover:text-white",
   },
   {
     icon: Users2,
     title: "Reliable Supply Chain",
-    subtitle: "Pan-India & Global Delivery",
+    subtitle: "Domestic & Export Dispatch",
     description:
-      "Robust distribution network ensuring on-time delivery of formulation orders across domestic and export markets.",
-    badge: "On-Time Dispatch",
-    gradient: "from-emerald-500/10 to-emerald-500/0",
-    iconBg: "bg-emerald-50 text-emerald-700 group-hover:bg-emerald-700 group-hover:text-white",
+      "Streamlined inventory coordination and on-time shipment fulfillment across regional and global markets.",
+    badge: "Dependable Logistics",
+    gradient: "from-teal-500/10 to-teal-500/0",
+    iconBg: "bg-teal-50 text-[#0F766E] group-hover:bg-[#0F766E] group-hover:text-white",
   },
   {
     icon: Award,
-    title: "Strategic B2B Partner",
-    subtitle: "End-to-End Dossier & Support",
+    title: "Strategic B2B Support",
+    subtitle: "Dossier & Private Labeling",
     description:
-      "Building strategic relationships through complete dossier support, responsive service, and direct communications.",
-    badge: "Dedicated Account Lead",
-    gradient: "from-indigo-500/10 to-indigo-500/0",
-    iconBg: "bg-indigo-50 text-indigo-700 group-hover:bg-indigo-700 group-hover:text-white",
+      "Comprehensive CTD/ACTD regulatory support, custom primary packaging, and dedicated account management.",
+    badge: "Dedicated Commercial Lead",
+    gradient: "from-blue-500/10 to-blue-500/0",
+    iconBg: "bg-blue-50 text-[#123B5D] group-hover:bg-[#123B5D] group-hover:text-white",
   },
 ];
 
 export default function WhyChooseUs() {
   return (
-    <SectionBackground variant="medical-grid" className="bg-white py-12 lg:py-12">
+    <SectionBackground variant="medical-grid" className="bg-white py-12 lg:py-12 border-t border-slate-100">
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         {/* Section Header */}
         <div className="mx-auto max-w-3xl text-center mb-12">
@@ -71,11 +70,11 @@ export default function WhyChooseUs() {
           </h2>
 
           <p className="mt-4 text-base md:text-[17px] font-normal leading-relaxed text-slate-600 max-w-2xl mx-auto">
-            Combining WHO-GMP certified manufacturing, advanced technical infrastructure, and responsive B2B coordination to build enduring pharmaceutical partnerships.
+            Combining WHO-GMP certified manufacturing, advanced technical infrastructure, and responsive B2B coordination to build enduring healthcare partnerships.
           </p>
         </div>
 
-        {/* Modern Interactive Feature Cards Grid */}
+        {/* Feature Cards Grid */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {features.map((feature) => {
             const Icon = feature.icon;
@@ -83,15 +82,10 @@ export default function WhyChooseUs() {
             return (
               <div
                 key={feature.title}
-                className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border-2 border-slate-300/90 bg-white p-7 shadow-md backdrop-blur-sm transition-all duration-500 hover:-translate-y-2.5 hover:border-[#0F766E] hover:shadow-2xl hover:shadow-teal-950/15"
+                className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border-2 border-slate-300/90 bg-white p-7 shadow-md transition-all duration-500 hover:-translate-y-2.5 hover:border-[#0F766E] hover:shadow-2xl hover:shadow-teal-950/15"
               >
                 {/* Top Sliding Accent Line */}
-                <div className="absolute top-0 left-0 h-[4px] w-0 bg-gradient-to-r from-[#123B5D] to-[#0F766E] transition-all duration-500 group-hover:w-full" />
-
-                {/* Soft Gradient Background Subtle Glow on Hover */}
-                <div
-                  className={`absolute inset-0 bg-gradient-to-b ${feature.gradient} opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none`}
-                />
+                <div className="absolute top-0 left-0 h-[4px] w-0 bg-gradient-to-r from-[#123B5D] to-[#0F766E] transition-all duration-500 group-hover:w-full" aria-hidden="true" />
 
                 <div>
                   {/* Top Bar: Icon + Corner Arrow */}
@@ -99,7 +93,7 @@ export default function WhyChooseUs() {
                     <div
                       className={`flex h-12 w-12 items-center justify-center rounded-xl shadow-xs transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 ${feature.iconBg}`}
                     >
-                      <Icon size={22} strokeWidth={2} />
+                      <Icon size={22} strokeWidth={2} aria-hidden="true" />
                     </div>
 
                     <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-400 opacity-60 transition-all duration-300 group-hover:bg-[#123B5D] group-hover:text-white group-hover:opacity-100 group-hover:scale-105">

@@ -1,12 +1,18 @@
+import type { Metadata } from "next";
 import AboutHero from "@/app/components/about/AboutHero";
 import CompanyStory from "@/app/components/about/CompanyStory";
-import MissionVision from "@/app/components/about/MissionVision";
+import WhatWeDo from "@/app/components/about/WhatWeDo";
 import CoreValues from "@/app/components/about/CoreValues";
-import OurJourney from "@/app/components/about/OurJourney";
-import ResearchDevelopment from "@/app/components/about/ResearchDevelopment";
+import ManufacturingOverview from "@/app/components/about/ManufacturingOverview";
 import QualityCertifications from "@/app/components/about/QualityCertifications";
 import TestimonialsSection from "@/app/components/about/TestimonialsSection";
+import PartnershipPhilosophy from "@/app/components/about/PartnershipPhilosophy";
 import FAQSection from "@/app/components/common/FAQSection";
+
+export const metadata: Metadata = {
+  title: "About Us | Aurevia Healthcare - B2B Pharmaceutical Manufacturing",
+  description: "Learn about Aurevia Healthcare, a trusted B2B pharmaceutical manufacturing company dedicated to high-capacity dosage formulations, cGMP quality standards, and dependable business partnerships.",
+};
 
 const aboutFaqs = [
   {
@@ -33,19 +39,36 @@ const aboutFaqs = [
 
 export default function AboutPage() {
     return (
-        <main>
+        <main className="min-h-screen bg-white">
+            {/* 1. Hero */}
             <AboutHero />
+
+            {/* 2. Company Introduction & Who We Are */}
             <CompanyStory />
-            <MissionVision />
+
+            {/* 3. What We Do / Capabilities (Soft Teal Background) */}
+            <WhatWeDo />
+
+            {/* 4. Core Principles / Working Philosophy (White Background) */}
             <CoreValues />
-            <OurJourney />
-            <ResearchDevelopment />
+
+            {/* 5. Manufacturing & Infrastructure Overview (Soft Blue Background) */}
+            <ManufacturingOverview />
+
+            {/* 6. Quality & Reliability / Verified Certifications (White Background) */}
             <QualityCertifications />
+
+            {/* 7. Client Trust & Testimonials (White Background) */}
             <TestimonialsSection />
+
+            {/* 8. B2B Partnership Philosophy (Deep Navy Background) */}
+            <PartnershipPhilosophy />
+
+            {/* 9. About Us FAQs (White Background) */}
             <FAQSection
                 eyebrow="ABOUT AUREVIA HEALTHCARE"
                 title="About Us FAQs"
-                subtitle="Common questions regarding our heritage, manufacturing capabilities, compliance, and corporate vision."
+                subtitle="Common questions regarding our manufacturing capabilities, compliance, quality standards, and corporate vision."
                 faqs={aboutFaqs}
             />
         </main>

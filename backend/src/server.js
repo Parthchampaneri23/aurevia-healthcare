@@ -90,8 +90,12 @@ app.use("/api/careers", careerRoutes);
 app.use("/api/auth", authRoutes);
 
 /* ----------------------------------
-   Root Route
+   Root & Health Check Routes
 ---------------------------------- */
+
+app.get("/health", (req, res) => {
+    res.status(200).json({ status: "ok", timestamp: new Date().toISOString() });
+});
 
 app.get("/", (req, res) => {
     res.json({

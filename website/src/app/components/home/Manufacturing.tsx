@@ -5,6 +5,7 @@ import {
     ShieldCheck,
     Settings,
     PackageCheck,
+    ArrowRight,
 } from "lucide-react";
 
 const capabilities = [
@@ -12,42 +13,42 @@ const capabilities = [
         icon: Factory,
         title: "Modern Infrastructure",
         description:
-            "Purpose-driven facilities and infrastructure designed to support efficient pharmaceutical manufacturing.",
+            "Purpose-built production blocks designed for controlled cGMP pharmaceutical manufacturing.",
     },
     {
         icon: Settings,
         title: "Controlled Processes",
         description:
-            "Structured and controlled manufacturing processes focused on consistency and operational reliability.",
+            "Automated equipment and environmental air controls focused on consistency and operational reliability.",
     },
     {
         icon: ShieldCheck,
         title: "Quality Focus",
         description:
-            "Quality-focused operations integrated throughout the manufacturing and production workflow.",
+            "Integrated quality assurance and analytical testing protocols across every batch workflow.",
     },
     {
         icon: PackageCheck,
         title: "Reliable Packaging",
         description:
-            "Careful packaging processes designed to support product integrity and dependable delivery.",
+            "Automated primary blister packing & secondary labeling designed to safeguard product stability.",
     },
 ];
 
 export default function Manufacturing() {
     return (
-        <section className="relative overflow-hidden bg-gradient-to-b from-white to-slate-50 py-12 lg:py-12">
+        <section aria-label="Manufacturing Excellence" className="relative overflow-hidden bg-white py-12 lg:py-12 border-t border-slate-100">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
 
                 {/* Main Content */}
                 <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 lg:items-stretch">
 
                     {/* Image with Hover Zoom & Floating Badge */}
-                    <div className="group relative flex overflow-hidden rounded-3xl bg-slate-100 shadow-2xl transition-all duration-500 hover:shadow-cyan-900/10 min-h-[380px] sm:min-h-[440px] lg:min-h-full">
+                    <div className="group relative flex overflow-hidden rounded-3xl bg-slate-900 shadow-xl transition-all duration-500 hover:shadow-2xl min-h-[380px] sm:min-h-[440px] lg:min-h-full">
                         <div className="overflow-hidden w-full h-full relative">
                             <Image
                                 src="/hero/manufacture%20intelligence.png?v=2"
-                                alt="Aurevia Healthcare manufacturing facility"
+                                alt="Aurevia Healthcare Manufacturing Facility"
                                 width={900}
                                 height={650}
                                 unoptimized
@@ -56,63 +57,66 @@ export default function Manufacturing() {
                         </div>
 
                         {/* Image Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-slate-950/10 to-transparent transition-opacity duration-500 group-hover:opacity-80" />
 
-                        {/* Image Overlay Badge */}
-                        <div className="absolute bottom-6 left-6 translate-y-0 rounded-2xl border border-white/20 bg-white/90 px-6 py-4 shadow-xl backdrop-blur-md transition-all duration-500 group-hover:-translate-y-2 group-hover:bg-white">
-                            <p className="bg-gradient-to-r from-[#123B5D] to-[#0F766E] bg-clip-text text-sm font-extrabold text-transparent uppercase tracking-wider">
-                                MANUFACTURING
+                        {/* Floating Badge */}
+                        <div className="absolute bottom-6 left-6 rounded-2xl border border-white/20 bg-white/95 px-5 py-3 shadow-lg backdrop-blur-md transition-all duration-500 group-hover:-translate-y-1">
+                            <p className="text-xs font-semibold uppercase tracking-wider text-[#0F766E]">
+                                MANUFACTURING FACILITY
                             </p>
-                            <p className="mt-1 text-xs font-semibold text-slate-600">
-                                Quality-focused operations
+                            <p className="text-sm font-bold text-[#123B5D]">
+                                Controlled Dosage Production
                             </p>
                         </div>
                     </div>
 
                     {/* Content Section */}
-                    <div>
+                    <div className="flex flex-col justify-center">
                         <div className="inline-flex items-center gap-2 mb-3">
-                            <span className="h-1.5 w-8 rounded-full bg-[#123B5D]"></span>
-                            <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#123B5D]">
-                                Manufacturing Excellence
+                            <span className="h-1.5 w-8 rounded-full bg-[#0F766E]" aria-hidden="true" />
+                            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#0F766E]">
+                                MANUFACTURING EXCELLENCE
                             </p>
+                            <span className="h-1.5 w-8 rounded-full bg-[#0F766E]" aria-hidden="true" />
                         </div>
 
-                        <h2 className="text-3xl font-extrabold leading-tight text-slate-900 sm:text-4xl lg:text-5xl">
+                        <h2 className="text-3xl font-extrabold tracking-tight text-[#123B5D] leading-tight sm:text-4xl lg:text-5xl lg:leading-tight">
                             Built for
                             <span className="block mt-1 bg-gradient-to-r from-[#123B5D] to-[#0F766E] bg-clip-text text-transparent">
                                 Consistent Quality
                             </span>
                         </h2>
 
-                        <p className="mt-6 text-base leading-relaxed text-slate-600">
-                            Aurevia Healthcare combines modern manufacturing infrastructure with structured processes to support reliable pharmaceutical production.
+                        <p className="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg">
+                            Aurevia Healthcare combines modern manufacturing infrastructure with structured processes to support high-capacity, reliable pharmaceutical production.
                         </p>
 
-                        <p className="mt-4 text-base leading-relaxed text-slate-600">
-                            From production and quality control to packaging, every stage is approached with a focus on consistency, efficiency and dependable outcomes.
+                        <p className="mt-3 text-base leading-relaxed text-slate-600">
+                            From raw material qualification and cleanroom compounding to primary blister packing, every stage is executed with precision, efficiency, and dependable batch quality.
                         </p>
 
                         {/* Capabilities Card Grid */}
-                        <div className="mt-10 grid gap-5 sm:grid-cols-2">
+                        <div className="mt-8 grid gap-4 sm:grid-cols-2">
                             {capabilities.map((item) => {
                                 const Icon = item.icon;
 
                                 return (
                                     <div
                                         key={item.title}
-                                        className="group/cap flex gap-4 rounded-2xl border border-slate-100/50 bg-white/60 p-4 transition-all duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-md hover:border-slate-100"
+                                        className="group/cap relative flex gap-3.5 overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-50/50 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-[#0F766E]/40 hover:bg-white hover:shadow-md"
                                     >
-                                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#123B5D]/10 text-[#123B5D] transition-all duration-300 group-hover/cap:scale-110 group-hover/cap:bg-[#123B5D] group-hover/cap:text-white">
-                                            <Icon size={20} strokeWidth={1.8} />
+                                        <div className="absolute top-0 left-0 h-[3px] w-0 bg-[#0F766E] transition-all duration-300 group-hover/cap:w-full" aria-hidden="true" />
+
+                                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-teal-50 text-[#0F766E] transition-colors duration-300 group-hover/cap:bg-[#0F766E] group-hover/cap:text-white">
+                                            <Icon size={18} strokeWidth={2} aria-hidden="true" />
                                         </div>
 
                                         <div>
-                                            <h3 className="text-sm font-bold text-slate-900 transition-colors duration-300 group-hover/cap:text-[#123B5D]">
+                                            <h3 className="text-sm font-bold text-slate-900 transition-colors duration-300 group-hover/cap:text-[#0F766E]">
                                                 {item.title}
                                             </h3>
 
-                                            <p className="mt-1.5 text-xs leading-relaxed text-slate-500">
+                                            <p className="mt-1 text-xs font-normal leading-relaxed text-slate-600">
                                                 {item.description}
                                             </p>
                                         </div>
@@ -122,13 +126,13 @@ export default function Manufacturing() {
                         </div>
 
                         {/* Button */}
-                        <div className="mt-10">
+                        <div className="mt-8">
                             <Link
                                 href="/industries#industry-segments"
-                                className="group/btn inline-flex items-center gap-2 rounded-xl bg-[#123B5D] px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-900/10 transition-all duration-300 hover:bg-[#0d2d46] hover:shadow-xl hover:shadow-blue-900/20 hover:translate-x-0.5 active:scale-95"
+                                className="group/btn inline-flex items-center gap-2 rounded-xl bg-[#123B5D] px-6 py-3.5 text-sm font-bold text-white shadow-md transition-all duration-300 hover:bg-[#0F766E] hover:shadow-lg active:scale-95"
                             >
-                                Explore Industries
-                                <span className="transition-transform duration-300 group-hover/btn:translate-x-1">→</span>
+                                <span>Explore Business Sectors</span>
+                                <ArrowRight size={16} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
                             </Link>
                         </div>
                     </div>

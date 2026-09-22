@@ -38,8 +38,8 @@ export default function ContactInfo() {
             <style dangerouslySetInnerHTML={{
                 __html: `
                 @keyframes cardFadeIn {
-                    from { opacity: 0; transform: translateY(15px) scale(0.98); }
-                    to { opacity: 1; transform: translateY(0) scale(1); }
+                    from { opacity: 0; transform: translateY(15px); }
+                    to { opacity: 1; transform: translateY(0); }
                 }
                 .animate-card-fade-in {
                     animation: cardFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -47,22 +47,24 @@ export default function ContactInfo() {
                 }
             `}} />
             <div className="mx-auto grid max-w-7xl gap-10 lg:gap-16 px-6 lg:grid-cols-2 lg:items-center lg:px-8">
-                <div className="flex flex-col justify-center">
-                    <p className="text-xs font-bold uppercase tracking-[0.25em] text-teal-600">
-                        GET IN TOUCH
-                    </p>
+                <div className="flex flex-col justify-center text-center lg:text-left">
+                    <div className="inline-flex items-center gap-2 mb-3 justify-center lg:justify-start">
+                        <span className="h-1.5 w-8 rounded-full bg-[#0F766E]" />
+                        <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#0F766E]">
+                            GET IN TOUCH
+                        </p>
+                        <span className="h-1.5 w-8 rounded-full bg-[#0F766E]" />
+                    </div>
 
-                    <h2 className="mt-3 text-3xl font-bold text-slate-900 sm:text-4xl bg-gradient-to-r from-slate-900 via-slate-800 to-[#123B5D] bg-clip-text text-transparent">
-                        We&apos;re Here to Help
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight text-slate-900">
+                        We&apos;re Here to <span className="bg-gradient-to-r from-[#123B5D] to-[#0F766E] bg-clip-text text-transparent">Help</span>
                     </h2>
 
-                    <p className="mt-4 max-w-xl text-sm leading-7 text-slate-600">
-                        Connect with Aurevia Healthcare for product enquiries,
-                        manufacturing requirements, business partnerships and
-                        other healthcare-related enquiries.
+                    <p className="mt-4 max-w-xl text-base leading-relaxed text-slate-600 font-normal mx-auto lg:mx-0">
+                        Connect with Aurevia Healthcare for product enquiries, manufacturing requirements, business partnerships, and other healthcare-related inquiries.
                     </p>
 
-                    <div className="mt-8 grid gap-5 sm:grid-cols-2">
+                    <div className="mt-8 grid gap-5 sm:grid-cols-2 text-left">
                         {contactItems.map((item, index) => {
                             const Icon = item.icon;
                             const isLink = !!item.link;
@@ -76,7 +78,7 @@ export default function ContactInfo() {
                             return (
                                 <Component
                                     key={item.title}
-                                    className="group relative overflow-hidden flex gap-4 p-4 rounded-xl border border-slate-200/80 bg-slate-50 transition-all duration-500 hover:-translate-y-1 hover:border-teal-400/60 hover:shadow-xl hover:shadow-teal-900/10 hover:bg-white animate-card-fade-in"
+                                    className="group relative overflow-hidden flex gap-4 p-4 rounded-xl border border-slate-200/80 bg-slate-50 transition-all duration-500 hover:-translate-y-1 hover:border-[#0F766E] hover:shadow-xl hover:shadow-teal-900/10 hover:bg-white animate-card-fade-in"
                                     style={{ animationDelay: `${index * 80}ms` }}
                                     {...linkProps}
                                 >
@@ -87,11 +89,11 @@ export default function ContactInfo() {
                                     </div>
 
                                     <div>
-                                        <h3 className="text-sm font-semibold text-slate-900 transition-colors duration-300 group-hover:text-[#123B5D]">
+                                        <h3 className="text-sm font-bold text-slate-900 transition-colors duration-300 group-hover:text-[#123B5D]">
                                             {item.title}
                                         </h3>
 
-                                        <p className="mt-1 text-sm leading-5 text-slate-500">
+                                        <p className="mt-1 text-xs sm:text-sm leading-relaxed text-slate-600">
                                             {item.value}
                                         </p>
                                     </div>
@@ -101,7 +103,7 @@ export default function ContactInfo() {
                     </div>
                 </div>
 
-                <div className="group relative overflow-hidden rounded-2xl bg-slate-100 shadow-lg transition-all duration-500 hover:shadow-xl hover:shadow-[#123B5D]/10 max-h-[300px] sm:max-h-[340px] lg:max-h-[360px] max-w-[500px] mx-auto w-full aspect-[4/3]">
+                <div className="group relative overflow-hidden rounded-3xl bg-slate-100 shadow-xl transition-all duration-500 hover:shadow-2xl border border-slate-200/80 max-h-[320px] sm:max-h-[360px] lg:max-h-[380px] max-w-lg mx-auto lg:max-w-none w-full aspect-[4/3]">
                     <div className="overflow-hidden w-full h-full relative">
                         <Image
                             src="/contact/contactoffice.png?v=2"

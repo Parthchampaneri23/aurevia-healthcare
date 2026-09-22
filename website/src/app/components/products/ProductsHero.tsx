@@ -1,21 +1,20 @@
 import Image from "next/image";
 import Breadcrumb from "@/app/components/common/Breadcrumb";
 
-export default function IndustriesHero() {
+export default function ProductsHero() {
     return (
-        <section aria-label="Industries We Support Hero" className="relative w-full overflow-hidden bg-slate-950 min-h-[240px] sm:min-h-[280px] lg:min-h-[310px] flex items-center py-8 sm:py-10">
-            {/* Background Image with Natural Proportional Framing */}
+        <section aria-label="Products Hero" className="relative w-full overflow-hidden bg-slate-950 min-h-[240px] sm:min-h-[280px] lg:min-h-[310px] flex items-center py-8 sm:py-10">
+            {/* Background Image */}
             <Image
-                src="/industries/industrybanner.png"
-                alt="Aurevia Healthcare pharmaceutical industry support banner"
+                src="/products/productbanner.png"
+                alt="Aurevia Healthcare pharmaceutical products portfolio"
                 fill
                 priority
-                unoptimized={true}
                 className="object-cover object-center sm:object-[center_35%]"
                 sizes="100vw"
             />
 
-            {/* Professional Dark Gradient Overlay */}
+            {/* Dark Navy Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-r from-[#071E33]/90 via-[#071E33]/75 to-[#123B5D]/40" />
 
             {/* Content Container */}
@@ -32,12 +31,12 @@ export default function IndustriesHero() {
 
                     {/* Clean Title */}
                     <h1 className="text-3xl font-extrabold tracking-tight text-white drop-shadow-md sm:text-4xl lg:text-5xl">
-                        Industries
+                        Products
                     </h1>
 
                     {/* Breadcrumb on Banner */}
                     <div className="mt-3">
-                        <Breadcrumb items={[{ name: "Industries" }]} />
+                        <Breadcrumb items={[{ name: "Products" }]} />
                     </div>
 
                 </div>

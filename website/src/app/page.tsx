@@ -1,9 +1,10 @@
 import Hero from "@/app/components/home/Hero";
 import AboutPreview from "@/app/components/home/AboutPreview";
 import Stats from "@/app/components/home/Stats";
-import WhyChooseUs from "@/app/components/home/WhyChooseUs";
-import ProductCategories from "@/app/components/home/ProductCategories";
 import Manufacturing from "@/app/components/home/Manufacturing";
+import ProductCategories from "@/app/components/home/ProductCategories";
+import ManufacturingProcess from "@/app/components/home/ManufacturingProcess";
+import WhyChooseUs from "@/app/components/home/WhyChooseUs";
 import IndustrySegments from "@/app/components/industries/IndustrySegments";
 import HomeBlogSection from "@/app/components/home/HomeBlogSection";
 import ClientSlider from "@/app/components/home/ClientSlider";
@@ -39,9 +40,10 @@ export default function Home() {
       <Hero />
       <AboutPreview />
       <Stats />
-      <WhyChooseUs />
-      <ProductCategories />
       <Manufacturing />
+      <ProductCategories />
+      <ManufacturingProcess />
+      <WhyChooseUs />
       <IndustrySegments />
       <HomeBlogSection />
       <ClientSlider />

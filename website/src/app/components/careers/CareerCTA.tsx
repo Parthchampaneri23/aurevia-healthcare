@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Briefcase, MessageSquare } from "lucide-react";
 
 export default function CareerCTA() {
     return (
-        <section className="bg-white py-12">
+        <section className="bg-slate-50 py-12 lg:py-12">
             <style dangerouslySetInnerHTML={{
                 __html: `
                 @keyframes ctaSlideUp {
@@ -16,35 +16,46 @@ export default function CareerCTA() {
                 }
             `}} />
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                <div className="rounded-2xl bg-gradient-to-r from-[#123B5D] to-[#0F766E] px-7 py-10 text-center sm:px-12 animate-cta-card shadow-lg">
-                    <p className="text-xs font-bold uppercase tracking-[0.22em] text-teal-200">
-                        YOUR NEXT STEP
-                    </p>
+                <div className="relative overflow-hidden rounded-3xl bg-[#071E33] px-7 py-12 text-center shadow-2xl sm:px-12 sm:py-12 animate-cta-card border border-teal-900/40">
 
-                    <h2 className="mt-3 text-3xl font-bold text-white">
-                        Ready to Build Your Future With Aurevia?
-                    </h2>
+                    {/* Background Subtle Gradient Blobs */}
+                    <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-teal-500/10 blur-3xl" />
+                    <div className="pointer-events-none absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-[#123B5D]/40 blur-3xl" />
 
-                    <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-200">
-                        Take the next step toward a rewarding career in
-                        healthcare.
-                    </p>
+                    <div className="relative z-10 mx-auto max-w-3xl">
+                        <div className="mb-3.5 inline-flex items-center gap-2 rounded-full border border-teal-400/30 bg-teal-950/60 px-4 py-1 backdrop-blur-md">
+                            <span className="h-2 w-2 rounded-full bg-teal-400 animate-pulse" aria-hidden="true" />
+                            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-teal-300">
+                                Your Next Step
+                            </span>
+                        </div>
 
-                    <div className="mt-7 flex flex-wrap justify-center gap-3">
-                        <Link
-                            href="#opportunities"
-                            className="group inline-flex items-center rounded-lg bg-white px-6 py-3 text-sm font-semibold text-[#123B5D] transition-all duration-300 hover:bg-slate-100 hover:shadow-lg"
-                        >
-                            Explore Opportunities
-                            <ArrowRight size={16} className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
-                        </Link>
+                        <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
+                            Ready to Build Your Future With Aurevia?
+                        </h2>
 
-                        <Link
-                            href="/contact#contact-form"
-                            className="rounded-lg border border-white/60 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-white/10"
-                        >
-                            Contact Us
-                        </Link>
+                        <p className="mx-auto mt-4 max-w-2xl text-base text-slate-300 leading-relaxed font-normal">
+                            Take the next step toward a rewarding career in pharmaceutical manufacturing, quality control, and business operations.
+                        </p>
+
+                        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                            <Link
+                                href="#opportunities"
+                                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-[#0F766E] px-7 py-3.5 text-sm font-bold text-white shadow-lg transition-all duration-300 hover:bg-[#2A9D8F] hover:shadow-teal-500/25 hover:scale-[1.02] active:scale-[0.98]"
+                            >
+                                <Briefcase size={16} />
+                                <span>Explore Opportunities</span>
+                                <ArrowRight size={16} />
+                            </Link>
+
+                            <Link
+                                href="/contact#contact-form"
+                                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-slate-700 bg-slate-900/60 px-7 py-3.5 text-sm font-bold text-white backdrop-blur-md transition-all duration-300 hover:bg-slate-800 hover:border-slate-500 hover:scale-[1.02] active:scale-[0.98]"
+                            >
+                                <MessageSquare size={16} />
+                                <span>Contact Us</span>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>
