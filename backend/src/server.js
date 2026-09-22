@@ -31,6 +31,8 @@ const __dirname = path.dirname(__filename);
 const allowedOrigins = [
     "http://localhost:3000",
     "http://localhost:3001",
+    "http://localhost:3002",
+    "http://localhost:3003",
     "https://aurevia-healthcare-one.vercel.app",
     "https://aurevia-healthcare-admin-two.vercel.app",
 ];
@@ -38,13 +40,16 @@ const allowedOrigins = [
 app.use(
     cors({
         origin: function (origin, callback) {
-            // Allow requests with no origin
-            // Postman, server-to-server requests, etc.
+            // Allow requests with no origin (Postman, server-to-server, curl, etc.)
             if (!origin) {
                 return callback(null, true);
             }
 
-            if (allowedOrigins.includes(origin)) {
+            if (
+                allowedOrigins.includes(origin) ||
+                /^http:\/\/(localhost|127\.0\.0\.1):\d+$/.test(origin) ||
+                /\.vercel\.app$/.test(origin)
+            ) {
                 return callback(null, true);
             }
 

@@ -181,8 +181,14 @@ export default function Dashboard() {
     } catch (error) {
       console.error("Dashboard fetch error:", error);
 
+      const isNetworkError =
+        error instanceof TypeError ||
+        (error instanceof Error && error.message.includes("fetch"));
+
       setError(
-        error instanceof Error
+        isNetworkError
+          ? "Failed to connect to API server. Please check backend service status or network connection."
+          : error instanceof Error
           ? error.message
           : "Failed to load dashboard data"
       );
