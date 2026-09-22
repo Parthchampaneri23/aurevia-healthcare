@@ -22,6 +22,7 @@ export default function ContactLocation() {
                         <p className="text-xs font-bold uppercase tracking-[0.25em] text-teal-600">
                             VISIT OUR HEADQUARTERS
                         </p>
+                        <span className="h-1.5 w-8 rounded-full bg-teal-600" />
                     </div>
 
                     <h2 className="bg-gradient-to-r from-slate-900 via-slate-800 to-[#123B5D] bg-clip-text text-3xl font-extrabold text-transparent sm:text-4xl">

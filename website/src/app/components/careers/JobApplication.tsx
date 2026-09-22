@@ -282,6 +282,7 @@ export default function JobApplication() {
                                 <p className="text-xs font-bold uppercase tracking-[0.25em] text-teal-600">
                                     JOIN OUR TEAM
                                 </p>
+                                <span className="h-1 w-6 rounded-full bg-teal-600" />
                             </div>
 
                             <h2

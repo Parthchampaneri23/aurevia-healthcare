@@ -161,6 +161,7 @@ export default function JobOpportunities() {
                         <p className="text-xs font-bold uppercase tracking-[0.25em] text-teal-600">
                             CURRENT OPPORTUNITIES
                         </p>
+                        <span className="h-1 w-6 rounded-full bg-teal-600" />
                     </div>
 
                     <h2 className="text-3xl font-extrabold text-slate-900 sm:text-4xl bg-gradient-to-r from-slate-900 via-slate-800 to-[#123B5D] bg-clip-text text-transparent">

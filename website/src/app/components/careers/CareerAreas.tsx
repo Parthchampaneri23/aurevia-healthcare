@@ -67,6 +67,7 @@ export default function CareerAreas() {
                         <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#0F766E]">
                             CAREER AREAS
                         </p>
+                        <span className="h-1.5 w-6 rounded-full bg-[#0F766E]" />
                     </div>
 
                     <h2 className="text-3xl font-extrabold text-slate-900 sm:text-4xl">

@@ -191,6 +191,7 @@ export default function FilterableProducts() {
                         <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#0F766E]">
                             CATALOGUE NAVIGATION
                         </p>
+                        <span className="h-1.5 w-6 rounded-full bg-[#0F766E]" />
                     </div>
 
                     <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#123B5D] tracking-tight">
