@@ -80,12 +80,47 @@ export const blogs: BlogPost[] = [
 </blockquote>
 
 <h2>Environmental Sterility & Cleanroom Engineering</h2>
-<p>To guarantee complete batch integrity, modern commercial manufacturing relies on stringent cleanroom engineering protocols maintained at our <a href="/about">WHO-GMP compliant facilities</a>:</p>
+<p>To guarantee complete batch integrity, modern commercial manufacturing relies on stringent cleanroom engineering protocols maintained at our <a href="/about#quality-certifications">WHO-GMP compliant facilities</a>:</p>
 <ul>
   <li><strong>Differential Air Pressure:</strong> Class 100,000 (ISO 8) to Class 100 (ISO 5) cleanrooms maintain 15-20 Pa positive pressure gradients to keep airborne particles out of core processing bays.</li>
   <li><strong>SCADA & PLC Automation:</strong> Computerized Supervisory Control and Data Acquisition (SCADA) systems generate tamper-proof 21 CFR Part 11 electronic batch records.</li>
   <li><strong>CIP & SIP Validation:</strong> Clean-in-Place and Sterilize-in-Place cycles ensure total removal of chemical residues between campaign product switches.</li>
-  <li><strong>Analytical QA Integration:</strong> Every batch is released only after rigorous <a href="/blog/why-quality-control-matters-in-pharmaceutical-manufacturing">quality control testing</a> confirming assay potency and dissolution stability.</li>
+  <li><strong>Analytical QA Integration:</strong> Every batch is released only after rigorous <a href="/blog/why-quality-control-matters-in-pharmaceutical-manufacturing#section-1-instrumental-analytical-verification">quality control testing</a> confirming assay potency and dissolution stability.</li>
+</ul>
+
+<h2>Related Articles &amp; Website Resources</h2>
+<p>Explore related pharmaceutical insights and Aurevia Healthcare website resources to understand end-to-end manufacturing excellence:</p>
+
+<p><strong><a href="/blog/why-quality-control-matters-in-pharmaceutical-manufacturing#section-the-pillars-of-pharmaceutical-quality-control">1. Why Quality Control Matters in Pharmaceutical Manufacturing</a></strong> — Discover how analytical testing, HPLC verification, and microbial controls guarantee dosage safety across all batch runs.</p>
+<ul>
+  <li>Instrumental verification including High-Performance Liquid Chromatography (HPLC) and Gas Chromatography (GC).</li>
+  <li>Microbiological limit testing (TAMC/TYMC) and pyrogen-free endotoxin assurance.</li>
+  <li>In-process quality checks (IPQC) performed every 30 to 60 minutes during compression.</li>
+  <li>Accelerated and real-time ICH stability studies establishing shelf-life dates.</li>
+</ul>
+
+<p><strong><a href="/blog/importance-of-gmp-practices-in-pharmaceutical-manufacturing#section-2-facility-engineering-hvac-environmental-controls">2. Importance of GMP Practices in Pharmaceutical Manufacturing</a></strong> — Learn how Good Manufacturing Practices (cGMP) and cleanroom airflow cascades ensure international regulatory compliance.</p>
+<ul>
+  <li>Cleanroom pressure differential gradients (ISO 5 to ISO 8) preventing cross-contamination.</li>
+  <li>Comprehensive 4-step equipment qualification lifecycle (DQ / IQ / OQ / PQ).</li>
+  <li>SCADA automated batch record generation compliant with 21 CFR Part 11.</li>
+  <li>Personnel air shower protocols and aseptic cleanroom gowning standards.</li>
+</ul>
+
+<p><strong><a href="/blog/how-technology-is-shaping-pharmaceutical-manufacturing#section-1-automated-high-speed-visual-inspection-systems">3. How Technology Is Shaping Pharmaceutical Manufacturing</a></strong> — Explore how Industry 4.0 smart sensors, automated vision inspection, and robotics transform commercial packaging.</p>
+<ul>
+  <li>100% automated high-speed visual inspection for tablet surface defects.</li>
+  <li>Process Analytical Technology (PAT) and inline Near-Infrared (NIR) spectroscopy.</li>
+  <li>Serialization and 2D DataMatrix track-and-trace printing for global security.</li>
+  <li>Real-Time Release Testing (RTRt) accelerating market dispatch turnaround.</li>
+</ul>
+
+<p><strong><a href="/products#explore">4. Aurevia Commercial Product Portfolio</a></strong> — Browse our extensive range of high-volume oral solid tablets, capsules, and oral liquids produced under WHO-GMP standards.</p>
+<ul>
+  <li>Formulations covering major therapeutic areas and specialized dosage strengths.</li>
+  <li>High-speed compression and encapsulation capacity exceeding millions of doses.</li>
+  <li>Custom primary blister and bottle packaging options.</li>
+  <li>Complete Certificate of Analysis (COA) and regulatory monograph documentation.</li>
 </ul>
 
 <h2>Aurevia Perspective</h2>
@@ -164,15 +199,51 @@ export const blogs: BlogPost[] = [
 </blockquote>
 
 <h2>Key Quality Management Protocols</h2>
-<p>Our analytical testing framework at our <a href="/about">accredited WHO-GMP manufacturing facilities</a> follows structured risk management procedures:</p>
+<p>Our analytical testing framework at our <a href="/about#quality-certifications">accredited WHO-GMP manufacturing facilities</a> follows structured risk management procedures:</p>
 <ul>
   <li><strong>Vendor Audit & Qualification:</strong> Active Pharmaceutical Ingredients (APIs) and excipients are sourced exclusively from audited, qualified chemical manufacturers.</li>
   <li><strong>Out-of-Specification (OOS) Investigations:</strong> A structured 8D root-cause analysis is conducted immediately for any parameter deviation before lot disposition.</li>
   <li><strong>ICH Stability Studies:</strong> Product samples undergo real-time and accelerated temperature/humidity testing (25°C/60% RH to 40°C/75% RH) to establish shelf-life dates.</li>
 </ul>
 
+<h2>Related Articles &amp; Website Resources</h2>
+<p>To broaden your technical knowledge on pharmaceutical compliance, formulation stability, and CMO selection, review these related guides:</p>
+
+<p><strong><a href="/blog/understanding-modern-pharmaceutical-manufacturing-processes#section-sequential-stages-in-modern-pharmaceutical-processing">1. Understanding Modern Pharmaceutical Manufacturing Processes</a></strong> — An in-depth look at continuous processing, granulate drying, and automated dosage compression.</p>
+<ul>
+  <li>Sequential stages from active raw material quarantine to final aqueous coating.</li>
+  <li>High-shear wet granulation and moisture-controlled fluid bed drying.</li>
+  <li>Isolator containment systems for processing high-potency active compounds.</li>
+  <li>Rotary compression presses delivering over 200,000 units per hour.</li>
+</ul>
+
+<p><strong><a href="/blog/importance-of-gmp-practices-in-pharmaceutical-manufacturing#section-equipment-qualification-lifecycle-iq-oq-pq">2. Importance of GMP Practices in Pharmaceutical Manufacturing</a></strong> — Understand the foundational cGMP standards that govern cleanroom hygiene, validation, and quality management.</p>
+<ul>
+  <li>WHO-GMP certified production facilities with HEPA air filtration.</li>
+  <li>Installation Qualification (IQ) and Operational Qualification (OQ) execution.</li>
+  <li>Standard Operating Procedures (SOPs) governing every production step.</li>
+  <li>Corrective and Preventive Action (CAPA) systems for quality management.</li>
+</ul>
+
+<p><strong><a href="/blog/role-of-rd-in-pharmaceutical-formulation-development#section-pre-formulation-characterization">3. The Role of R&D in Pharmaceutical Formulation Development</a></strong> — Discover how formulation R&D works alongside analytical QC to optimize drug dissolution and stability.</p>
+<ul>
+  <li>Pre-formulation solubility profiling across physiological pH ranges.</li>
+  <li>Statistical Design of Experiments (DoE) for binder and disintegrant selection.</li>
+  <li>Bio-equivalence optimization for BCS Class II and Class IV molecules.</li>
+  <li>Accelerated stability testing under ICH climate guidelines (40°C / 75% RH).</li>
+</ul>
+
+<p><strong><a href="/about#quality-certifications">4. Aurevia Quality Governance & Accredited Facilities</a></strong> — Read about our state-of-the-art WHO-GMP manufacturing plant and dedicated analytical control laboratories.</p>
+<ul>
+  <li>Fully accredited WHO-GMP & ISO certified manufacturing facilities.</li>
+  <li>Advanced analytical laboratory equipped with modern HPLC and GC units.</li>
+  <li>Transparent client quality audit and facility inspection policy.</li>
+  <li>Dedicated Quality Assurance & Regulatory Affairs leadership team.</li>
+</ul>
+
 <h2>Aurevia Perspective</h2>
-<p>Aurevia Healthcare enforces a zero-tolerance policy regarding quality deviations. Our dedicated analytical laboratories serve leading <a href="/industries">healthcare brand owners and institutional partners</a> worldwide.</p>
+<p>Aurevia Healthcare enforces a zero-tolerance policy regarding quality deviations. Our dedicated analytical laboratories serve leading <a href="/industries#industry-segments">healthcare brand owners and institutional partners</a> worldwide.</p>
+
 
 <p>Every commercial batch undergoes exhaustive monograph testing (USP, IP, BP, EP) prior to receiving final Certificate of Analysis (COA) release.</p>
 
@@ -237,7 +308,7 @@ export const blogs: BlogPost[] = [
   <li><strong>Laboratory Bench Scale Trial (5 kg):</strong> Initial binder screening and compressibility testing.</li>
   <li><strong>Pilot Scale Batch Trial (50 kg):</strong> Granulation kinetics, drying curve optimization, and dissolution profiling.</li>
   <li><strong>Stability Protocol Initiation:</strong> ICH accelerated stability testing (40°C / 75% RH) for 6 months.</li>
-  <li><strong>Commercial Technology Transfer:</strong> Full batch scale-up during <a href="/blog/understanding-modern-pharmaceutical-manufacturing-processes">commercial manufacturing scale-up</a>.</li>
+  <li><strong>Commercial Technology Transfer:</strong> Full batch scale-up during <a href="/blog/understanding-modern-pharmaceutical-manufacturing-processes#section-sequential-stages-in-modern-pharmaceutical-processing">commercial manufacturing scale-up</a>.</li>
 </ol>
 
 <blockquote>
@@ -250,8 +321,44 @@ export const blogs: BlogPost[] = [
   <li><strong>Solubility Enhancement:</strong> Solid dispersion, micronization, and lipid-based self-emulsifying systems (SEDDS) for poorly soluble BCS Class II & IV molecules.</li>
   <li><strong>Controlled & Sustained Release:</strong> Hydrophilic matrix systems (HPMC) and coated multiparticulate beads for uniform blood drug concentrations over 12-24 hours.</li>
   <li><strong>Taste Masking:</strong> Ion-exchange resins and barrier coatings for pediatric liquids and chewable tablets.</li>
-  <li><strong>Analytical Validation:</strong> Collaboration with <a href="/blog/why-quality-control-matters-in-pharmaceutical-manufacturing">QC analytical teams</a> to validate stability-indicating HPLC assay methods.</li>
+  <li><strong>Analytical Validation:</strong> Collaboration with <a href="/blog/why-quality-control-matters-in-pharmaceutical-manufacturing#section-1-instrumental-analytical-verification">QC analytical teams</a> to validate stability-indicating HPLC assay methods.</li>
 </ul>
+
+<h2>Related Articles &amp; Website Resources</h2>
+<p>Explore related insights on analytical validation, commercial scale-up, and smart technology in formulation development:</p>
+
+<p><strong><a href="/blog/why-quality-control-matters-in-pharmaceutical-manufacturing#section-1-instrumental-analytical-verification">1. Why Quality Control Matters in Pharmaceutical Manufacturing</a></strong> — Examine how analytical QC laboratories validate stability-indicating assay methods created during R&D.</p>
+<ul>
+  <li>HPLC and GC analytical method validation for active drug assay purity.</li>
+  <li>Microbiological limit testing and pyrogen safety verification.</li>
+  <li>In-process dissolution kinetics testing in simulated gastric media.</li>
+  <li>ICH stability chamber monitoring for real-time shelf-life estimation.</li>
+</ul>
+
+<p><strong><a href="/blog/understanding-modern-pharmaceutical-manufacturing-processes#section-core-processing-considerations-for-technical-integrity">2. Understanding Modern Pharmaceutical Manufacturing Processes</a></strong> — Discover how pilot-scale formulation trials scale up into high-volume commercial production runs.</p>
+<ul>
+  <li>Commercial technology transfer from 5 kg lab batches to high-volume output.</li>
+  <li>Granulate drying kinetics and equilibrium relative humidity controls.</li>
+  <li>Rotary press compaction dynamics preventing tablet capping or lamination.</li>
+  <li>Aqueous film coating pan parameter optimization for targeted release.</li>
+</ul>
+
+<p><strong><a href="/blog/how-technology-is-shaping-pharmaceutical-manufacturing#section-2-process-analytical-technology-pat-real-time-monitoring">3. How Technology Is Shaping Pharmaceutical Manufacturing</a></strong> — See how digital twin simulation and Process Analytical Technology (PAT) speed up drug formulation.</p>
+<ul>
+  <li>Inline Near-Infrared (NIR) spectroscopy monitoring blend uniformity.</li>
+  <li>Automated particle size analysis during high-shear wet granulation.</li>
+  <li>21 CFR Part 11 compliant digital formulation tracking.</li>
+  <li>Predictive modeling reducing trial batch iterations and raw material loss.</li>
+</ul>
+
+<p><strong><a href="/contact#contact-form">4. Aurevia In-House Formulation R&D Services</a></strong> — Partner with Aurevia Healthcare's scientific team for custom formulation development and technology transfer.</p>
+<ul>
+  <li>Tailored formulation R&D for tablets, capsules, and oral liquids.</li>
+  <li>Bio-equivalence optimization and excipient compatibility testing.</li>
+  <li>Comprehensive CTD / ACTD regulatory dossier support for international markets.</li>
+  <li>Seamless transition to commercial contract manufacturing.</li>
+</ul>
+
 
 <h2>Aurevia Perspective</h2>
 <p>At Aurevia Healthcare, our in-house R&D division focuses on formulation refinement, bio-equivalence optimization, and process customization.</p>
@@ -326,12 +433,48 @@ export const blogs: BlogPost[] = [
 <ul>
   <li><strong>Raw Material Supply Chain Transparency:</strong> Full traceability into API and excipient supplier audits, material origin, and lead-time predictability.</li>
   <li><strong>Audit Accessibility:</strong> Open-door policy for technical site audits, customer quality inspections, and batch documentation reviews.</li>
-  <li><strong>cGMP Operational Compliance:</strong> Alignment with global <a href="/blog/importance-of-gmp-practices-in-pharmaceutical-manufacturing">Good Manufacturing Practices (GMP)</a> and cleanroom sterility standards.</li>
-  <li><strong>High-Speed Automated Packaging:</strong> Utilization of <a href="/blog/understanding-modern-pharmaceutical-manufacturing-processes">automated packaging lines</a> for blister, bottle, and pouch formats.</li>
+  <li><strong>cGMP Operational Compliance:</strong> Alignment with global <a href="/blog/importance-of-gmp-practices-in-pharmaceutical-manufacturing#section-essential-pillars-of-gmp-execution">Good Manufacturing Practices (GMP)</a> and cleanroom sterility standards.</li>
+  <li><strong>High-Speed Automated Packaging:</strong> Utilization of <a href="/blog/understanding-modern-pharmaceutical-manufacturing-processes#section-sequential-stages-in-modern-pharmaceutical-processing">automated packaging lines</a> for blister, bottle, and pouch formats.</li>
+</ul>
+
+<h2>Related Articles &amp; Website Resources</h2>
+<p>Review key operational guidelines and regulatory resources to evaluate third-party manufacturing partners:</p>
+
+<p><strong><a href="/blog/importance-of-gmp-practices-in-pharmaceutical-manufacturing#section-essential-pillars-of-gmp-execution">1. Importance of GMP Practices in Pharmaceutical Manufacturing</a></strong> — Essential cGMP benchmarks to inspect during technical facility audits and vendor evaluations.</p>
+<ul>
+  <li>Cleanroom pressure cascades and HEPA air change frequency verification.</li>
+  <li>Tamper-proof electronic batch records compliant with 21 CFR Part 11.</li>
+  <li>IQ / OQ / PQ equipment qualification records and calibration logs.</li>
+  <li>Proven regulatory compliance track record and audit history.</li>
+</ul>
+
+<p><strong><a href="/blog/understanding-modern-pharmaceutical-manufacturing-processes#section-environmental-sterility-cleanroom-engineering">2. Understanding Modern Pharmaceutical Manufacturing Processes</a></strong> — Learn about high-capacity dosage compression, cleanroom HVAC systems, and automated packaging lines.</p>
+<ul>
+  <li>High-volume rotary tablet compression exceeding 200,000 units/hr.</li>
+  <li>Controlled cleanroom HVAC engineering for contamination prevention.</li>
+  <li>High-potency compound containment isolators for operator safety.</li>
+  <li>Automated primary blister and bottle packaging machinery.</li>
+</ul>
+
+<p><strong><a href="/blog/how-technology-is-shaping-pharmaceutical-manufacturing#section-data-integrity-smart-manufacturing-compliance">3. How Technology Is Shaping Pharmaceutical Manufacturing</a></strong> — Discover how automated vision inspection and smart robotics enhance CMO production quality.</p>
+<ul>
+  <li>100% automated optical inspection eliminating missing or damaged units.</li>
+  <li>Track-and-trace 2D DataMatrix serialization for supply chain authenticity.</li>
+  <li>Process Analytical Technology (PAT) guaranteeing low batch variance.</li>
+  <li>Predictive equipment maintenance minimizing production delays.</li>
+</ul>
+
+<p><strong><a href="/industries#industry-segments">4. Aurevia Healthcare B2B Industry Solutions</a></strong> — Learn about contract manufacturing partnerships tailored for pharmaceutical companies, brand owners, and institutional buyers.</p>
+<ul>
+  <li>Flexible batch production scale from pilot trials to full commercial runs.</li>
+  <li>Turnkey CDMO services including formulation, manufacturing, and packaging.</li>
+  <li>Export-ready regulatory dossier assistance (CTD/ACTD formats).</li>
+  <li>Dedicated account manager ensuring transparent timeline updates.</li>
 </ul>
 
 <h2>Aurevia Perspective</h2>
 <p>Aurevia Healthcare serves as a trusted third-party manufacturing partner for leading pharmaceutical companies and global healthcare brands.</p>
+
 
 <p>We combine high-capacity manufacturing lines with transparent communication, regulatory dossier support, and dedicated account management.</p>
 
@@ -410,12 +553,48 @@ export const blogs: BlogPost[] = [
   <li><strong>Standard Operating Procedures (SOPs):</strong> Detailed, step-by-step written SOPs for every operational task, equipment wash cycle, and testing protocol.</li>
   <li><strong>Traceability & Electronic Batch Records:</strong> Complete tracking of raw material lot numbers, machine cleaning logs, operator signatures, and analytical COAs.</li>
   <li><strong>CAPA Systems:</strong> Corrective and Preventive Action (CAPA) procedures immediately address operational anomalies and prevent recurrence.</li>
-  <li><strong>IPQC Alignment:</strong> Synchronization with <a href="/blog/why-quality-control-matters-in-pharmaceutical-manufacturing">in-process quality control protocols</a> every 30-60 minutes.</li>
-  <li><strong>Smart Automation:</strong> Integration of <a href="/blog/how-technology-is-shaping-pharmaceutical-manufacturing">smart automation technologies</a> to reduce manual errors.</li>
+  <li><strong>IPQC Alignment:</strong> Synchronization with <a href="/blog/why-quality-control-matters-in-pharmaceutical-manufacturing#section-step-by-step-in-process-quality-check-ipqc-sequence">in-process quality control protocols</a> every 30-60 minutes.</li>
+  <li><strong>Smart Automation:</strong> Integration of <a href="/blog/how-technology-is-shaping-pharmaceutical-manufacturing#section-key-technological-innovations-in-pharma-manufacturing">smart automation technologies</a> to reduce manual errors.</li>
+</ul>
+
+<h2>Related Articles &amp; Website Resources</h2>
+<p>Expand your understanding of pharmaceutical quality compliance, manufacturing workflows, and partner evaluation:</p>
+
+<p><strong><a href="/blog/why-quality-control-matters-in-pharmaceutical-manufacturing#section-2-microbiological-assurance-environmental-control">1. Why Quality Control Matters in Pharmaceutical Manufacturing</a></strong> — Discover how analytical QC testing enforces cGMP compliance across incoming APIs and final products.</p>
+<ul>
+  <li>HPLC and GC analytical verification for chemical assay purity.</li>
+  <li>Microbiological limit testing (TAMC/TYMC) and pyrogen-free water monitoring.</li>
+  <li>In-process quality checks (IPQC) performed every 30 to 60 minutes.</li>
+  <li>Structured Out-of-Specification (OOS) root-cause investigation protocols.</li>
+</ul>
+
+<p><strong><a href="/blog/understanding-modern-pharmaceutical-manufacturing-processes#section-environmental-sterility-cleanroom-engineering">2. Understanding Modern Pharmaceutical Manufacturing Processes</a></strong> — Learn how facility cleanroom engineering and HVAC systems maintain cGMP environmental standards.</p>
+<ul>
+  <li>ISO Class 5 to ISO Class 8 positive air pressure cascades.</li>
+  <li>Automated fluid bed drying under continuous relative humidity control.</li>
+  <li>Aseptic liquid filling and sealed blister packaging lines.</li>
+  <li>Clean-in-Place (CIP) automated decontamination cycles.</li>
+</ul>
+
+<p><strong><a href="/blog/choosing-the-right-pharmaceutical-manufacturing-partner#section-structured-due-diligence-roadmap-for-partner-selection">3. Choosing the Right Pharmaceutical Manufacturing Partner</a></strong> — Use cGMP compliance metrics to select a dependable contract manufacturer for your brand.</p>
+<ul>
+  <li>Structured 5-step CDMO due diligence roadmap.</li>
+  <li>Comprehensive quality agreement terms and IP protection.</li>
+  <li>Vendor qualification and API supply chain transparency.</li>
+  <li>Facility audit accessibility and transparent batch documentation.</li>
+</ul>
+
+<p><strong><a href="/about#quality-certifications">4. Aurevia WHO-GMP Plant & Facility Standards</a></strong> — Explore our certified manufacturing plant engineered to strict WHO-GMP and ISO international guidelines.</p>
+<ul>
+  <li>State-of-the-art cleanroom suites with epoxy flooring and HEPA filtration.</li>
+  <li>Fully equipped analytical and microbiological testing laboratories.</li>
+  <li>Continuous staff cGMP training and gowning certification programs.</li>
+  <li>Zero-tolerance policy on quality deviations and safety protocol breaches.</li>
 </ul>
 
 <h2>Aurevia Perspective</h2>
 <p>At Aurevia Healthcare, WHO-GMP compliance is woven into our corporate culture.</p>
+
 
 <p>From raw API receipt to final automated packaging, our facility operates strictly under cGMP principles to guarantee that every pharmaceutical dose is safe, pure, and effective.</p>
 
@@ -494,12 +673,48 @@ export const blogs: BlogPost[] = [
   <li><strong>21 CFR Part 11 Compliance:</strong> Ensuring electronic signatures, audit trails, and data storage systems remain tamper-proof.</li>
   <li><strong>Cybersecurity Infrastructure:</strong> Safeguarding automated SCADA control systems and proprietary formulation databases.</li>
   <li><strong>Predictive Maintenance:</strong> IoT vibration and thermal sensors predict machine maintenance needs before operational downtime occurs.</li>
-  <li><strong>Synergy with Formulation R&D:</strong> Accelerating <a href="/blog/role-of-rd-in-pharmaceutical-formulation-development">formulation technology transfer</a> through digital twin simulation.</li>
-  <li><strong>cGMP Alignment:</strong> Adherence to global <a href="/blog/importance-of-gmp-practices-in-pharmaceutical-manufacturing">Good Manufacturing Practices (cGMP)</a>.</li>
+  <li><strong>Synergy with Formulation R&D:</strong> Accelerating <a href="/blog/role-of-rd-in-pharmaceutical-formulation-development#section-structured-phases-of-formulation-rd">formulation technology transfer</a> through digital twin simulation.</li>
+  <li><strong>cGMP Alignment:</strong> Adherence to global <a href="/blog/importance-of-gmp-practices-in-pharmaceutical-manufacturing#section-essential-pillars-of-gmp-execution">Good Manufacturing Practices (cGMP)</a>.</li>
+</ul>
+
+<h2>Related Articles &amp; Website Resources</h2>
+<p>Explore how advanced technologies integrate with core processing, quality control, and formulation development:</p>
+
+<p><strong><a href="/blog/understanding-modern-pharmaceutical-manufacturing-processes#section-sequential-stages-in-modern-pharmaceutical-processing">1. Understanding Modern Pharmaceutical Manufacturing Processes</a></strong> — See how smart automation powers high-speed compression and continuous dosage processing.</p>
+<ul>
+  <li>Continuous granulate processing with automated temperature monitoring.</li>
+  <li>High-speed rotary compression operating above 200,000 units/hr.</li>
+  <li>Perforated pan film coating with automated liquid atomization.</li>
+  <li>Automated primary and secondary packaging line integration.</li>
+</ul>
+
+<p><strong><a href="/blog/why-quality-control-matters-in-pharmaceutical-manufacturing#section-1-instrumental-analytical-verification">2. Why Quality Control Matters in Pharmaceutical Manufacturing</a></strong> — Learn how automated PAT tools and digital sensors elevate analytical QC precision.</p>
+<ul>
+  <li>Inline Near-Infrared (NIR) spectroscopy for real-time assay monitoring.</li>
+  <li>Automated HPLC assay logging compliant with 21 CFR Part 11.</li>
+  <li>Continuous microbial cleanroom environmental monitoring.</li>
+  <li>Real-Time Release Testing (RTRt) reducing release cycle times.</li>
+</ul>
+
+<p><strong><a href="/blog/role-of-rd-in-pharmaceutical-formulation-development#section-structured-phases-of-formulation-rd">3. The Role of R&D in Pharmaceutical Formulation Development</a></strong> — Discover how digital twin simulation and DoE software accelerate R&D formulation lifecycles.</p>
+<ul>
+  <li>Statistical Design of Experiments (DoE) trial batch optimization.</li>
+  <li>Pre-formulation thermal analysis and solubility modeling.</li>
+  <li>Bio-availability enhancement for poorly soluble active molecules.</li>
+  <li>Accelerated stability testing under controlled ICH storage conditions.</li>
+</ul>
+
+<p><strong><a href="/products#explore">4. Aurevia Formulations & Smart Production Output</a></strong> — View our catalog of oral solid and liquid formulations produced using state-of-the-art smart technology.</p>
+<ul>
+  <li>High-quality pharmaceutical tablets, capsules, and oral suspensions.</li>
+  <li>WHO-GMP certified production lines with 100% optical inspection.</li>
+  <li>Comprehensive therapeutic coverage and monograph compliance.</li>
+  <li>Export-ready blister, strip, and bottle packaging formats.</li>
 </ul>
 
 <h2>Aurevia Perspective</h2>
 <p>Aurevia Healthcare continually invests in state-of-the-art manufacturing automation and high-speed packaging technology.</p>
+
 
 <p>By combining automated dose processing with electronic data logging, we deliver maximum reliability and fast turnaround times for our partner clients.</p>
 
@@ -548,7 +763,7 @@ export const getDynamicBlogs = (): BlogPost[] => {
         }));
       }
     }
-  } catch {}
+  } catch { }
   return blogs;
 };
 
@@ -571,18 +786,18 @@ export const getRelatedBlogs = (currentSlug: string, count: number = 3): BlogPos
   const currentBlogs = getDynamicBlogs();
   const current = getBlogBySlug(currentSlug);
   if (!current) return currentBlogs.slice(0, count);
-  
+
   const sameCategory = currentBlogs.filter(
     (b) => b.slug !== currentSlug && b.category === current.category && b.published
   );
-  
+
   if (sameCategory.length >= count) {
     return sameCategory.slice(0, count);
   }
-  
+
   const remaining = currentBlogs.filter(
     (b) => b.slug !== currentSlug && b.category !== current.category && b.published
   );
-  
+
   return [...sameCategory, ...remaining].slice(0, count);
 };

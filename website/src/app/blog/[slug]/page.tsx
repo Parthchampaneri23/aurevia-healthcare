@@ -81,6 +81,60 @@ function processArticleHtml(html: string) {
   return { processedHtml, headings };
 }
 
+function getBlogKeyTakeaways(slug: string) {
+  switch (slug) {
+    case "understanding-modern-pharmaceutical-manufacturing-processes":
+      return [
+        { title: "Continuous Dosage Processing", desc: "Granulation kinetics and automated rotary compression exceeding 200,000 units/hr", link: "/blog/how-technology-is-shaping-pharmaceutical-manufacturing#section-step-by-step-smart-manufacturing-workflow", linkLabel: "Smart Workflow Section" },
+        { title: "Cleanroom HVAC Sterility", desc: "ISO 5 to ISO 8 positive pressure air cascades preventing cross-contamination", link: "/blog/importance-of-gmp-practices-in-pharmaceutical-manufacturing#section-2-facility-engineering-hvac-environmental-controls", linkLabel: "Cleanroom Controls Section" },
+        { title: "Analytical Quality Verification", desc: "In-process checks (IPQC) and batch release monograph assay testing", link: "/blog/why-quality-control-matters-in-pharmaceutical-manufacturing#section-step-by-step-in-process-quality-check-ipqc-sequence", linkLabel: "IPQC Testing Sequence" },
+        { title: "Commercial Formulations Catalog", desc: "WHO-GMP solid oral tablets, capsules, and liquid suspensions", link: "/products#explore", linkLabel: "View Formulations Catalog" },
+      ];
+    case "why-quality-control-matters-in-pharmaceutical-manufacturing":
+      return [
+        { title: "Analytical Assay Purity", desc: "HPLC, GC, and spectrophotometric testing verifying active drug potency", link: "/blog/role-of-rd-in-pharmaceutical-formulation-development#section-advanced-drug-delivery-considerations", linkLabel: "Analytical Validation Section" },
+        { title: "Microbiological Assurance", desc: "TAMC, TYMC limit testing and pyrogen-free LAL water loop monitoring", link: "/blog/importance-of-gmp-practices-in-pharmaceutical-manufacturing#section-1-people-cleanroom-hygiene-standards", linkLabel: "Hygiene Standards Section" },
+        { title: "In-Process Check Sequence", desc: "Weight variation, hardness, friability, and dissolution profiling every 30-60 mins", link: "/blog/understanding-modern-pharmaceutical-manufacturing-processes#section-sequential-stages-in-modern-pharmaceutical-processing", linkLabel: "Processing Stages Section" },
+        { title: "Accredited Plant Governance", desc: "WHO-GMP & ISO certified manufacturing facilities with full dossier support", link: "/about#quality-certifications", linkLabel: "Aurevia Plant Certifications" },
+      ];
+    case "role-of-rd-in-pharmaceutical-formulation-development":
+      return [
+        { title: "Pre-Formulation Characterization", desc: "pH-solubility profiling, DSC thermal analysis, and excipient compatibility", link: "/blog/why-quality-control-matters-in-pharmaceutical-manufacturing#section-1-instrumental-analytical-verification", linkLabel: "Analytical Verification Section" },
+        { title: "Statistical DoE Optimization", desc: "Screening binders, disintegrants, and film coatings for targeted drug release", link: "/blog/understanding-modern-pharmaceutical-manufacturing-processes#section-core-processing-considerations-for-technical-integrity", linkLabel: "Processing Integrity Section" },
+        { title: "Bio-Availability Engineering", desc: "Solid dispersions and SEDDS for poorly soluble BCS Class II & IV compounds", link: "/blog/how-technology-is-shaping-pharmaceutical-manufacturing#section-2-process-analytical-technology-pat-real-time-monitoring", linkLabel: "PAT Real-Time Section" },
+        { title: "In-House Scientific Consultation", desc: "Tailored formulation development, stability testing, and CTD dossiers", link: "/contact#contact-form", linkLabel: "Formulation R&D Consultation" },
+      ];
+    case "choosing-the-right-pharmaceutical-manufacturing-partner":
+      return [
+        { title: "5-Step CDMO Audit Roadmap", desc: "Technical site inspection, cGMP verification, and API supply chain audit", link: "/blog/importance-of-gmp-practices-in-pharmaceutical-manufacturing#section-key-considerations-for-total-quality-governance", linkLabel: "Quality Governance Section" },
+        { title: "High-Capacity Infrastructure", desc: "Class 100,000 cleanrooms and high-speed automated packaging machinery", link: "/blog/understanding-modern-pharmaceutical-manufacturing-processes#section-environmental-sterility-cleanroom-engineering", linkLabel: "Cleanroom Engineering Section" },
+        { title: "Smart Serialization & Security", desc: "2D DataMatrix track-and-trace printing and 21 CFR Part 11 batch records", link: "/blog/how-technology-is-shaping-pharmaceutical-manufacturing#section-data-integrity-smart-manufacturing-compliance", linkLabel: "Data Integrity Section" },
+        { title: "B2B Contract Manufacturing", desc: "Flexible batch capacity and turnkey manufacturing for healthcare brand owners", link: "/industries#industry-segments", linkLabel: "B2B Industry Segments" },
+      ];
+    case "importance-of-gmp-practices-in-pharmaceutical-manufacturing":
+      return [
+        { title: "Aseptic Cleanroom Cascades", desc: "Positive pressure differentials, air showers, and strict operator gowning", link: "/blog/understanding-modern-pharmaceutical-manufacturing-processes#section-environmental-sterility-cleanroom-engineering", linkLabel: "Sterility & Cleanrooms Section" },
+        { title: "Equipment Qualification Lifecycle", desc: "Design, Installation, Operational, and Performance Qualification (DQ/IQ/OQ/PQ)", link: "/blog/why-quality-control-matters-in-pharmaceutical-manufacturing#section-step-by-step-in-process-quality-check-ipqc-sequence", linkLabel: "IPQC Sequence Section" },
+        { title: "Digital Batch Integrity", desc: "SCADA automated data logging and Corrective & Preventive Action (CAPA) tracking", link: "/blog/choosing-the-right-pharmaceutical-manufacturing-partner#section-critical-evaluation-factors-for-cdmo-cmo-selection", linkLabel: "CDMO Evaluation Section" },
+        { title: "WHO-GMP & ISO Facilities", desc: "State-of-the-art accredited plant delivering safe, pure, and effective medicines", link: "/about#quality-certifications", linkLabel: "Certified Plant Section" },
+      ];
+    case "how-technology-is-shaping-pharmaceutical-manufacturing":
+      return [
+        { title: "Automated Visual Inspection", desc: "AI-driven high-speed optical cameras evaluating 100% of dosage units", link: "/blog/understanding-modern-pharmaceutical-manufacturing-processes#section-sequential-stages-in-modern-pharmaceutical-processing", linkLabel: "Processing Sequence Section" },
+        { title: "Process Analytical Technology (PAT)", desc: "Inline Near-Infrared (NIR) spectroscopy monitoring powder blend uniformity", link: "/blog/why-quality-control-matters-in-pharmaceutical-manufacturing#section-1-instrumental-analytical-verification", linkLabel: "Analytical Verification Section" },
+        { title: "Smart Packaging & Serialization", desc: "Integrated cartoning, leaflet insertion, and 2D DataMatrix barcode security", link: "/blog/role-of-rd-in-pharmaceutical-formulation-development#section-advanced-drug-delivery-considerations", linkLabel: "Drug Delivery Section" },
+        { title: "Product Formulations Portfolio", desc: "High-potency solid oral tablets, capsules, and syrups manufactured under cGMP", link: "/products#explore", linkLabel: "View Products Section" },
+      ];
+    default:
+      return [
+        { title: "Pharmaceutical Manufacturing", desc: "Advanced continuous processing and cleanroom dosage engineering", link: "/blog/understanding-modern-pharmaceutical-manufacturing-processes#section-sequential-stages-in-modern-pharmaceutical-processing", linkLabel: "Manufacturing Section" },
+        { title: "Quality Control & Compliance", desc: "HPLC analytical verification, microbial limit testing, and WHO-GMP standards", link: "/blog/why-quality-control-matters-in-pharmaceutical-manufacturing#section-the-pillars-of-pharmaceutical-quality-control", linkLabel: "Quality Control Section" },
+        { title: "Formulation R&D Services", desc: "Pre-formulation characterization, stability studies, and bio-equivalence", link: "/blog/role-of-rd-in-pharmaceutical-formulation-development#section-structured-phases-of-formulation-rd", linkLabel: "Formulation R&D Section" },
+        { title: "CDMO Partnering", desc: "Turnkey contract manufacturing solutions for global healthcare brands", link: "/industries#industry-segments", linkLabel: "Industry Segments Section" },
+      ];
+  }
+}
+
 export default async function BlogArticlePage({ params }: BlogArticlePageProps) {
   const { slug } = await params;
   const blog = getBlogBySlug(slug);
@@ -246,11 +300,51 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                 </div>
               </div>
 
-              {/* Lead Excerpt Callout Box */}
-              <div className="mb-10 rounded-2xl border-l-4 border-[#0F766E] bg-white p-6 sm:p-7 shadow-sm">
-                <p className="text-lg font-semibold leading-relaxed text-slate-900">
+              {/* Lead Excerpt & Key Takeaways Box with Internal Links & Bullet Points */}
+              <div className="mb-10 overflow-hidden rounded-3xl border border-teal-200/80 bg-gradient-to-br from-white via-teal-50/40 to-slate-50 p-6 sm:p-8 shadow-sm">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#0F766E] text-white">
+                    <CheckCircle2 size={16} />
+                  </span>
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-[#123B5D]">
+                    Article Overview &amp; Executive Summary
+                  </h3>
+                </div>
+
+                <p className="text-base sm:text-lg font-semibold leading-relaxed text-slate-900 border-b border-teal-100 pb-5">
                   {blog.excerpt}
                 </p>
+
+                {/* Key Takeaways & Internal Resource Bullet Points */}
+                <div className="mt-5">
+                  <h4 className="text-xs font-bold uppercase tracking-widest text-[#0F766E] mb-3">
+                    Key Article Takeaways &amp; Quick Links:
+                  </h4>
+                  <ul className="grid gap-3 sm:grid-cols-2 text-xs sm:text-sm">
+                    {getBlogKeyTakeaways(blog.slug).map((item, idx) => (
+                      <li
+                        key={idx}
+                        className="flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white p-4 shadow-2xs hover:border-[#0F766E] hover:shadow-md transition-all"
+                      >
+                        <div>
+                          <span className="font-bold text-[#123B5D] flex items-center gap-1.5 mb-1.5">
+                            <span className="h-2 w-2 rounded-full bg-[#0F766E]" />
+                            {item.title}
+                          </span>
+                          <p className="text-slate-600 text-xs leading-relaxed">
+                            {item.desc}
+                          </p>
+                        </div>
+                        <Link
+                          href={item.link}
+                          className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-[#0F766E] hover:text-[#123B5D] hover:underline"
+                        >
+                          <span>🔗 {item.linkLabel}</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
 
               {/* Article Content Container */}
