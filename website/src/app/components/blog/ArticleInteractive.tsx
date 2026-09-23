@@ -87,12 +87,22 @@ export default function ArticleInteractive({
   };
 
   const scrollToSection = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      const yOffset = -100;
-      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: "smooth" });
+    // 1. Dispatch custom expand event so collapsed article opens automatically
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(
+        new CustomEvent("expand-blog-article", { detail: { targetId: id } })
+      );
     }
+
+    // 2. Perform smooth scroll offset
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) {
+        const yOffset = -100;
+        const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: "smooth" });
+      }
+    }, 50);
   };
 
   return (

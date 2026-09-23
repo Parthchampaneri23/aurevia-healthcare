@@ -16,7 +16,7 @@ export default function FeaturedBlog({ blog }: FeaturedBlogProps) {
       className="group block overflow-hidden rounded-3xl border border-slate-200/90 bg-white shadow-lg transition-all duration-300 hover:border-teal-400/60 hover:shadow-2xl hover:shadow-teal-900/10 cursor-pointer"
     >
       <div className="flex flex-col lg:flex-row">
-        
+
         {/* Left: Image / Visual (55% on desktop) */}
         <div className="relative aspect-[16/10] w-full bg-[#0b1724] lg:aspect-auto lg:w-[55%] min-h-[280px] lg:min-h-[360px]">
           {blog.image ? (
@@ -33,7 +33,7 @@ export default function FeaturedBlog({ blog }: FeaturedBlogProps) {
             <div className="relative flex h-full min-h-[280px] w-full flex-col justify-between overflow-hidden bg-gradient-to-br from-[#0b1724] via-[#123B5D] to-[#0F766E] p-8 text-white lg:min-h-[380px]">
               <div className="absolute -right-16 -top-16 h-64 w-64 rounded-full bg-teal-400/15 blur-2xl" />
               <div className="absolute -bottom-16 -left-16 h-64 w-64 rounded-full bg-slate-900/50 blur-2xl" />
-              
+
               {/* Background Tech Pattern */}
               <div className="absolute inset-0 bg-[radial-gradient(#2dd4bf_1px,transparent_1px)] [background-size:16px_16px] opacity-10" />
 

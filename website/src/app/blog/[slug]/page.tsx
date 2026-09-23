@@ -20,6 +20,7 @@ import BlogCTA from "@/app/components/blog/BlogCTA";
 import BlogFAQ, { defaultBlogDetailFAQs } from "@/app/components/blog/BlogFAQ";
 import Breadcrumb from "@/app/components/common/Breadcrumb";
 import ArticleInteractive, { PrevNextNav } from "@/app/components/blog/ArticleInteractive";
+import ExpandableBlogArticle from "@/app/components/blog/ExpandableBlogArticle";
 
 interface BlogArticlePageProps {
   params: Promise<{
@@ -347,37 +348,9 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
                 </div>
               </div>
 
-              {/* Article Content Container */}
+              {/* Article Content Container with Expandable Read More Button */}
               <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-10 shadow-sm">
-                <div
-                  className="prose max-w-none text-slate-900
-                    prose-headings:font-extrabold prose-headings:text-[#123B5D] prose-headings:tracking-tight
-                    prose-h2:mt-10 prose-h2:mb-4 prose-h2:text-2xl prose-h2:border-b prose-h2:border-slate-200 prose-h2:pb-3 prose-h2:scroll-mt-24
-                    prose-h3:mt-8 prose-h3:mb-3 prose-h3:text-xl prose-h3:text-[#123B5D] prose-h3:scroll-mt-24
-                    prose-p:text-[17px] prose-p:leading-[1.8] prose-p:text-slate-800 prose-p:my-5 prose-p:font-normal
-                    prose-ul:my-6 prose-ul:list-disc prose-ul:pl-6 
-                    prose-li:my-2.5 prose-li:text-slate-800 prose-li:leading-relaxed prose-li:font-normal
-                    prose-strong:text-slate-900 prose-strong:font-bold"
-                  dangerouslySetInnerHTML={{ __html: processedHtml }}
-                />
-
-                {/* Article Tags */}
-                {blog.tags && blog.tags.length > 0 && (
-                  <div className="mt-12 flex flex-wrap items-center gap-2 border-t border-slate-200 pt-6">
-                    <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-600 mr-2">
-                      <Tag size={14} className="text-[#0F766E]" />
-                      Keywords &amp; Tags:
-                    </span>
-                    {blog.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-lg border border-slate-200 bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-700"
-                      >
-                        #{tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
+                <ExpandableBlogArticle htmlContent={processedHtml} tags={blog.tags} />
               </div>
 
               {/* Previous / Next Article Navigation */}

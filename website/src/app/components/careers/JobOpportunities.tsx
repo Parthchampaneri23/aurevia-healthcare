@@ -226,11 +226,11 @@ export default function JobOpportunities() {
 
             {/* Job Details Modal */}
             {selectedJob && (
-                <div 
+                <div
                     className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-slate-950/70 backdrop-blur-md transition-opacity duration-300 overflow-y-auto"
                     onClick={() => setSelectedJob(null)}
                 >
-                    <div 
+                    <div
                         className="relative my-auto w-full max-w-2xl max-h-[82vh] rounded-3xl bg-white shadow-2xl border border-slate-100 flex flex-col overflow-hidden animate-scale-in"
                         onClick={(e) => e.stopPropagation()}
                     >
