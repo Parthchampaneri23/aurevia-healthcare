@@ -2,7 +2,22 @@
 
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Search, X, PackageSearch, Filter, SlidersHorizontal, RefreshCw } from "lucide-react";
+import {
+    Search,
+    X,
+    PackageSearch,
+    SlidersHorizontal,
+    RefreshCw,
+    Pill,
+    Droplets,
+    Syringe,
+    Sparkles,
+    ShieldCheck,
+    Layers,
+    Grid,
+    ChevronRight,
+    Boxes,
+} from "lucide-react";
 import ProductCard from "./ProductCard";
 import type { Product } from "./productTypes";
 import localProducts from "./productData";
@@ -26,6 +41,87 @@ const categoryMap: Record<string, string> = {
     nutraceuticals: "Nutraceuticals",
 };
 
+const categoryMetaData: Record<
+    string,
+    {
+        description: string;
+        badgeText: string;
+        icon: React.ComponentType<{ className?: string; size?: number }>;
+        bgGradient: string;
+        accentText: string;
+        badgeBg: string;
+        badgeBorder: string;
+        headerBorder: string;
+    }
+> = {
+    Tablets: {
+        description:
+            "Solid oral dosage formulations engineered for precise dosing, rapid dissolution, and therapeutic reliability.",
+        badgeText: "Solid Oral Dosage",
+        icon: Pill,
+        bgGradient: "from-blue-50/70 via-indigo-50/30 to-transparent",
+        accentText: "text-blue-800",
+        badgeBg: "bg-blue-100/80 text-blue-800",
+        badgeBorder: "border-blue-200",
+        headerBorder: "border-blue-200/80",
+    },
+    Capsules: {
+        description:
+            "Hard gelatin and HPMC encapsulated formulations engineered for targeted intestinal release and high bioavailability.",
+        badgeText: "Encapsulated Formulations",
+        icon: Layers,
+        bgGradient: "from-teal-50/70 via-emerald-50/30 to-transparent",
+        accentText: "text-teal-800",
+        badgeBg: "bg-teal-100/80 text-teal-800",
+        badgeBorder: "border-teal-200",
+        headerBorder: "border-teal-200/80",
+    },
+    Syrups: {
+        description:
+            "Palatable liquid oral syrups, demulcents, and pediatric suspensions produced for consistent dosing.",
+        badgeText: "Liquid Oral Formulations",
+        icon: Droplets,
+        bgGradient: "from-sky-50/70 via-cyan-50/30 to-transparent",
+        accentText: "text-sky-800",
+        badgeBg: "bg-sky-100/80 text-sky-800",
+        badgeBorder: "border-sky-200",
+        headerBorder: "border-sky-200/80",
+    },
+    Injectables: {
+        description:
+            "Sterile parenteral solutions and lyophilisates manufactured under ISO cleanroom conditions for hospital care.",
+        badgeText: "Sterile Parenterals",
+        icon: Syringe,
+        bgGradient: "from-purple-50/70 via-slate-50/30 to-transparent",
+        accentText: "text-purple-800",
+        badgeBg: "bg-purple-100/80 text-purple-800",
+        badgeBorder: "border-purple-200",
+        headerBorder: "border-purple-200/80",
+    },
+    "Ointments & Creams": {
+        description:
+            "Topical dermatological creams, therapeutic ointments, counterirritant gels, and barrier-repair formulations.",
+        badgeText: "Topical Dermatologicals",
+        icon: ShieldCheck,
+        bgGradient: "from-amber-50/70 via-orange-50/30 to-transparent",
+        accentText: "text-amber-800",
+        badgeBg: "bg-amber-100/80 text-amber-800",
+        badgeBorder: "border-amber-200",
+        headerBorder: "border-amber-200/80",
+    },
+    Nutraceuticals: {
+        description:
+            "Dietary supplements, multivitamins, essential mineral blends, and active wellness formulations.",
+        badgeText: "Dietary & Wellness",
+        icon: Sparkles,
+        bgGradient: "from-emerald-50/70 via-green-50/30 to-transparent",
+        accentText: "text-emerald-800",
+        badgeBg: "bg-emerald-100/80 text-emerald-800",
+        badgeBorder: "border-emerald-200",
+        headerBorder: "border-emerald-200/80",
+    },
+};
+
 const API_URL = `${process.env.NEXT_PUBLIC_API_URL || "https://aurevia-healthcare.onrender.com"}/api/products`;
 
 export default function FilterableProducts() {
@@ -36,6 +132,7 @@ export default function FilterableProducts() {
     const [products, setProducts] = useState<Product[]>(localProducts as unknown as Product[]);
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [searchQuery, setSearchQuery] = useState("");
+    const [viewMode, setViewMode] = useState<"categorized" | "grid">("categorized");
     const [loading, setLoading] = useState(true);
 
     // Fetch products from API with fallback to local static data
@@ -55,7 +152,6 @@ export default function FilterableProducts() {
                 if (data.success && Array.isArray(data.products) && data.products.length > 0) {
                     setProducts(data.products);
                 } else {
-                    // Fallback to local verified products
                     setProducts(localProducts as unknown as Product[]);
                 }
             } catch (error) {
@@ -90,15 +186,6 @@ export default function FilterableProducts() {
         }
 
         setSelectedCategory(targetCategory);
-
-        if (categoryParam) {
-            requestAnimationFrame(() => {
-                containerRef.current?.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start",
-                });
-            });
-        }
     }, [searchParams]);
 
     // Calculate product counts per category
@@ -135,6 +222,31 @@ export default function FilterableProducts() {
             return matchesCategory && matchesSearch;
         });
     }, [products, selectedCategory, searchQuery]);
+
+    // Group filtered products by category
+    const productsByCategory = useMemo(() => {
+        const grouped: Record<string, Product[]> = {};
+
+        // Initialize all categories in canonical order
+        categories.forEach((cat) => {
+            if (cat !== "All") {
+                grouped[cat] = [];
+            }
+        });
+
+        // Group matching products
+        filteredProducts.forEach((product) => {
+            const cat = product.category;
+            if (grouped[cat]) {
+                grouped[cat].push(product);
+            } else {
+                if (!grouped[cat]) grouped[cat] = [];
+                grouped[cat].push(product);
+            }
+        });
+
+        return grouped;
+    }, [filteredProducts]);
 
     // Handle category click
     const handleCategoryClick = (category: string) => {
@@ -199,7 +311,7 @@ export default function FilterableProducts() {
                     </h2>
 
                     <p className="mt-2 text-sm sm:text-base leading-relaxed text-slate-600">
-                        Browse Aurevia Healthcare&apos;s pharmaceutical product portfolio across multiple dosage categories.
+                        Browse Aurevia Healthcare&apos;s pharmaceutical product portfolio structured across specialized dosage categories.
                     </p>
                 </div>
 
@@ -218,7 +330,7 @@ export default function FilterableProducts() {
                             type="text"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            placeholder="Search by product name or dosage..."
+                            placeholder="Search by product name, category, or dosage..."
                             className="w-full rounded-xl border border-slate-300 bg-white py-2.5 pl-10 pr-9 text-sm text-slate-900 placeholder:text-slate-400 shadow-2xs transition-all focus:border-[#0F766E] focus:outline-none focus:ring-2 focus:ring-[#0F766E]/20"
                         />
                         {searchQuery && (
@@ -235,19 +347,52 @@ export default function FilterableProducts() {
                 </div>
             </div>
 
-            {/* Category Filter Pills Bar */}
+            {/* Category Filter Pills & View Mode Bar */}
             <div className="mt-8">
-                <div className="flex items-center justify-between gap-4 mb-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
                     <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#0F766E]">
                         <SlidersHorizontal size={15} />
                         <span>Filter by Category</span>
                     </div>
 
-                    <span className="text-xs font-semibold text-slate-500">
-                        Showing {filteredProducts.length} of {products.length} Products
-                    </span>
+                    <div className="flex items-center gap-4">
+                        <span className="text-xs font-semibold text-slate-500">
+                            Showing {filteredProducts.length} of {products.length} Products
+                        </span>
+
+                        {/* View Switcher Toggle */}
+                        <div className="inline-flex items-center rounded-lg bg-slate-100 p-0.5 border border-slate-200">
+                            <button
+                                type="button"
+                                onClick={() => setViewMode("categorized")}
+                                className={`inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-bold transition-all ${
+                                    viewMode === "categorized"
+                                        ? "bg-white text-[#123B5D] shadow-2xs"
+                                        : "text-slate-600 hover:text-slate-900"
+                                }`}
+                                title="Categorized View"
+                            >
+                                <Boxes size={14} />
+                                <span className="hidden md:inline">Structured</span>
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setViewMode("grid")}
+                                className={`inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-bold transition-all ${
+                                    viewMode === "grid"
+                                        ? "bg-white text-[#123B5D] shadow-2xs"
+                                        : "text-slate-600 hover:text-slate-900"
+                                }`}
+                                title="Compact Grid View"
+                            >
+                                <Grid size={14} />
+                                <span className="hidden md:inline">Grid</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
+                {/* Category Pills */}
                 <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
                     {categories.map((category) => {
                         const isActive = selectedCategory === category;
@@ -258,17 +403,19 @@ export default function FilterableProducts() {
                                 key={category}
                                 type="button"
                                 onClick={() => handleCategoryClick(category)}
-                                className={`cursor-pointer inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs sm:text-sm font-semibold transition-all duration-300 active:scale-95 ${isActive
-                                    ? "bg-[#123B5D] text-white shadow-md shadow-blue-950/20 border border-[#123B5D]"
-                                    : "border border-slate-200/90 bg-white text-slate-700 hover:border-[#0F766E] hover:text-[#0F766E] hover:bg-teal-50/50"
-                                    }`}
+                                className={`cursor-pointer inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs sm:text-sm font-semibold transition-all duration-300 active:scale-95 ${
+                                    isActive
+                                        ? "bg-[#123B5D] text-white shadow-md shadow-blue-950/20 border border-[#123B5D]"
+                                        : "border border-slate-200/90 bg-white text-slate-700 hover:border-[#0F766E] hover:text-[#0F766E] hover:bg-teal-50/50"
+                                }`}
                             >
                                 <span>{category}</span>
                                 <span
-                                    className={`rounded-full px-1.5 py-0.2 text-[10px] font-bold ${isActive
-                                        ? "bg-teal-500 text-white"
-                                        : "bg-slate-100 text-slate-600 border border-slate-200"
-                                        }`}
+                                    className={`rounded-full px-1.5 py-0.2 text-[10px] font-bold ${
+                                        isActive
+                                            ? "bg-teal-500 text-white"
+                                            : "bg-slate-100 text-slate-600 border border-slate-200"
+                                    }`}
                                 >
                                     {count}
                                 </span>
@@ -301,23 +448,210 @@ export default function FilterableProducts() {
                 </div>
             )}
 
-            {/* Product Grid */}
+            {/* Product Catalogue Display */}
             {!loading && (
-                <>
+                <div className="mt-10">
                     {filteredProducts.length > 0 ? (
-                        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                            {filteredProducts.map((product, index) => (
-                                <div
-                                    key={product._id || product.slug}
-                                    className="animate-card-fade-in"
-                                    style={{
-                                        animationDelay: `${index * 40}ms`,
-                                    }}
-                                >
-                                    <ProductCard product={product} />
+                        <>
+                            {/* CASE 1: Categorized View (Default when viewing All or browsing categories) */}
+                            {viewMode === "categorized" && selectedCategory === "All" && !searchQuery ? (
+                                <div className="space-y-14">
+                                    {Object.entries(productsByCategory).map(([catName, catProducts]) => {
+                                        if (catProducts.length === 0) return null;
+                                        const meta = categoryMetaData[catName] || {
+                                            description: `Pharmaceutical products in the ${catName} category.`,
+                                            badgeText: "Dosage Category",
+                                            icon: Boxes,
+                                            bgGradient: "from-slate-50 to-transparent",
+                                            accentText: "text-[#123B5D]",
+                                            badgeBg: "bg-slate-100 text-slate-800",
+                                            badgeBorder: "border-slate-200",
+                                            headerBorder: "border-slate-200",
+                                        };
+                                        const IconComponent = meta.icon;
+
+                                        return (
+                                            <section
+                                                key={catName}
+                                                id={`category-${catName.toLowerCase().replace(/[^a-z0-9]/g, "-")}`}
+                                                className="scroll-mt-32 rounded-3xl border border-slate-200/90 bg-white shadow-xs p-6 sm:p-8 transition-all hover:shadow-md"
+                                            >
+                                                {/* Category Section Header */}
+                                                <div
+                                                    className={`rounded-2xl bg-gradient-to-r ${meta.bgGradient} p-5 sm:p-6 border ${meta.headerBorder} mb-6`}
+                                                >
+                                                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                                        <div className="flex items-start gap-3.5">
+                                                            <div
+                                                                className={`p-3 rounded-xl bg-white shadow-2xs border ${meta.badgeBorder} ${meta.accentText}`}
+                                                            >
+                                                                <IconComponent size={24} />
+                                                            </div>
+
+                                                            <div>
+                                                                <div className="flex flex-wrap items-center gap-2 mb-1">
+                                                                    <span
+                                                                        className={`text-[11px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${meta.badgeBg} ${meta.badgeBorder}`}
+                                                                    >
+                                                                        {meta.badgeText}
+                                                                    </span>
+                                                                    <span className="text-xs font-bold text-slate-500 bg-white/80 px-2 py-0.5 rounded-full border border-slate-200">
+                                                                        {catProducts.length} {catProducts.length === 1 ? "Product" : "Products"}
+                                                                    </span>
+                                                                </div>
+
+                                                                <h3 className="text-xl sm:text-2xl font-extrabold text-[#123B5D]">
+                                                                    {catName}
+                                                                </h3>
+
+                                                                <p className="mt-1 text-xs sm:text-sm text-slate-600 max-w-3xl leading-relaxed">
+                                                                    {meta.description}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+
+                                                        {/* Filter specifically to this category */}
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => handleCategoryClick(catName)}
+                                                            className="inline-flex items-center gap-1.5 self-start sm:self-center text-xs font-bold text-[#0F766E] hover:text-[#123B5D] bg-white px-3.5 py-2 rounded-xl border border-slate-200 hover:border-[#0F766E] shadow-2xs transition-all cursor-pointer active:scale-95"
+                                                        >
+                                                            <span>View Only {catName}</span>
+                                                            <ChevronRight size={14} />
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                {/* Product Cards Grid for this Category */}
+                                                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                                                    {catProducts.map((product, index) => (
+                                                        <div
+                                                            key={product._id || product.slug}
+                                                            className="animate-card-fade-in"
+                                                            style={{
+                                                                animationDelay: `${index * 30}ms`,
+                                                            }}
+                                                        >
+                                                            <ProductCard product={product} />
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </section>
+                                        );
+                                    })}
                                 </div>
-                            ))}
-                        </div>
+                            ) : selectedCategory !== "All" && viewMode === "categorized" && !searchQuery ? (
+                                /* CASE 2: Single Selected Category Header + Grid */
+                                <div>
+                                    {(() => {
+                                        const catName = selectedCategory;
+                                        const meta = categoryMetaData[catName] || {
+                                            description: `Pharmaceutical products in the ${catName} category.`,
+                                            badgeText: "Dosage Category",
+                                            icon: Boxes,
+                                            bgGradient: "from-slate-50 to-transparent",
+                                            accentText: "text-[#123B5D]",
+                                            badgeBg: "bg-slate-100 text-slate-800",
+                                            badgeBorder: "border-slate-200",
+                                            headerBorder: "border-slate-200",
+                                        };
+                                        const IconComponent = meta.icon;
+
+                                        return (
+                                            <div
+                                                className={`rounded-2xl bg-gradient-to-r ${meta.bgGradient} p-6 sm:p-8 border ${meta.headerBorder} mb-8`}
+                                            >
+                                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                                    <div className="flex items-start gap-4">
+                                                        <div
+                                                            className={`p-3.5 rounded-xl bg-white shadow-2xs border ${meta.badgeBorder} ${meta.accentText}`}
+                                                        >
+                                                            <IconComponent size={28} />
+                                                        </div>
+
+                                                        <div>
+                                                            <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                                                                <span
+                                                                    className={`text-xs font-extrabold uppercase tracking-wider px-3 py-0.5 rounded-full border ${meta.badgeBg} ${meta.badgeBorder}`}
+                                                                >
+                                                                    {meta.badgeText}
+                                                                </span>
+                                                                <span className="text-xs font-bold text-slate-500 bg-white/90 px-2.5 py-0.5 rounded-full border border-slate-200">
+                                                                    {filteredProducts.length} Formulations
+                                                                </span>
+                                                            </div>
+
+                                                            <h3 className="text-2xl sm:text-3xl font-extrabold text-[#123B5D]">
+                                                                {catName} Formulations
+                                                            </h3>
+
+                                                            <p className="mt-1.5 text-sm text-slate-600 max-w-3xl leading-relaxed">
+                                                                {meta.description}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <button
+                                                        type="button"
+                                                        onClick={handleClearFilters}
+                                                        className="inline-flex items-center gap-1.5 self-start sm:self-center text-xs font-bold text-slate-700 bg-white px-3.5 py-2 rounded-xl border border-slate-200 hover:border-slate-400 shadow-2xs transition-all cursor-pointer active:scale-95"
+                                                    >
+                                                        <RefreshCw size={13} />
+                                                        <span>View All Categories</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        );
+                                    })()}
+
+                                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                                        {filteredProducts.map((product, index) => (
+                                            <div
+                                                key={product._id || product.slug}
+                                                className="animate-card-fade-in"
+                                                style={{
+                                                    animationDelay: `${index * 40}ms`,
+                                                }}
+                                            >
+                                                <ProductCard product={product} />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            ) : (
+                                /* CASE 3: Compact Grid or Search Active View */
+                                <div>
+                                    {searchQuery && (
+                                        <div className="mb-6 flex items-center justify-between bg-teal-50/70 border border-teal-200/80 rounded-2xl p-4">
+                                            <p className="text-xs sm:text-sm font-semibold text-teal-900">
+                                                Search results for &quot;<span className="font-extrabold text-[#123B5D]">{searchQuery}</span>&quot; ({filteredProducts.length} items found)
+                                            </p>
+                                            <button
+                                                type="button"
+                                                onClick={() => setSearchQuery("")}
+                                                className="text-xs font-bold text-[#0F766E] hover:underline"
+                                            >
+                                                Clear Search
+                                            </button>
+                                        </div>
+                                    )}
+
+                                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                                        {filteredProducts.map((product, index) => (
+                                            <div
+                                                key={product._id || product.slug}
+                                                className="animate-card-fade-in"
+                                                style={{
+                                                    animationDelay: `${index * 40}ms`,
+                                                }}
+                                            >
+                                                <ProductCard product={product} />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </>
                     ) : (
                         /* Empty State */
                         <div className="mt-12 rounded-3xl border border-slate-200/90 bg-slate-50/70 px-6 py-12 text-center">
@@ -337,7 +671,7 @@ export default function FilterableProducts() {
                                 <button
                                     type="button"
                                     onClick={handleClearFilters}
-                                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#0F766E] px-6 py-2.5 text-sm font-bold text-white shadow-md transition-all hover:bg-[#123B5D] active:scale-95"
+                                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#0F766E] px-6 py-2.5 text-sm font-bold text-white shadow-md transition-all hover:bg-[#123B5D] active:scale-95 cursor-pointer"
                                 >
                                     <RefreshCw size={15} />
                                     <span>Clear Search &amp; Filters</span>
@@ -345,7 +679,7 @@ export default function FilterableProducts() {
                             </div>
                         </div>
                     )}
-                </>
+                </div>
             )}
         </div>
     );
